@@ -11,19 +11,18 @@ use InvalidArgumentException;
 
 /**
  * Class ChartClassRepository
- * @package Fintech\Transaction\Repositories\Eloquent
  */
 class ChartClassRepository extends EloquentRepository implements InterfacesChartClassRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.chart_class_model', \Fintech\Transaction\Models\ChartClass::class));
+        $model = app(config('fintech.transaction.chart_class_model', \Fintech\Transaction\Models\ChartClass::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class ChartClassRepository extends EloquentRepository implements InterfacesChart
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

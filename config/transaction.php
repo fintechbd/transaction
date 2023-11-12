@@ -51,7 +51,6 @@ return [
     */
     'order_detail_model' => \Fintech\Transaction\Models\OrderDetail::class,
 
-
     /*
     |--------------------------------------------------------------------------
     | ChartClass Model
@@ -61,7 +60,6 @@ return [
     */
     'chart_class_model' => \Fintech\Transaction\Models\ChartClass::class,
 
-
     /*
     |--------------------------------------------------------------------------
     | ChartType Model
@@ -70,7 +68,6 @@ return [
     | This value will be used to across system where model is needed
     */
     'chart_type_model' => \Fintech\Transaction\Models\ChartType::class,
-
 
     /*
     |--------------------------------------------------------------------------
