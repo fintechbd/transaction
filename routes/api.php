@@ -25,6 +25,15 @@ if (Config::get('fintech.transaction.enabled')) {
         Route::apiResource('order-details', \Fintech\Transaction\Http\Controllers\OrderDetailController::class);
         Route::post('order-details/{order_detail}/restore', [\Fintech\Transaction\Http\Controllers\OrderDetailController::class, 'restore'])->name('order-details.restore');
 
+        Route::apiResource('chart-classes', \Fintech\Transaction\Http\Controllers\ChartClassController::class);
+        Route::post('chart-classes/{chart_class}/restore', [\Fintech\Transaction\Http\Controllers\ChartClassController::class, 'restore'])->name('chart-classes.restore');
+
+        Route::apiResource('chart-types', \Fintech\Transaction\Http\Controllers\ChartTypeController::class);
+        Route::post('chart-types/{chart_type}/restore', [\Fintech\Transaction\Http\Controllers\ChartTypeController::class, 'restore'])->name('chart-types.restore');
+
+        Route::apiResource('chart-entries', \Fintech\Transaction\Http\Controllers\ChartEntryController::class);
+        Route::post('chart-entries/{chart_entry}/restore', [\Fintech\Transaction\Http\Controllers\ChartEntryController::class, 'restore'])->name('chart-entries.restore');
+
         //DO NOT REMOVE THIS LINE//
     });
 }

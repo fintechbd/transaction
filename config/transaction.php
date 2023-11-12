@@ -5,6 +5,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Enable Module APIs
+    |--------------------------------------------------------------------------
+    | this setting enable the api will be available or not
+    */
+    'enabled' => env('PACKAGE_TRANSACTION_ENABLED', true),
+
+    /*
+    |--------------------------------------------------------------------------
     | Transaction Group Root Prefix
     |--------------------------------------------------------------------------
     |
@@ -43,6 +51,36 @@ return [
     */
     'order_detail_model' => \Fintech\Transaction\Models\OrderDetail::class,
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | ChartClass Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'chart_class_model' => \Fintech\Transaction\Models\ChartClass::class,
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ChartType Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'chart_type_model' => \Fintech\Transaction\Models\ChartType::class,
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | ChartEntry Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'chart_entry_model' => \Fintech\Transaction\Models\ChartEntry::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -59,6 +97,12 @@ return [
         \Fintech\Transaction\Interfaces\OrderRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderRepository::class,
 
         \Fintech\Transaction\Interfaces\OrderDetailRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository::class,
+
+        \Fintech\Transaction\Interfaces\ChartClassRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartClassRepository::class,
+
+        \Fintech\Transaction\Interfaces\ChartTypeRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
+
+        \Fintech\Transaction\Interfaces\ChartEntryRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
