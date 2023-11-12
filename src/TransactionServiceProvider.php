@@ -1,0 +1,56 @@
+<?php
+
+namespace Fintech\Transaction;
+
+use Illuminate\Support\ServiceProvider;
+use Fintech\Transaction\Commands\InstallCommand;
+use Fintech\Transaction\Commands\TransactionCommand;
+
+class TransactionServiceProvider extends ServiceProvider
+{
+    /**
+     * Register any application services.
+     *
+     * @return void
+     */
+    public function register()
+    {
+        $this->mergeConfigFrom(
+            __DIR__.'/../config/transaction.php', 'fintech.transaction'
+        );
+
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
+    }
+
+    /**
+     * Bootstrap any package services.
+     */
+    public function boot(): void
+    {
+        $this->publishes([
+            __DIR__.'/../config/transaction.php' => config_path('fintech/transaction.php'),
+        ]);
+
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'transaction');
+
+        $this->publishes([
+            __DIR__.'/../lang' => $this->app->langPath('vendor/transaction'),
+        ]);
+
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'transaction');
+
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/transaction'),
+        ]);
+
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                InstallCommand::class,
+                TransactionCommand::class,
+            ]);
+        }
+    }
+}
