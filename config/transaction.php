@@ -16,7 +16,6 @@ return [
 
     'root_prefix' => 'test/',
 
-    
     /*
     |--------------------------------------------------------------------------
     | TransactionForm Model
@@ -26,7 +25,6 @@ return [
     */
     'transaction_form_model' => \Fintech\Transaction\Models\TransactionForm::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | Order Model
@@ -36,7 +34,6 @@ return [
     */
     'order_model' => \Fintech\Transaction\Models\Order::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | OrderDetail Model

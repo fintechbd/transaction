@@ -2,9 +2,9 @@
 
 namespace Fintech\Transaction;
 
-use Illuminate\Support\ServiceProvider;
 use Fintech\Transaction\Commands\InstallCommand;
 use Fintech\Transaction\Commands\TransactionCommand;
+use Illuminate\Support\ServiceProvider;
 
 class TransactionServiceProvider extends ServiceProvider
 {

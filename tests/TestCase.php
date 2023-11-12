@@ -2,9 +2,9 @@
 
 namespace Fintech\Transaction\Tests;
 
+use Fintech\Transaction\TransactionServiceProvider;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 use Orchestra\Testbench\TestCase as Orchestra;
-use Fintech\Transaction\TransactionServiceProvider;
 
 class TestCase extends Orchestra
 {

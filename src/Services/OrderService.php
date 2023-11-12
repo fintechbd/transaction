@@ -2,26 +2,22 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\OrderRepository;
 
 /**
  * Class OrderService
- * @package Fintech\Transaction\Services
- *
  */
 class OrderService
 {
     /**
      * OrderService constructor.
-     * @param OrderRepository $orderRepository
      */
-    public function __construct(OrderRepository $orderRepository) {
+    public function __construct(OrderRepository $orderRepository)
+    {
         $this->orderRepository = $orderRepository;
     }
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

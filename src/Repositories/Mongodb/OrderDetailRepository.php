@@ -6,24 +6,23 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\OrderDetailRepository as InterfacesOrderDetailRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
 use InvalidArgumentException;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class OrderDetailRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class OrderDetailRepository extends MongodbRepository implements InterfacesOrderDetailRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
+        $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class OrderDetailRepository extends MongodbRepository implements InterfacesOrder
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

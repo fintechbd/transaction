@@ -1,34 +1,33 @@
 <?php
 
 namespace Fintech\Transaction\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
+use Fintech\Core\Exceptions\StoreOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Http\Resources\OrderDetailResource;
-use Fintech\Transaction\Http\Resources\OrderDetailCollection;
 use Fintech\Transaction\Http\Requests\ImportOrderDetailRequest;
+use Fintech\Transaction\Http\Requests\IndexOrderDetailRequest;
 use Fintech\Transaction\Http\Requests\StoreOrderDetailRequest;
 use Fintech\Transaction\Http\Requests\UpdateOrderDetailRequest;
-use Fintech\Transaction\Http\Requests\IndexOrderDetailRequest;
+use Fintech\Transaction\Http\Resources\OrderDetailCollection;
+use Fintech\Transaction\Http\Resources\OrderDetailResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
 /**
  * Class OrderDetailController
- * @package Fintech\Transaction\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to OrderDetail
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class OrderDetailController extends Controller
 {
     use ApiResponseTrait;
@@ -38,10 +37,8 @@ class OrderDetailController extends Controller
      * Return a listing of the *OrderDetail* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexOrderDetailRequest $request
-     * @return OrderDetailCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexOrderDetailRequest $request): OrderDetailCollection|JsonResponse
     {
@@ -61,10 +58,9 @@ class OrderDetailController extends Controller
     /**
      * @lrd:start
      * Create a new *OrderDetail* resource in storage.
+     *
      * @lrd:end
      *
-     * @param StoreOrderDetailRequest $request
-     * @return JsonResponse
      * @throws StoreOperationException
      */
     public function store(StoreOrderDetailRequest $request): JsonResponse
@@ -74,14 +70,14 @@ class OrderDetailController extends Controller
 
             $orderDetail = Transaction::orderDetail()->create($inputs);
 
-            if (!$orderDetail) {
+            if (! $orderDetail) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.order_detail_model'));
             }
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'Order Detail']),
-                'id' => $orderDetail->id
-             ]);
+                'id' => $orderDetail->id,
+            ]);
 
         } catch (Exception $exception) {
 
@@ -92,10 +88,9 @@ class OrderDetailController extends Controller
     /**
      * @lrd:start
      * Return a specified *OrderDetail* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return OrderDetailResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): OrderDetailResource|JsonResponse
@@ -104,7 +99,7 @@ class OrderDetailController extends Controller
 
             $orderDetail = Transaction::orderDetail()->find($id);
 
-            if (!$orderDetail) {
+            if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
@@ -123,11 +118,9 @@ class OrderDetailController extends Controller
     /**
      * @lrd:start
      * Update a specified *OrderDetail* resource using id.
+     *
      * @lrd:end
      *
-     * @param UpdateOrderDetailRequest $request
-     * @param string|int $id
-     * @return JsonResponse
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
@@ -137,13 +130,13 @@ class OrderDetailController extends Controller
 
             $orderDetail = Transaction::orderDetail()->find($id);
 
-            if (!$orderDetail) {
+            if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Transaction::orderDetail()->update($id, $inputs)) {
+            if (! Transaction::orderDetail()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -163,10 +156,11 @@ class OrderDetailController extends Controller
     /**
      * @lrd:start
      * Soft delete a specified *OrderDetail* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -176,11 +170,11 @@ class OrderDetailController extends Controller
 
             $orderDetail = Transaction::orderDetail()->find($id);
 
-            if (!$orderDetail) {
+            if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            if (!Transaction::orderDetail()->destroy($id)) {
+            if (! Transaction::orderDetail()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -201,9 +195,9 @@ class OrderDetailController extends Controller
      * @lrd:start
      * Restore the specified *OrderDetail* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
      */
     public function restore(string|int $id)
@@ -212,11 +206,11 @@ class OrderDetailController extends Controller
 
             $orderDetail = Transaction::orderDetail()->find($id, true);
 
-            if (!$orderDetail) {
+            if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            if (!Transaction::orderDetail()->restore($id)) {
+            if (! Transaction::orderDetail()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -239,9 +233,6 @@ class OrderDetailController extends Controller
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
-     *
-     * @param IndexOrderDetailRequest $request
-     * @return JsonResponse
      */
     public function export(IndexOrderDetailRequest $request): JsonResponse
     {
@@ -265,7 +256,6 @@ class OrderDetailController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportOrderDetailRequest $request
      * @return OrderDetailCollection|JsonResponse
      */
     public function import(ImportOrderDetailRequest $request): JsonResponse

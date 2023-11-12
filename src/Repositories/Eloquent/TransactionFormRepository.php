@@ -11,19 +11,18 @@ use InvalidArgumentException;
 
 /**
  * Class TransactionFormRepository
- * @package Fintech\Transaction\Repositories\Eloquent
  */
 class TransactionFormRepository extends EloquentRepository implements InterfacesTransactionFormRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
+        $model = app(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class TransactionFormRepository extends EloquentRepository implements Interfaces
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

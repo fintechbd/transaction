@@ -11,19 +11,18 @@ use InvalidArgumentException;
 
 /**
  * Class OrderDetailRepository
- * @package Fintech\Transaction\Repositories\Eloquent
  */
 class OrderDetailRepository extends EloquentRepository implements InterfacesOrderDetailRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
+        $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

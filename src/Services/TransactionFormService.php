@@ -2,26 +2,22 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\TransactionFormRepository;
 
 /**
  * Class TransactionFormService
- * @package Fintech\Transaction\Services
- *
  */
 class TransactionFormService
 {
     /**
      * TransactionFormService constructor.
-     * @param TransactionFormRepository $transactionFormRepository
      */
-    public function __construct(TransactionFormRepository $transactionFormRepository) {
+    public function __construct(TransactionFormRepository $transactionFormRepository)
+    {
         $this->transactionFormRepository = $transactionFormRepository;
     }
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

@@ -6,24 +6,23 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\TransactionFormRepository as InterfacesTransactionFormRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
 use InvalidArgumentException;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class TransactionFormRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class TransactionFormRepository extends MongodbRepository implements InterfacesTransactionFormRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
+        $model = app(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class TransactionFormRepository extends MongodbRepository implements InterfacesT
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 
