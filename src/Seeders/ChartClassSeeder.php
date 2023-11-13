@@ -2,8 +2,8 @@
 
 namespace Fintech\Transaction\Seeders;
 
-use Illuminate\Database\Seeder;
 use Fintech\Transaction\Facades\Transaction;
+use Illuminate\Database\Seeder;
 
 class ChartClassSeeder extends Seeder
 {

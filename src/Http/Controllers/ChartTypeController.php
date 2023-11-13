@@ -1,34 +1,33 @@
 <?php
 
 namespace Fintech\Transaction\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
+use Fintech\Core\Exceptions\StoreOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Http\Resources\ChartTypeResource;
-use Fintech\Transaction\Http\Resources\ChartTypeCollection;
 use Fintech\Transaction\Http\Requests\ImportChartTypeRequest;
+use Fintech\Transaction\Http\Requests\IndexChartTypeRequest;
 use Fintech\Transaction\Http\Requests\StoreChartTypeRequest;
 use Fintech\Transaction\Http\Requests\UpdateChartTypeRequest;
-use Fintech\Transaction\Http\Requests\IndexChartTypeRequest;
+use Fintech\Transaction\Http\Resources\ChartTypeCollection;
+use Fintech\Transaction\Http\Resources\ChartTypeResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
 /**
  * Class ChartTypeController
- * @package Fintech\Transaction\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to ChartType
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class ChartTypeController extends Controller
 {
     use ApiResponseTrait;
@@ -38,10 +37,8 @@ class ChartTypeController extends Controller
      * Return a listing of the *ChartType* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexChartTypeRequest $request
-     * @return ChartTypeCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexChartTypeRequest $request): ChartTypeCollection|JsonResponse
     {
@@ -61,10 +58,9 @@ class ChartTypeController extends Controller
     /**
      * @lrd:start
      * Create a new *ChartType* resource in storage.
+     *
      * @lrd:end
      *
-     * @param StoreChartTypeRequest $request
-     * @return JsonResponse
      * @throws StoreOperationException
      */
     public function store(StoreChartTypeRequest $request): JsonResponse
@@ -74,14 +70,14 @@ class ChartTypeController extends Controller
 
             $chartType = Transaction::chartType()->create($inputs);
 
-            if (!$chartType) {
+            if (! $chartType) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.chart_type_model'));
             }
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'Chart Type']),
-                'id' => $chartType->id
-             ]);
+                'id' => $chartType->id,
+            ]);
 
         } catch (Exception $exception) {
 
@@ -92,10 +88,9 @@ class ChartTypeController extends Controller
     /**
      * @lrd:start
      * Return a specified *ChartType* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return ChartTypeResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): ChartTypeResource|JsonResponse
@@ -104,7 +99,7 @@ class ChartTypeController extends Controller
 
             $chartType = Transaction::chartType()->find($id);
 
-            if (!$chartType) {
+            if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
@@ -123,11 +118,9 @@ class ChartTypeController extends Controller
     /**
      * @lrd:start
      * Update a specified *ChartType* resource using id.
+     *
      * @lrd:end
      *
-     * @param UpdateChartTypeRequest $request
-     * @param string|int $id
-     * @return JsonResponse
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
@@ -137,13 +130,13 @@ class ChartTypeController extends Controller
 
             $chartType = Transaction::chartType()->find($id);
 
-            if (!$chartType) {
+            if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Transaction::chartType()->update($id, $inputs)) {
+            if (! Transaction::chartType()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -163,10 +156,11 @@ class ChartTypeController extends Controller
     /**
      * @lrd:start
      * Soft delete a specified *ChartType* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -176,11 +170,11 @@ class ChartTypeController extends Controller
 
             $chartType = Transaction::chartType()->find($id);
 
-            if (!$chartType) {
+            if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
-            if (!Transaction::chartType()->destroy($id)) {
+            if (! Transaction::chartType()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -201,9 +195,9 @@ class ChartTypeController extends Controller
      * @lrd:start
      * Restore the specified *ChartType* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
      */
     public function restore(string|int $id)
@@ -212,11 +206,11 @@ class ChartTypeController extends Controller
 
             $chartType = Transaction::chartType()->find($id, true);
 
-            if (!$chartType) {
+            if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
-            if (!Transaction::chartType()->restore($id)) {
+            if (! Transaction::chartType()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -239,9 +233,6 @@ class ChartTypeController extends Controller
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
-     *
-     * @param IndexChartTypeRequest $request
-     * @return JsonResponse
      */
     public function export(IndexChartTypeRequest $request): JsonResponse
     {
@@ -265,7 +256,6 @@ class ChartTypeController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportChartTypeRequest $request
      * @return ChartTypeCollection|JsonResponse
      */
     public function import(ImportChartTypeRequest $request): JsonResponse

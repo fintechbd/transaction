@@ -2,26 +2,22 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\ChartTypeRepository;
 
 /**
  * Class ChartTypeService
- * @package Fintech\Transaction\Services
- *
  */
 class ChartTypeService
 {
     /**
      * ChartTypeService constructor.
-     * @param ChartTypeRepository $chartTypeRepository
      */
-    public function __construct(ChartTypeRepository $chartTypeRepository) {
+    public function __construct(ChartTypeRepository $chartTypeRepository)
+    {
         $this->chartTypeRepository = $chartTypeRepository;
     }
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

@@ -1,34 +1,33 @@
 <?php
 
 namespace Fintech\Transaction\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
+use Fintech\Core\Exceptions\StoreOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Http\Resources\ChartClassResource;
-use Fintech\Transaction\Http\Resources\ChartClassCollection;
 use Fintech\Transaction\Http\Requests\ImportChartClassRequest;
+use Fintech\Transaction\Http\Requests\IndexChartClassRequest;
 use Fintech\Transaction\Http\Requests\StoreChartClassRequest;
 use Fintech\Transaction\Http\Requests\UpdateChartClassRequest;
-use Fintech\Transaction\Http\Requests\IndexChartClassRequest;
+use Fintech\Transaction\Http\Resources\ChartClassCollection;
+use Fintech\Transaction\Http\Resources\ChartClassResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
 /**
  * Class ChartClassController
- * @package Fintech\Transaction\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to ChartClass
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class ChartClassController extends Controller
 {
     use ApiResponseTrait;
@@ -38,10 +37,8 @@ class ChartClassController extends Controller
      * Return a listing of the *ChartClass* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexChartClassRequest $request
-     * @return ChartClassCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexChartClassRequest $request): ChartClassCollection|JsonResponse
     {
@@ -61,10 +58,9 @@ class ChartClassController extends Controller
     /**
      * @lrd:start
      * Create a new *ChartClass* resource in storage.
+     *
      * @lrd:end
      *
-     * @param StoreChartClassRequest $request
-     * @return JsonResponse
      * @throws StoreOperationException
      */
     public function store(StoreChartClassRequest $request): JsonResponse
@@ -74,14 +70,14 @@ class ChartClassController extends Controller
 
             $chartClass = Transaction::chartClass()->create($inputs);
 
-            if (!$chartClass) {
+            if (! $chartClass) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.chart_class_model'));
             }
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'Chart Class']),
-                'id' => $chartClass->id
-             ]);
+                'id' => $chartClass->id,
+            ]);
 
         } catch (Exception $exception) {
 
@@ -92,10 +88,9 @@ class ChartClassController extends Controller
     /**
      * @lrd:start
      * Return a specified *ChartClass* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return ChartClassResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): ChartClassResource|JsonResponse
@@ -104,7 +99,7 @@ class ChartClassController extends Controller
 
             $chartClass = Transaction::chartClass()->find($id);
 
-            if (!$chartClass) {
+            if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
 
@@ -123,11 +118,9 @@ class ChartClassController extends Controller
     /**
      * @lrd:start
      * Update a specified *ChartClass* resource using id.
+     *
      * @lrd:end
      *
-     * @param UpdateChartClassRequest $request
-     * @param string|int $id
-     * @return JsonResponse
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
@@ -137,13 +130,13 @@ class ChartClassController extends Controller
 
             $chartClass = Transaction::chartClass()->find($id);
 
-            if (!$chartClass) {
+            if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Transaction::chartClass()->update($id, $inputs)) {
+            if (! Transaction::chartClass()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
@@ -163,10 +156,11 @@ class ChartClassController extends Controller
     /**
      * @lrd:start
      * Soft delete a specified *ChartClass* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -176,11 +170,11 @@ class ChartClassController extends Controller
 
             $chartClass = Transaction::chartClass()->find($id);
 
-            if (!$chartClass) {
+            if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
 
-            if (!Transaction::chartClass()->destroy($id)) {
+            if (! Transaction::chartClass()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
@@ -201,9 +195,9 @@ class ChartClassController extends Controller
      * @lrd:start
      * Restore the specified *ChartClass* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
      */
     public function restore(string|int $id)
@@ -212,11 +206,11 @@ class ChartClassController extends Controller
 
             $chartClass = Transaction::chartClass()->find($id, true);
 
-            if (!$chartClass) {
+            if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
 
-            if (!Transaction::chartClass()->restore($id)) {
+            if (! Transaction::chartClass()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
@@ -239,9 +233,6 @@ class ChartClassController extends Controller
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
-     *
-     * @param IndexChartClassRequest $request
-     * @return JsonResponse
      */
     public function export(IndexChartClassRequest $request): JsonResponse
     {
@@ -265,7 +256,6 @@ class ChartClassController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportChartClassRequest $request
      * @return ChartClassCollection|JsonResponse
      */
     public function import(ImportChartClassRequest $request): JsonResponse
