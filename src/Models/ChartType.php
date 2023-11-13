@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class ChartType extends Model
@@ -38,7 +39,10 @@ class ChartType extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-
+    public function chartClass():BelongsTo
+    {
+        return $this->belongsTo(config('fintech.transaction.chart_class_model', ChartClass::class));
+    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
@@ -59,10 +63,10 @@ class ChartType extends Model
         $primaryKey = $this->getKey();
 
         $links = [
-            'show' => action_link(route('transaction.chart-type.show', $primaryKey), __('core::messages.action.show'), 'get'),
-            'update' => action_link(route('transaction.chart-type.update', $primaryKey), __('core::messages.action.update'), 'put'),
-            'destroy' => action_link(route('transaction.chart-type.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
-            'restore' => action_link(route('transaction.chart-type.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
+            'show' => action_link(route('transaction.chart-types.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('transaction.chart-types.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('transaction.chart-types.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('transaction.chart-types.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
         ];
 
         if ($this->getAttribute('deleted_at') == null) {

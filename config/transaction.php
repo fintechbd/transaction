@@ -81,6 +81,16 @@ return [
     */
     'chart_entry_model' => \Fintech\Transaction\Models\ChartEntry::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | UserAccount Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'user_account_model' => \Fintech\Transaction\Models\UserAccount::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -103,6 +113,8 @@ return [
         \Fintech\Transaction\Interfaces\ChartTypeRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
 
         \Fintech\Transaction\Interfaces\ChartEntryRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
+
+        \Fintech\Transaction\Interfaces\UserAccountRepository::class => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

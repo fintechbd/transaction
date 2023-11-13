@@ -16,7 +16,19 @@ class ChartTypeCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return $this->collection->map(function ($chart_type) {
+            return [
+                'id' => $chart_type->getKey(),
+                'code' => $chart_type->code,
+                'name' => $chart_type->name,
+                'chart_class_id' => $chart_type->chart_class_id,
+                'chart_class_name' => $chart_type->chartClass?->name ?? null,
+                'chart_type_data' => $chart_type->chart_type_data,
+                'links' => $chart_type->links,
+                'created_at' => $chart_type->created_at,
+                'updated_at' => $chart_type->updated_at,
+            ];
+        })->toArray();
     }
 
     /**

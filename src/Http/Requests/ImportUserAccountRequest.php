@@ -4,9 +4,9 @@ namespace Fintech\Transaction\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreChartEntryRequest extends FormRequest
+class ImportUserAccountRequest extends FormRequest
 {
-
+    
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,10 +23,7 @@ class StoreChartEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'chart_type_id' => ['required', 'integer', 'min:1'],
-            'name' => ['required', 'string', 'min:3', 'max:255'],
-            'code' => ['required', 'string', 'min:3', 'max:255'],
-            'chart_entry_data' => ['nullable', 'array'],
+            //
         ];
     }
 

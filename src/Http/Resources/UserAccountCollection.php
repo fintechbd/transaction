@@ -6,7 +6,7 @@ use Fintech\Core\Supports\Constant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-class ChartClassCollection extends ResourceCollection
+class UserAccountCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
@@ -16,15 +16,16 @@ class ChartClassCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        return $this->collection->map(function ($chart_class) {
+        return $this->collection->map(function ($user_account) {
             return [
-                'id' => $chart_class->getKey(),
-                'code' => $chart_class->code,
-                'name' => $chart_class->name,
-                'chart_class_data' => $chart_class->chart_class_data,
-                'links' => $chart_class->links,
-                'created_at' => $chart_class->created_at,
-                'updated_at' => $chart_class->updated_at,
+                'id' => $user_account->getKey(),
+                'user_id' => $user_account->user_id,
+                'user_name' => $user_account->user->name,
+                'name' => $user_account->name,
+                'chart_class_data' => $user_account->chart_class_data,
+                'links' => $user_account->links,
+                'created_at' => $user_account->created_at,
+                'updated_at' => $user_account->updated_at,
             ];
         })->toArray();
     }

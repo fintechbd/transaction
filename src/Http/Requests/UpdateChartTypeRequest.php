@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateChartTypeRequest extends FormRequest
 {
-    
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,7 +23,10 @@ class UpdateChartTypeRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'chart_class_id' => ['required', 'integer', 'min:1'],
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'code' => ['required', 'string', 'min:3', 'max:255'],
+            'chart_type_data' => ['nullable', 'array'],
         ];
     }
 

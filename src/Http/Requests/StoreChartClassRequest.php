@@ -6,7 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreChartClassRequest extends FormRequest
 {
-    
+
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -23,7 +23,9 @@ class StoreChartClassRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['required', 'string', 'min:3', 'max:255'],
+            'code' => ['required', 'string', 'min:3', 'max:255'],
+            'chart_class_data' => ['nullable', 'array'],
         ];
     }
 

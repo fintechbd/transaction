@@ -52,7 +52,16 @@ class Transaction
         return app(\Fintech\Transaction\Services\ChartEntryService::class);
     }
 
+    /**
+     * @return \Fintech\Transaction\Services\UserAccountService
+     */
+    public function userAccount()
+    {
+        return app(\Fintech\Transaction\Services\UserAccountService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 
 

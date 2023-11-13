@@ -4,8 +4,9 @@ namespace Fintech\Transaction\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class StoreChartEntryRequest extends FormRequest
+class IndexUserAccountRequest extends FormRequest
 {
+    use \Fintech\Core\Traits\HasPaginateQuery;
 
     /**
      * Determine if the user is authorized to make this request.
@@ -23,10 +24,13 @@ class StoreChartEntryRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'chart_type_id' => ['required', 'integer', 'min:1'],
-            'name' => ['required', 'string', 'min:3', 'max:255'],
-            'code' => ['required', 'string', 'min:3', 'max:255'],
-            'chart_entry_data' => ['nullable', 'array'],
+            'search' => ['string', 'nullable', 'max:255'],
+            'per_page' => ['integer', 'nullable', 'min:10', 'max:500'],
+            'page' => ['integer', 'nullable', 'min:1'],
+            'paginate' => ['boolean'],
+            'sort' => ['string', 'nullable', 'min:2', 'max:255'],
+            'dir' => ['string', 'min:3', 'max:4'],
+            'trashed' => ['boolean', 'nullable'],
         ];
     }
 

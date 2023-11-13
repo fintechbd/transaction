@@ -14,6 +14,16 @@ class ChartTypeResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        return [
+            'id' => $this->getKey(),
+            'code' => $this->code,
+            'name' => $this->name,
+            'chart_class_id' => $this->chart_class_id,
+            'chart_class_name' => $this->chartClass?->name ?? null,
+            'chart_type_data' => $this->chart_type_data,
+            'links' => $this->links,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
+        ];
     }
 }

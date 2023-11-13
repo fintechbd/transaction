@@ -24,6 +24,43 @@ class ChartClassSeeder extends Seeder
 
     private function data()
     {
-        return array();
+        return array(
+            array(
+                'id' => '1',
+                'name' => 'Asset',
+                'code' => '1',
+                'chart_class_data' => array()
+            ),
+            array(
+                'id' => '2',
+                'name' => 'Liability',
+                'code' => '2',
+                'chart_class_data' => array()
+            ),
+            array(
+                'id' => '3',
+                'name' => 'Equity',
+                'code' => '3',
+                'chart_class_data' => array()
+            ),
+            array(
+                'id' => '4',
+                'name' => 'Revenue',
+                'code' => '4',
+                'chart_class_data' => array()
+            ),
+            array(
+                'id' => '5',
+                'name' => 'Expense',
+                'code' => '5',
+                'chart_class_data' => array()
+            ),
+            array(
+                'id' => '6',
+                'name' => 'Other',
+                'code' => '6',
+                'chart_class_data' => array()
+            ),
+        );
     }
 }
