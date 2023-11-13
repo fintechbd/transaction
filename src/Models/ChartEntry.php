@@ -39,7 +39,7 @@ class ChartEntry extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function chartType():BelongsTo
+    public function chartType(): BelongsTo
     {
         return $this->belongsTo(config('fintech.transaction.chart_type_model', ChartType::class));
     }

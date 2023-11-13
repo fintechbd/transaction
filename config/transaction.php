@@ -78,7 +78,6 @@ return [
     */
     'chart_entry_model' => \Fintech\Transaction\Models\ChartEntry::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | UserAccount Model

@@ -2,26 +2,22 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\UserAccountRepository;
 
 /**
  * Class UserAccountService
- * @package Fintech\Transaction\Services
- *
  */
 class UserAccountService
 {
     /**
      * UserAccountService constructor.
-     * @param UserAccountRepository $userAccountRepository
      */
-    public function __construct(UserAccountRepository $userAccountRepository) {
+    public function __construct(UserAccountRepository $userAccountRepository)
+    {
         $this->userAccountRepository = $userAccountRepository;
     }
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

@@ -6,24 +6,23 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\UserAccountRepository as InterfacesUserAccountRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
 use InvalidArgumentException;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class UserAccountRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class UserAccountRepository extends MongodbRepository implements InterfacesUserAccountRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.user_account_model', \Fintech\Transaction\Models\UserAccount::class));
+        $model = app(config('fintech.transaction.user_account_model', \Fintech\Transaction\Models\UserAccount::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class UserAccountRepository extends MongodbRepository implements InterfacesUserA
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

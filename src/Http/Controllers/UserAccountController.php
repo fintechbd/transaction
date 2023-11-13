@@ -1,34 +1,33 @@
 <?php
 
 namespace Fintech\Transaction\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
+use Fintech\Core\Exceptions\StoreOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Http\Resources\UserAccountResource;
-use Fintech\Transaction\Http\Resources\UserAccountCollection;
 use Fintech\Transaction\Http\Requests\ImportUserAccountRequest;
+use Fintech\Transaction\Http\Requests\IndexUserAccountRequest;
 use Fintech\Transaction\Http\Requests\StoreUserAccountRequest;
 use Fintech\Transaction\Http\Requests\UpdateUserAccountRequest;
-use Fintech\Transaction\Http\Requests\IndexUserAccountRequest;
+use Fintech\Transaction\Http\Resources\UserAccountCollection;
+use Fintech\Transaction\Http\Resources\UserAccountResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
 /**
  * Class UserAccountController
- * @package Fintech\Transaction\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to UserAccount
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class UserAccountController extends Controller
 {
     use ApiResponseTrait;
@@ -38,10 +37,8 @@ class UserAccountController extends Controller
      * Return a listing of the *UserAccount* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexUserAccountRequest $request
-     * @return UserAccountCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexUserAccountRequest $request): UserAccountCollection|JsonResponse
     {
@@ -61,10 +58,9 @@ class UserAccountController extends Controller
     /**
      * @lrd:start
      * Create a new *UserAccount* resource in storage.
+     *
      * @lrd:end
      *
-     * @param StoreUserAccountRequest $request
-     * @return JsonResponse
      * @throws StoreOperationException
      */
     public function store(StoreUserAccountRequest $request): JsonResponse
@@ -74,14 +70,14 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->create($inputs);
 
-            if (!$userAccount) {
+            if (! $userAccount) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.user_account_model'));
             }
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'User Account']),
-                'id' => $userAccount->id
-             ]);
+                'id' => $userAccount->id,
+            ]);
 
         } catch (Exception $exception) {
 
@@ -92,10 +88,9 @@ class UserAccountController extends Controller
     /**
      * @lrd:start
      * Return a specified *UserAccount* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return UserAccountResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): UserAccountResource|JsonResponse
@@ -104,7 +99,7 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id);
 
-            if (!$userAccount) {
+            if (! $userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
@@ -123,11 +118,9 @@ class UserAccountController extends Controller
     /**
      * @lrd:start
      * Update a specified *UserAccount* resource using id.
+     *
      * @lrd:end
      *
-     * @param UpdateUserAccountRequest $request
-     * @param string|int $id
-     * @return JsonResponse
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
@@ -137,13 +130,13 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id);
 
-            if (!$userAccount) {
+            if (! $userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Transaction::userAccount()->update($id, $inputs)) {
+            if (! Transaction::userAccount()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -163,10 +156,11 @@ class UserAccountController extends Controller
     /**
      * @lrd:start
      * Soft delete a specified *UserAccount* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -176,11 +170,11 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id);
 
-            if (!$userAccount) {
+            if (! $userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (!Transaction::userAccount()->destroy($id)) {
+            if (! Transaction::userAccount()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -201,9 +195,9 @@ class UserAccountController extends Controller
      * @lrd:start
      * Restore the specified *UserAccount* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
      */
     public function restore(string|int $id)
@@ -212,11 +206,11 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id, true);
 
-            if (!$userAccount) {
+            if (! $userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (!Transaction::userAccount()->restore($id)) {
+            if (! Transaction::userAccount()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -239,9 +233,6 @@ class UserAccountController extends Controller
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
-     *
-     * @param IndexUserAccountRequest $request
-     * @return JsonResponse
      */
     public function export(IndexUserAccountRequest $request): JsonResponse
     {
@@ -265,7 +256,6 @@ class UserAccountController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportUserAccountRequest $request
      * @return UserAccountCollection|JsonResponse
      */
     public function import(ImportUserAccountRequest $request): JsonResponse
