@@ -13,10 +13,10 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Order extends Model
 {
     use AuditableTrait;
-    use SoftDeletes;
-    use MetaDataRelations;
     use AuthRelations;
     use BusinessRelations;
+    use MetaDataRelations;
+    use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------

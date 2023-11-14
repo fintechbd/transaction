@@ -32,7 +32,7 @@ class UserAccountService
     {
         $country = MetaData::country()->find($inputs['country_id']);
 
-        if (!$country) {
+        if (! $country) {
             throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class), $inputs['present_country_id']);
         }
 
@@ -42,7 +42,7 @@ class UserAccountService
             'currency_symbol' => $country->currency_symbol,
             'deposit_amount' => 0,
             'available_amount' => 0,
-            'spent_amount' => 0
+            'spent_amount' => 0,
         ];
 
         return $this->userAccountRepository->create($inputs);

@@ -16,6 +16,5 @@ if (Core::packageExists('Business')) {
 } else {
     trait BusinessRelations
     {
-
     }
 }

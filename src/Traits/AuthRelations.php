@@ -14,18 +14,16 @@ if (Core::packageExists('Auth')) {
                 config('fintech.auth.user_model', \Fintech\Auth\Models\User::class),
                 'sender_receiver_id');
         }
+
         public function user(): BelongsTo
         {
             return $this->belongsTo(
                 config('fintech.auth.user_model', \Fintech\Auth\Models\User::class),
                 'user_id');
         }
-
-
     }
 } else {
     trait AuthRelations
     {
-
     }
 }
