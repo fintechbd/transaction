@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Http\Resources;
 
+use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Constant;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
@@ -11,22 +12,41 @@ class UserAccountCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
     {
         return $this->collection->map(function ($user_account) {
-            return [
+            $data = [
                 'id' => $user_account->getKey(),
-                'user_id' => $user_account->user_id,
-                'user_name' => $user_account->user->name,
                 'name' => $user_account->name,
-                'chart_class_data' => $user_account->chart_class_data,
+                'account_no' => $user_account->account_no,
+                'user_id' => $user_account->user_id,
+                'user_name' => null,
+                'country_id' => $user_account->country_id,
+                'country_name' => null,
+                'currency' => $user_account->user_account_data['currency'] ?? null,
+                'currency_name' => $user_account->user_account_data['currency_name'] ?? null,
+                'currency_symbol' => $user_account->user_account_data['currency_symbol'] ?? null,
+                'deposit_amount' => $user_account->user_account_data['deposit_amount'] ?? 0,
+                'available_amount' => $user_account->user_account_data['available_amount'] ?? 0,
+                'spent_amount' => $user_account->user_account_data['spent_amount'] ?? 0,
+                'enabled' => $user_account->enabled,
                 'links' => $user_account->links,
                 'created_at' => $user_account->created_at,
                 'updated_at' => $user_account->updated_at,
             ];
+
+            if (Core::packageExists('Auth')) {
+                $data['user_name'] = $user_account->user?->name ?? null;
+            }
+            if (Core::packageExists('MetaData')) {
+                $data['country_name'] = $user_account->country?->name ?? null;
+            }
+
+            return $data;
+
         })->toArray();
     }
 

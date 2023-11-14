@@ -34,7 +34,7 @@ if (Config::get('fintech.transaction.enabled')) {
         Route::apiResource('chart-entries', \Fintech\Transaction\Http\Controllers\ChartEntryController::class);
         Route::post('chart-entries/{chart_entry}/restore', [\Fintech\Transaction\Http\Controllers\ChartEntryController::class, 'restore'])->name('chart-entries.restore');
 
-        Route::apiResource('user-accounts', \Fintech\Transaction\Http\Controllers\UserAccountController::class);
+        Route::apiResource('user-accounts', \Fintech\Transaction\Http\Controllers\UserAccountController::class)->except('update');
         Route::post('user-accounts/{user_account}/restore', [\Fintech\Transaction\Http\Controllers\UserAccountController::class, 'restore'])->name('user-accounts.restore');
 
         //DO NOT REMOVE THIS LINE//
