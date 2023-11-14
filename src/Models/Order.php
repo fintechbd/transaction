@@ -3,13 +3,20 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Traits\AuditableTrait;
+use Fintech\Transaction\Traits\AuthRelations;
+use Fintech\Transaction\Traits\BusinessRelations;
+use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends Model
 {
     use AuditableTrait;
     use SoftDeletes;
+    use MetaDataRelations;
+    use AuthRelations;
+    use BusinessRelations;
 
     /*
     |--------------------------------------------------------------------------
@@ -38,6 +45,11 @@ class Order extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+
+    public function transactionForm(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.transaction.order_model', \Fintech\Transaction\Models\TransactionForm::class));
+    }
 
     /*
     |--------------------------------------------------------------------------
