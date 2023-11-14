@@ -22,7 +22,22 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'source_country_id' => ['required', 'integer', 'min:1'],
+            'destination_country_id' => ['required', 'integer', 'min:1'],
+            'parent_id' => ['nullable', 'integer', 'min:1'],
+            'sender_receiver_id' => ['required', 'integer', 'min:1'],
+            'user_id' => ['required', 'integer', 'min:1'],
+            'service_id' => ['required', 'integer', 'min:1'],
+            'transaction_form_id' => ['required', 'integer', 'min:1'],
+            'ordered_at' => ['required', 'datetime'],
+            'amount' => ['required', 'numeric', 'min:1'],
+            'currency' => ['required', 'string', 'min:3', 'max:3'],
+            'order_number' => ['nullable', 'string'],
+            'risk' => ['nullable', 'string'],
+            'notes' => ['nullable', 'string', 'min:1'],
+            'is_refunded' => ['required', 'boolean'],
+            'order_data' => ['required', 'array'],
+            'status' => ['required', 'string'],
         ];
     }
 

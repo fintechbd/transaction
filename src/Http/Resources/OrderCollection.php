@@ -32,7 +32,7 @@ class OrderCollection extends ResourceCollection
                 'service_id' => $order->service_id ?? null,
                 'service_name' => null,
                 'transaction_form_id' => $order->transaction_form_id ?? null,
-                'transaction_form_null' => $order->transactionForm?->name ?? null,
+                'transaction_form_name' => $order->transactionForm?->name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
                 'amount' => $order->amount ?? null,
                 'currency' => $order->currency ?? null,

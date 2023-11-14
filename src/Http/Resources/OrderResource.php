@@ -29,7 +29,7 @@ class OrderResource extends JsonResource
             'service_id' => $this->service_id ?? null,
             'service_name' => null,
             'transaction_form_id' => $this->transaction_form_id ?? null,
-            'transaction_form_null' => $this->transactionForm?->name ?? null,
+            'transaction_form_name' => $this->transactionForm?->name ?? null,
             'ordered_at' => $this->ordered_at ?? null,
             'amount' => $this->amount ?? null,
             'currency' => $this->currency ?? null,
