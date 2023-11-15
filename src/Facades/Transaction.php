@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Fintech\Transaction\Services\ChartTypeService chartType()
  * @method static \Fintech\Transaction\Services\ChartEntryService chartEntry()
  * @method static \Fintech\Transaction\Services\UserAccountService userAccount()
+ * @method static \Fintech\Transaction\Services\OrderQueueService orderQueue()
  * // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction

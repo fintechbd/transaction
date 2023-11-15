@@ -37,6 +37,8 @@ if (Config::get('fintech.transaction.enabled')) {
         Route::apiResource('user-accounts', \Fintech\Transaction\Http\Controllers\UserAccountController::class)->except('update');
         Route::post('user-accounts/{user_account}/restore', [\Fintech\Transaction\Http\Controllers\UserAccountController::class, 'restore'])->name('user-accounts.restore');
 
+        Route::apiResource('order-queues', \Fintech\Transaction\Http\Controllers\OrderQueueController::class)->only(['index', 'show', 'destroy']);
+
         //DO NOT REMOVE THIS LINE//
     });
 }

@@ -60,6 +60,15 @@ class Transaction
         return app(\Fintech\Transaction\Services\UserAccountService::class);
     }
 
+    /**
+     * @return \Fintech\Transaction\Services\OrderQueueService
+     */
+    public function orderQueue()
+    {
+        return app(\Fintech\Transaction\Services\OrderQueueService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 }

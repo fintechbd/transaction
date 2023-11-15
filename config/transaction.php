@@ -87,6 +87,16 @@ return [
     */
     'user_account_model' => \Fintech\Transaction\Models\UserAccount::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | OrderQueue Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'order_queue_model' => \Fintech\Transaction\Models\OrderQueue::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -111,6 +121,8 @@ return [
         \Fintech\Transaction\Interfaces\ChartEntryRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
 
         \Fintech\Transaction\Interfaces\UserAccountRepository::class => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
+
+        \Fintech\Transaction\Interfaces\OrderQueueRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
