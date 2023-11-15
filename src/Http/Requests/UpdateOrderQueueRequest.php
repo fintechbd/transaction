@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOrderQueueRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,7 +21,7 @@ class UpdateOrderQueueRequest extends FormRequest
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:' . config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class) . ',user_id,' . $this->route('order_queue');
+        $uniqueRule = 'unique:'.config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class).',user_id,'.$this->route('order_queue');
 
         return [
             'user_id' => ['integer', 'required', 'min:1', $uniqueRule],

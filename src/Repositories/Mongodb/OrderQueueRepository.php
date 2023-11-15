@@ -6,24 +6,23 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\OrderQueueRepository as InterfacesOrderQueueRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
 use InvalidArgumentException;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class OrderQueueRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class OrderQueueRepository extends MongodbRepository implements InterfacesOrderQueueRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class));
+        $model = app(config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**
@@ -47,7 +46,7 @@ class OrderQueueRepository extends MongodbRepository implements InterfacesOrderQ
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

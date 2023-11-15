@@ -21,7 +21,7 @@ class StoreChartClassRequest extends FormRequest
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:' . config('fintech.transaction.chart_class_model', \Fintech\Transaction\Models\ChartClass::class) . ',code';
+        $uniqueRule = 'unique:'.config('fintech.transaction.chart_class_model', \Fintech\Transaction\Models\ChartClass::class).',code';
 
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],

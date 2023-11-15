@@ -21,7 +21,8 @@ class StoreChartEntryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:' . config('fintech.transaction.chart_entry_model', \Fintech\Transaction\Models\ChartEntry::class) . ',code';
+        $uniqueRule = 'unique:'.config('fintech.transaction.chart_entry_model', \Fintech\Transaction\Models\ChartEntry::class).',code';
+
         return [
             'chart_type_id' => ['required', 'integer', 'min:1'],
             'name' => ['required', 'string', 'min:3', 'max:255'],

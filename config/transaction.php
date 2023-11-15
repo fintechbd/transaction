@@ -87,7 +87,6 @@ return [
     */
     'user_account_model' => \Fintech\Transaction\Models\UserAccount::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | OrderQueue Model

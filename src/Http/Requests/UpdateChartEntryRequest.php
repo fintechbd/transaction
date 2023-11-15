@@ -21,7 +21,8 @@ class UpdateChartEntryRequest extends FormRequest
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:' . config('fintech.transaction.chart_entry_model', \Fintech\Transaction\Models\ChartEntry::class) . ',code,'. $this->route('chart_entry');
+        $uniqueRule = 'unique:'.config('fintech.transaction.chart_entry_model', \Fintech\Transaction\Models\ChartEntry::class).',code,'.$this->route('chart_entry');
+
         return [
             'chart_type_id' => ['required', 'integer', 'min:1'],
             'name' => ['required', 'string', 'min:3', 'max:255'],

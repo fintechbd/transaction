@@ -1,32 +1,29 @@
 <?php
 
 namespace Fintech\Transaction\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Http\Resources\OrderQueueResource;
-use Fintech\Transaction\Http\Resources\OrderQueueCollection;
-use Fintech\Transaction\Http\Requests\StoreOrderQueueRequest;
-use Fintech\Transaction\Http\Requests\UpdateOrderQueueRequest;
 use Fintech\Transaction\Http\Requests\IndexOrderQueueRequest;
+use Fintech\Transaction\Http\Requests\UpdateOrderQueueRequest;
+use Fintech\Transaction\Http\Resources\OrderQueueCollection;
+use Fintech\Transaction\Http\Resources\OrderQueueResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
 /**
  * Class OrderQueueController
- * @package Fintech\Transaction\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to OrderQueue
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class OrderQueueController extends Controller
 {
     use ApiResponseTrait;
@@ -36,10 +33,8 @@ class OrderQueueController extends Controller
      * Return a listing of the *OrderQueue* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexOrderQueueRequest $request
-     * @return OrderQueueCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexOrderQueueRequest $request): OrderQueueCollection|JsonResponse
     {
@@ -59,10 +54,9 @@ class OrderQueueController extends Controller
     /**
      * @lrd:start
      * Return a specified *OrderQueue* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return OrderQueueResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): OrderQueueResource|JsonResponse
@@ -71,7 +65,7 @@ class OrderQueueController extends Controller
 
             $orderQueue = Transaction::orderQueue()->find($id);
 
-            if (!$orderQueue) {
+            if (! $orderQueue) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
             }
 
@@ -87,53 +81,54 @@ class OrderQueueController extends Controller
         }
     }
 
-//    /**
-//     * @lrd:start
-//     * Update a specified *OrderQueue* resource using id.
-//     * @lrd:end
-//     *
-//     * @param UpdateOrderQueueRequest $request
-//     * @param string|int $id
-//     * @return JsonResponse
-//     * @throws ModelNotFoundException
-//     * @throws UpdateOperationException
-//     */
-//    public function update(UpdateOrderQueueRequest $request, string|int $id): JsonResponse
-//    {
-//        try {
-//
-//            $orderQueue = Transaction::orderQueue()->find($id);
-//
-//            if (!$orderQueue) {
-//                throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
-//            }
-//
-//            $inputs = $request->validated();
-//
-//            if (!Transaction::orderQueue()->update($id, $inputs)) {
-//
-//                throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_queue_model'), $id);
-//            }
-//
-//            return $this->updated(__('core::messages.resource.updated', ['model' => 'Order Queue']));
-//
-//        } catch (ModelNotFoundException $exception) {
-//
-//            return $this->notfound($exception->getMessage());
-//
-//        } catch (Exception $exception) {
-//
-//            return $this->failed($exception->getMessage());
-//        }
-//    }
+    //    /**
+    //     * @lrd:start
+    //     * Update a specified *OrderQueue* resource using id.
+    //     * @lrd:end
+    //     *
+    //     * @param UpdateOrderQueueRequest $request
+    //     * @param string|int $id
+    //     * @return JsonResponse
+    //     * @throws ModelNotFoundException
+    //     * @throws UpdateOperationException
+    //     */
+    //    public function update(UpdateOrderQueueRequest $request, string|int $id): JsonResponse
+    //    {
+    //        try {
+    //
+    //            $orderQueue = Transaction::orderQueue()->find($id);
+    //
+    //            if (!$orderQueue) {
+    //                throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
+    //            }
+    //
+    //            $inputs = $request->validated();
+    //
+    //            if (!Transaction::orderQueue()->update($id, $inputs)) {
+    //
+    //                throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_queue_model'), $id);
+    //            }
+    //
+    //            return $this->updated(__('core::messages.resource.updated', ['model' => 'Order Queue']));
+    //
+    //        } catch (ModelNotFoundException $exception) {
+    //
+    //            return $this->notfound($exception->getMessage());
+    //
+    //        } catch (Exception $exception) {
+    //
+    //            return $this->failed($exception->getMessage());
+    //        }
+    //    }
 
     /**
      * @lrd:start
      * Soft delete a specified *OrderQueue* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -143,11 +138,11 @@ class OrderQueueController extends Controller
 
             $orderQueue = Transaction::orderQueue()->find($id);
 
-            if (!$orderQueue) {
+            if (! $orderQueue) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
             }
 
-            if (!Transaction::orderQueue()->destroy($id)) {
+            if (! Transaction::orderQueue()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.order_queue_model'), $id);
             }

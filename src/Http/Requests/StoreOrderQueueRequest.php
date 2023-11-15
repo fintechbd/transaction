@@ -6,7 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class StoreOrderQueueRequest extends FormRequest
 {
-
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,7 +21,7 @@ class StoreOrderQueueRequest extends FormRequest
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:' . config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class) . ',user_id';
+        $uniqueRule = 'unique:'.config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class).',user_id';
 
         return [
             'user_id' => ['integer', 'required', 'min:1', $uniqueRule],
