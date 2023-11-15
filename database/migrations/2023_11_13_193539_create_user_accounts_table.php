@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('user_accounts', function (Blueprint $table) {
             $table->id();
             $table->string('account_no')->nullable();
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->foreignId('user_id');
             $table->foreignId('country_id');
             $table->boolean('enabled')->default(true);
