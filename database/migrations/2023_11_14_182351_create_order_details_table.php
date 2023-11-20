@@ -14,15 +14,16 @@ return new class extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->nullable();
-            $table->foreignId('default_country_id')->nullable();
-            $table->foreignId('country_id')->nullable();
+
+            $table->foreignId('source_country_id')->nullable();
+            $table->foreignId('destination_country_id')->nullable();
             $table->foreignId('order_detail_parent_id')->nullable();
             $table->foreignId('sender_receiver_id')->nullable();
             $table->foreignId('user_id')->nullable();
             $table->foreignId('service_id')->nullable();
             $table->foreignId('transaction_form_id')->nullable();
-            $table->foreignId('order_detail_type_id')->nullable();
             $table->dateTime('order_detail_date')->nullable()->useCurrent();
+            $table->string('order_detail_cause_name')->nullable();
             $table->decimal('order_detail_amount', 18, 6)->nullable();
             $table->string('order_detail_currency')->nullable();
             $table->decimal('converted_amount', 18, 6)->nullable();
