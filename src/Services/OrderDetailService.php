@@ -3,7 +3,6 @@
 namespace Fintech\Transaction\Services;
 
 use Fintech\Business\Facades\Business;
-use Fintech\Core\Enums\Transaction\OrderStatusConfig;
 use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Interfaces\OrderDetailRepository;
 
@@ -68,10 +67,12 @@ class OrderDetailService
     {
         dd($data);
     }
+
     public function masterUserRefundTransaction(array $data)
     {
         dd($data);
     }
+
     public function userTransaction($data)
     {
         $data->role_id = $data->user->roles[0]->getKey();
@@ -86,12 +87,12 @@ class OrderDetailService
         $serviceStateData['service_stat_id'] = $serviceState['id'];
         $charge_break_down = Business::chargeBreakDown()->list($serviceStateData)->first();
         $serviceState = $serviceState['service_stat_data'][0];
-        if($charge_break_down){
+        if ($charge_break_down) {
             $serviceStateJsonData['charge'] = $charge_break_down->charge_break_down_charge;
             $serviceStateJsonData['discount'] = $charge_break_down->charge_break_down_discount;
             $serviceStateJsonData['commission'] = $charge_break_down->charge_break_down_commission;
             $serviceStateJsonData['charge_break_down'] = $charge_break_down->getKey();
-        }else{
+        } else {
             $serviceStateJsonData['charge'] = $serviceState['charge'];
             $serviceStateJsonData['discount'] = $serviceState['discount'];
             $serviceStateJsonData['commission'] = $serviceState['commission'];
@@ -103,25 +104,25 @@ class OrderDetailService
         $discount_amount = 0;
         $commission_amount = 0;
 
-
-        $data->order_detail_cause_name = "cash_deposit";
+        $data->order_detail_cause_name = 'cash_deposit';
         $orderDetailStore = Transaction::orderDetail()->create(self::orderDetailsDataArrange($data));
-        $data->amount = - $charge_amount;
-        $data->converted_amount = - $charge_amount;
-        $data->order_detail_cause_name = "charge";
+        $data->amount = -$charge_amount;
+        $data->converted_amount = -$charge_amount;
+        $data->order_detail_cause_name = 'charge';
         //$data->notes = "charge";
         $data->step = 2;
         $data->order_detail_parent_id = $orderDetailStore->getKey();
         $orderDetailStoreForCharge = Transaction::orderDetail()->create(self::orderDetailsDataArrange($data));
-        $data->amount = - $discount_amount;
-        $data->converted_amount = - $discount_amount;
-        $data->order_detail_cause_name = "discount";
+        $data->amount = -$discount_amount;
+        $data->converted_amount = -$discount_amount;
+        $data->order_detail_cause_name = 'discount';
         //$data->notes = "charge";
         $data->step = 3;
         $data->order_detail_parent_id = $orderDetailStore->getKey();
         $updateData['order_data']['previous_amount'] = 0;
         $orderDetailStoreForDiscount = Transaction::orderDetail()->create(self::orderDetailsDataArrange($data));
-        print_r($orderDetailStoreForDiscount);exit();
+        print_r($orderDetailStoreForDiscount);
+        exit();
     }
 
     public function userRefundTransaction(array $data)
@@ -138,6 +139,7 @@ class OrderDetailService
         $orderData['step'] = 0;
         dd($data);
     }
+
     public function discountStore($data)
     {
         $orderData['order_detail_amount'] = $data['commission_amount'];
@@ -147,6 +149,7 @@ class OrderDetailService
         $orderData['step'] = 0;
         dd($data);
     }
+
     public function commissionStore($data)
     {
         $orderData['order_detail_amount'] = $data['commission_amount'];
@@ -157,10 +160,6 @@ class OrderDetailService
         dd($data);
     }
 
-    /**
-     * @param $data
-     * @return array
-     */
     private function orderDetailsDataArrange($data): array
     {
         $orderData['order_id'] = $data->getKey();
@@ -184,6 +183,7 @@ class OrderDetailService
         $orderData['is_refundable'] = $data->is_refundable;
         $orderData['order_detail_data'] = $data->order_data;
         $orderData['status'] = 'success';
+
         return $orderData;
 
     }
