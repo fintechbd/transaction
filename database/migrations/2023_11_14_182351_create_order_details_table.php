@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('order_details', function (Blueprint $table) {
             $table->id();
             $table->foreignId('order_id')->nullable();
-
             $table->foreignId('source_country_id')->nullable();
             $table->foreignId('destination_country_id')->nullable();
             $table->foreignId('order_detail_parent_id')->nullable();
@@ -24,14 +23,14 @@ return new class extends Migration
             $table->foreignId('transaction_form_id')->nullable();
             $table->dateTime('order_detail_date')->nullable()->useCurrent();
             $table->string('order_detail_cause_name')->nullable();
-            $table->decimal('order_detail_amount', 18, 6)->nullable();
+            $table->decimal('order_detail_amount', 19, 6)->nullable();
             $table->string('order_detail_currency')->nullable();
-            $table->decimal('converted_amount', 18, 6)->nullable();
+            $table->decimal('converted_amount', 19, 6)->nullable();
             $table->string('converted_currency')->nullable();
             $table->string('order_detail_number')->nullable();
             $table->string('order_detail_response_id')->nullable();
             $table->integer('step')->default(0);
-            $table->string('risk')->default('green')->nullable();
+            $table->string('risk')->default(\Fintech\Core\Enums\Auth\RiskProfile::Low->value)->nullable();
             $table->longText('notes')->nullable();
             $table->boolean('is_refundable')->nullable()->default(false);
             $table->json('order_detail_data')->nullable();
