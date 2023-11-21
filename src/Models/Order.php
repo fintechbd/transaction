@@ -71,10 +71,10 @@ class Order extends Model
         $primaryKey = $this->getKey();
 
         $links = [
-            'show' => action_link(route('transaction.order.show', $primaryKey), __('core::messages.action.show'), 'get'),
-            'update' => action_link(route('transaction.order.update', $primaryKey), __('core::messages.action.update'), 'put'),
-            'destroy' => action_link(route('transaction.order.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
-            'restore' => action_link(route('transaction.order.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
+            'show' => action_link(route('transaction.orders.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('transaction.orders.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('transaction.orders.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('transaction.orders.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
         ];
 
         if ($this->getAttribute('deleted_at') == null) {

@@ -60,4 +60,32 @@ class OrderDetailService
     {
         return $this->orderDetailRepository->create($filters);
     }
+
+    public function orderDetailsDataArrange($data): array
+    {
+        $orderData['order_id'] = $data->getKey();
+        $orderData['source_country_id'] = $data->source_country_id;
+        $orderData['destination_country_id'] = $data->destination_country_id;
+        $orderData['order_detail_parent_id'] = $data->order_detail_parent_id ?? null;
+        $orderData['sender_receiver_id'] = $data->sender_receiver_id;
+        $orderData['user_id'] = $data->user_id;
+        $orderData['service_id'] = $data->service_id;
+        $orderData['transaction_form_id'] = $data->transaction_form_id;
+        $orderData['order_detail_date'] = $data->ordered_at;
+        $orderData['order_detail_cause_name'] = $data->order_detail_cause_name;
+        $orderData['order_detail_amount'] = $data->amount;
+        $orderData['order_detail_currency'] = $data->currency;
+        $orderData['converted_amount'] = $data->converted_amount;
+        $orderData['converted_currency'] = $data->converted_currency;
+        $orderData['order_detail_number'] = $data->order_detail_number ?? null;
+        $orderData['order_detail_response_id'] = $data->order_detail_response_id ?? null;
+        $orderData['step'] = $data->step ?? 1;
+        $orderData['risk'] = $data->risk_profile ?? null;
+        $orderData['notes'] = $data->notes ?? null;
+        $orderData['is_refundable'] = $data->is_refundable ?? null;
+        $orderData['order_detail_data'] = $data->order_data;
+        $orderData['status'] = 'success';
+
+        return $orderData;
+    }
 }
