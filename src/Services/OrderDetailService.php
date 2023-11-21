@@ -2,9 +2,6 @@
 
 namespace Fintech\Transaction\Services;
 
-use Fintech\Auth\Facades\Auth;
-use Fintech\Business\Facades\Business;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Interfaces\OrderDetailRepository;
 
 /**
@@ -64,10 +61,6 @@ class OrderDetailService
         return $this->orderDetailRepository->create($filters);
     }
 
-    /**
-     * @param $data
-     * @return array
-     */
     public function orderDetailsDataArrange($data): array
     {
         $orderData['order_id'] = $data->getKey();
