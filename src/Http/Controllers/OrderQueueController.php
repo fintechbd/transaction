@@ -4,11 +4,9 @@ namespace Fintech\Transaction\Http\Controllers;
 
 use Exception;
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\IndexOrderQueueRequest;
-use Fintech\Transaction\Http\Requests\UpdateOrderQueueRequest;
 use Fintech\Transaction\Http\Resources\OrderQueueCollection;
 use Fintech\Transaction\Http\Resources\OrderQueueResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
