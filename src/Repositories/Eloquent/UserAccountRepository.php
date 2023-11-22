@@ -45,6 +45,14 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             }
         }
 
+        if (isset($filters['user_id']) && ! empty($filters['user_id'])) {
+            $query->where('user_id', '=', $filters['user_id']);
+        }
+
+        if (isset($filters['country_id']) && ! empty($filters['country_id'])) {
+            $query->where('country_id', '=', $filters['country_id']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
