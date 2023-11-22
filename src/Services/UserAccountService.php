@@ -2,7 +2,6 @@
 
 namespace Fintech\Transaction\Services;
 
-use Fintech\MetaData\Facades\MetaData;
 use Fintech\Transaction\Interfaces\UserAccountRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -14,9 +13,8 @@ class UserAccountService
     /**
      * UserAccountService constructor.
      */
-    public function __construct(UserAccountRepository $userAccountRepository)
+    public function __construct(private readonly UserAccountRepository $userAccountRepository)
     {
-        $this->userAccountRepository = $userAccountRepository;
     }
 
     /**
@@ -30,7 +28,7 @@ class UserAccountService
 
     public function create(array $inputs = [])
     {
-        $country = MetaData::country()->find($inputs['country_id']);
+        $country = \Fintech\MetaData\Facades\MetaData::country()->find($inputs['country_id']);
 
         if (! $country) {
             throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class), $inputs['present_country_id']);

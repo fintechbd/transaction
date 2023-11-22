@@ -12,9 +12,8 @@ class TransactionFormService
     /**
      * TransactionFormService constructor.
      */
-    public function __construct(TransactionFormRepository $transactionFormRepository)
+    public function __construct(private readonly TransactionFormRepository $transactionFormRepository)
     {
-        $this->transactionFormRepository = $transactionFormRepository;
     }
 
     /**

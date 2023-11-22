@@ -12,9 +12,8 @@ class OrderService
     /**
      * OrderService constructor.
      */
-    public function __construct(OrderRepository $orderRepository)
+    public function __construct(private readonly OrderRepository $orderRepository)
     {
-        $this->orderRepository = $orderRepository;
     }
 
     /**

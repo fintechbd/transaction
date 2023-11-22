@@ -12,9 +12,8 @@ class OrderQueueService
     /**
      * OrderQueueService constructor.
      */
-    public function __construct(OrderQueueRepository $orderQueueRepository)
+    public function __construct(private readonly OrderQueueRepository $orderQueueRepository)
     {
-        $this->orderQueueRepository = $orderQueueRepository;
     }
 
     /**

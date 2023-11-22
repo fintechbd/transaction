@@ -12,9 +12,8 @@ class ChartClassService
     /**
      * ChartClassService constructor.
      */
-    public function __construct(ChartClassRepository $chartClassRepository)
+    public function __construct(private readonly ChartClassRepository $chartClassRepository)
     {
-        $this->chartClassRepository = $chartClassRepository;
     }
 
     /**
