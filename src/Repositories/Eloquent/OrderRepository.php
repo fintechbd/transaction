@@ -100,29 +100,29 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filter['order_start_date_time']) && $filter['order_start_date_time'] != '0000-00-00' && $filter['order_start_date_time'] != '' &&
             isset($filter['order_end_date_time']) && $filter['order_end_date_time'] != '0000-00-00' && $filter['order_end_date_time'] != ''
         ) {
-            $query->whereBetween($modelTable.'.order_date', array($filter['order_start_date_time'], $filter['order_end_date_time']));
+            $query->whereBetween($modelTable.'.order_date', [$filter['order_start_date_time'], $filter['order_end_date_time']]);
         }
 
         if (isset($filter['order_start_date']) && $filter['order_start_date'] != '0000-00-00' && $filter['order_start_date'] != '' &&
             isset($filter['order_end_date']) && $filter['order_end_date'] != '0000-00-00' && $filter['order_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_start_date'], $filter['order_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), [$filter['order_start_date'], $filter['order_end_date']]);
         }
 
         if (isset($filter['order_start_date']) && $filter['order_start_date'] != '0000-00-00' && $filter['order_start_date'] != '' &&
             empty($filter['order_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_start_date'], $filter['order_start_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), [$filter['order_start_date'], $filter['order_start_date']]);
         }
 
         if (isset($filter['order_end_date']) && $filter['order_end_date'] != '0000-00-00' && $filter['order_end_date'] != '' &&
             empty($filter['order_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_end_date'], $filter['order_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), [$filter['order_end_date'], $filter['order_end_date']]);
         }
 
         if (isset($filter['order_date']) && $filter['order_date'] != '0000-00-00' && $filter['order_date'] != '') {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_date'], $filter['order_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), [$filter['order_date'], $filter['order_date']]);
         }
 
         if (isset($filter['created_at_start_date_time']) && $filter['created_at_start_date_time'] != '0000-00-00'
@@ -130,29 +130,29 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             isset($filter['created_at_end_date_time']) && $filter['created_at_end_date_time'] != '0000-00-00'
             && $filter['created_at_end_date_time'] != ''
         ) {
-            $query->whereBetween($modelTable.'.created_at', array($filter['created_at_start_date_time'], $filter['created_at_end_date_time']));
+            $query->whereBetween($modelTable.'.created_at', [$filter['created_at_start_date_time'], $filter['created_at_end_date_time']]);
         }
 
         if (isset($filter['created_at_start_date']) && $filter['created_at_start_date'] != '0000-00-00' && $filter['created_at_start_date'] != '' &&
             isset($filter['created_at_end_date']) && $filter['created_at_end_date'] != '0000-00-00' && $filter['created_at_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_start_date'], $filter['created_at_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), [$filter['created_at_start_date'], $filter['created_at_end_date']]);
         }
 
         if (isset($filter['created_at_start_date']) && $filter['created_at_start_date'] != '0000-00-00' && $filter['created_at_start_date'] != '' &&
             empty($filter['created_at_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_start_date'], $filter['created_at_start_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), [$filter['created_at_start_date'], $filter['created_at_start_date']]);
         }
 
         if (isset($filter['created_at_end_date']) && $filter['created_at_end_date'] != '0000-00-00' && $filter['created_at_end_date'] != '' &&
             empty($filter['created_at_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_end_date'], $filter['created_at_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), [$filter['created_at_end_date'], $filter['created_at_end_date']]);
         }
 
         if (isset($filter['created_at_date']) && $filter['created_at_date'] != '0000-00-00' && $filter['created_at_date'] != '') {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_date'], $filter['created_at_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), [$filter['created_at_date'], $filter['created_at_date']]);
         }
 
         if (isset($filter['status']) && $filter['status']) {
@@ -167,14 +167,13 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->whereIn($modelTable.'.source_country_id', $filter['source_country_id']);
         }
 
-        if (isset($filter['source_country_id_array']) && !empty($filter['source_country_id_array'])) {
+        if (isset($filter['source_country_id_array']) && ! empty($filter['source_country_id_array'])) {
             $query->whereIn($modelTable.'.source_country_id', $filter['source_country_id_array']);
         }
 
-        if (isset($filter['destination_country_id']) && !empty($filter['destination_country_id'])) {
+        if (isset($filter['destination_country_id']) && ! empty($filter['destination_country_id'])) {
             $query->where($modelTable.'.destination_country_id', $filter['destination_country_id']);
         }
-
 
         //Display Trashed
         if (isset($filters['trashed']) && ! empty($filters['trashed'])) {

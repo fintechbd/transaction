@@ -66,7 +66,7 @@ class OrderService
     public function transactionDelayCheck($data)
     {
         $delayCheck = config('fintech.transaction.delay_time');
-        if($delayCheck > 0){
+        if ($delayCheck > 0) {
             $input['user_id'] = $data['user_id'];
             $input['service_id'] = $data['service_id'];
             $input['amount'] = $data['amount'];
@@ -78,22 +78,22 @@ class OrderService
             $input['created_at_end_date_time'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['service_delay'] = 'yes';
             $service_type_parent_id = Business::service()->find($input['service_id']);
-            if((isset($service_type_parent_id->serviceType->service_type_slug)?$service_type_parent_id->serviceType->service_type_slug:null) == 'fund_deposit'){
-                $input['status'] = array('processing');
+            if ((isset($service_type_parent_id->serviceType->service_type_slug) ? $service_type_parent_id->serviceType->service_type_slug : null) == 'fund_deposit') {
+                $input['status'] = ['processing'];
                 unset($input['created_at_start_date_time'], $input['created_at_end_date_time']);
             }
             $orderCheck = Transaction::order()->list($input);
-            if($orderCheck->first()) {
+            if ($orderCheck->first()) {
                 $returnValue['countValue'] = $orderCheck->count();
                 $remainingTime = strtotime($created_at) - strtotime($orderCheck->first()->order_at);
-                $returnValue['remainingTime'] = $delayCheck - (int)($remainingTime / 60);
+                $returnValue['remainingTime'] = $delayCheck - (int) ($remainingTime / 60);
                 $returnValue['delayTime'] = $delayCheck;
-            }else {
+            } else {
                 $returnValue['countValue'] = 0;
                 $returnValue['remainingTime'] = 0;
                 $returnValue['delayTime'] = 0;
             }
-        }else{
+        } else {
             $returnValue['countValue'] = 0;
             $returnValue['remainingTime'] = 0;
             $returnValue['delayTime'] = 0;
