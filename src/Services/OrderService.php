@@ -2,6 +2,9 @@
 
 namespace Fintech\Transaction\Services;
 
+use Carbon\Carbon;
+use Fintech\Business\Facades\Business;
+use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Interfaces\OrderRepository;
 
 /**
@@ -58,5 +61,44 @@ class OrderService
     public function import(array $filters)
     {
         return $this->orderRepository->create($filters);
+    }
+
+    public function transactionDelayCheck($data)
+    {
+        $delayCheck = config('fintech.transaction.delay_time');
+        if ($delayCheck > 0) {
+            $input['user_id'] = $data['user_id'];
+            $input['service_id'] = $data['service_id'];
+            $input['amount'] = $data['amount'];
+            $input['currency'] = $data['currency'];
+            $input['source_country_id'] = $data['source_country_id'];
+            $input['destination_country_id'] = $data['destination_country_id'];
+            $created_at = Carbon::now()->subMinute($delayCheck)->format('Y-m-d H:i:s');
+            $input['created_at_start_date_time'] = $created_at;
+            $input['created_at_end_date_time'] = Carbon::now()->format('Y-m-d H:i:s');
+            $input['service_delay'] = 'yes';
+            $service_type_parent_id = Business::service()->find($input['service_id']);
+            if ((isset($service_type_parent_id->serviceType->service_type_slug) ? $service_type_parent_id->serviceType->service_type_slug : null) == 'fund_deposit') {
+                $input['status'] = ['processing'];
+                unset($input['created_at_start_date_time'], $input['created_at_end_date_time']);
+            }
+            $orderCheck = Transaction::order()->list($input);
+            if ($orderCheck->first()) {
+                $returnValue['countValue'] = $orderCheck->count();
+                $remainingTime = strtotime($created_at) - strtotime($orderCheck->first()->order_at);
+                $returnValue['remainingTime'] = $delayCheck - (int) ($remainingTime / 60);
+                $returnValue['delayTime'] = $delayCheck;
+            } else {
+                $returnValue['countValue'] = 0;
+                $returnValue['remainingTime'] = 0;
+                $returnValue['delayTime'] = 0;
+            }
+        } else {
+            $returnValue['countValue'] = 0;
+            $returnValue['remainingTime'] = 0;
+            $returnValue['delayTime'] = 0;
+        }
+
+        return $returnValue;
     }
 }
