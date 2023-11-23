@@ -83,9 +83,22 @@ class OrderService
                 unset($input['created_at_start_date_time'], $input['created_at_end_date_time']);
             }
             $orderCheck = Transaction::order()->list($input);
-                //$this->ShowAllPreTransaction($data)->orderBy('pre_transactions.transaction_date', 'DESC');
+            if($orderCheck->first()) {
+                $returnValue['countValue'] = $orderCheck->count();
+                $remainingTime = strtotime($created_at) - strtotime($orderCheck->first()->order_at);
+                $returnValue['remainingTime'] = $delayCheck - (int)($remainingTime / 60);
+                $returnValue['delayTime'] = $delayCheck;
+            }else {
+                $returnValue['countValue'] = 0;
+                $returnValue['remainingTime'] = 0;
+                $returnValue['delayTime'] = 0;
+            }
+        }else{
+            $returnValue['countValue'] = 0;
+            $returnValue['remainingTime'] = 0;
+            $returnValue['delayTime'] = 0;
         }
-        print_r($orderCheck);exit();
 
+        return $returnValue;
     }
 }
