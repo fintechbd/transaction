@@ -37,7 +37,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query = $this->model->newQuery();
         $modelTable = $this->model->getTable();
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -62,7 +62,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where($modelTable.'.sender_receiver_id', '=', $filters['sender_receiver_id']);
         }
         if (isset($filter['user_id_sender_receiver_id']) && $filter['user_id_sender_receiver_id']) {
-            $query->where(function ($query) use ($filter) {
+            $query->where(function ($query) use ($filter, $modelTable) {
                 $query->where($modelTable.'.user_id', $filter['user_id_sender_receiver_id']);
                 $query->orWhere($modelTable.'.sender_receiver_id', $filter['user_id_sender_receiver_id']);
             });
@@ -167,16 +167,16 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->whereIn($modelTable.'.source_country_id', $filter['source_country_id']);
         }
 
-        if (isset($filter['source_country_id_array']) && ! empty($filter['source_country_id_array'])) {
+        if (! empty($filter['source_country_id_array'])) {
             $query->whereIn($modelTable.'.source_country_id', $filter['source_country_id_array']);
         }
 
-        if (isset($filter['destination_country_id']) && ! empty($filter['destination_country_id'])) {
+        if (! empty($filter['destination_country_id'])) {
             $query->where($modelTable.'.destination_country_id', $filter['destination_country_id']);
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 
