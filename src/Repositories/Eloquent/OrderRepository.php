@@ -8,6 +8,7 @@ use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use InvalidArgumentException;
 
 /**
@@ -46,135 +47,151 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             }
         }
 
-        if (isset($filter['user_id_not_in']) && $filter['user_id_not_in']) {
-            $query->whereNotIn($modelTable.'.user_id', $filter['user_id_not_in']);
+        if (isset($filters['user_id_not_in']) && $filters['user_id_not_in']) {
+            $query->whereNotIn($modelTable.'.user_id', $filters['user_id_not_in']);
         }
 
-        if (isset($filter['order_id']) && $filter['order_id']) {
-            $query->where($modelTable.'.id', '=', $filter['order_id']);
+        if (isset($filters['order_id']) && $filters['order_id']) {
+            $query->where($modelTable.'.id', '=', $filters['order_id']);
         }
 
         if (isset($filters['user_id']) && $filters['user_id']) {
             $query->where($modelTable.'.user_id', '=', $filters['user_id']);
         }
 
-        if (isset($filter['$filters']) && $filters['sender_receiver_id']) {
+        if (isset($filters['$filters']) && $filters['sender_receiver_id']) {
             $query->where($modelTable.'.sender_receiver_id', '=', $filters['sender_receiver_id']);
         }
-        if (isset($filter['user_id_sender_receiver_id']) && $filter['user_id_sender_receiver_id']) {
-            $query->where(function ($query) use ($filter) {
-                $query->where($modelTable.'.user_id', $filter['user_id_sender_receiver_id']);
-                $query->orWhere($modelTable.'.sender_receiver_id', $filter['user_id_sender_receiver_id']);
+        if (isset($filters['user_id_sender_receiver_id']) && $filters['user_id_sender_receiver_id']) {
+            $query->where(function ($query) use ($filters, $modelTable) {
+                $query->where($modelTable.'.user_id', $filters['user_id_sender_receiver_id']);
+                $query->orWhere($modelTable.'.sender_receiver_id', $filters['user_id_sender_receiver_id']);
             });
-            /*$query->where($modelTable.'.user_id', '=', $filter['user_id_sender_receiver_id']);
-            $query->orWhere($modelTable.'.sender_receiver_id', '=', $filter['user_id_sender_receiver_id']);*/
+            /*$query->where($modelTable.'.user_id', '=', $filters['user_id_sender_receiver_id']);
+            $query->orWhere($modelTable.'.sender_receiver_id', '=', $filters['user_id_sender_receiver_id']);*/
         }
 
-        if (isset($filter['service_id']) && $filter['service_id']) {
-            $query->where($modelTable.'.service_id', '=', $filter['service_id']);
-        }
-        if (isset($filter['service_id_in']) && $filter['service_id_in']) {
-            $query->whereIn($modelTable.'.service_id', $filter['service_id_in']);
+        if (isset($filters['service_id']) && $filters['service_id']) {
+            $query->where($modelTable.'.service_id', '=', $filters['service_id']);
         }
 
-        if (isset($filter['transaction_form_id']) && $filter['transaction_form_id']) {
-            $query->where($modelTable.'.transaction_form_id', '=', $filter['transaction_form_id']);
+        if (isset($filters['service_id_in']) && $filters['service_id_in']) {
+            $query->whereIn($modelTable.'.service_id', $filters['service_id_in']);
         }
 
-        if (isset($filter['transaction_form_id_in']) && $filter['transaction_form_id_in']) {
-            $query->whereIn($modelTable.'.transaction_form_id', $filter['transaction_form_id_in']);
+        if (isset($filters['transaction_form_id']) && $filters['transaction_form_id']) {
+            $query->where($modelTable.'.transaction_form_id', '=', $filters['transaction_form_id']);
         }
 
-        if (isset($filter['transaction_form_id_not_in']) && $filter['transaction_form_id_not_in']) {
-            $query->whereNotIn($modelTable.'.transaction_form_id', $filter['transaction_form_id_not_in']);
+        if (isset($filters['transaction_form_id_in']) && $filters['transaction_form_id_in']) {
+            $query->whereIn($modelTable.'.transaction_form_id', $filters['transaction_form_id_in']);
         }
 
-        if (isset($filter['transaction_form_id_not_equal']) && $filter['transaction_form_id_not_equal']) {
-            $query->where($modelTable.'.transaction_form_id', '!=', $filter['transaction_form_id_not_equal']);
+        if (isset($filters['transaction_form_id_not_in']) && $filters['transaction_form_id_not_in']) {
+            $query->whereNotIn($modelTable.'.transaction_form_id', $filters['transaction_form_id_not_in']);
         }
 
-        if (isset($filter['amount']) && $filter['amount']) {
-            $query->where($modelTable.'.amount', '=', $filter['amount']);
+        if (isset($filters['transaction_form_id_not_equal']) && $filters['transaction_form_id_not_equal']) {
+            $query->where($modelTable.'.transaction_form_id', '!=', $filters['transaction_form_id_not_equal']);
         }
 
-        if (isset($filter['order_start_date_time']) && $filter['order_start_date_time'] != '0000-00-00' && $filter['order_start_date_time'] != '' &&
-            isset($filter['order_end_date_time']) && $filter['order_end_date_time'] != '0000-00-00' && $filter['order_end_date_time'] != ''
+        if (isset($filters['amount']) && $filters['amount']) {
+            $query->where($modelTable.'.amount', '=', $filters['amount']);
+        }
+
+        if (isset($filters['currency']) && $filters['currency']) {
+            $query->where($modelTable.'.currency', '=', $filters['currency']);
+        }
+
+        if (isset($filters['order_start_date_time']) && $filters['order_start_date_time'] != '0000-00-00' && $filters['order_start_date_time'] != '' &&
+            isset($filters['order_end_date_time']) && $filters['order_end_date_time'] != '0000-00-00' && $filters['order_end_date_time'] != ''
         ) {
-            $query->whereBetween($modelTable.'.order_date', array($filter['order_start_date_time'], $filter['order_end_date_time']));
+            $query->whereBetween($modelTable.'.order_date', array($filters['order_start_date_time'], $filters['order_end_date_time']));
         }
 
-        if (isset($filter['order_start_date']) && $filter['order_start_date'] != '0000-00-00' && $filter['order_start_date'] != '' &&
-            isset($filter['order_end_date']) && $filter['order_end_date'] != '0000-00-00' && $filter['order_end_date'] != ''
+        if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
+            isset($filters['order_end_date']) && $filters['order_end_date'] != '0000-00-00' && $filters['order_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_start_date'], $filter['order_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filters['order_start_date'], $filters['order_end_date']));
         }
 
-        if (isset($filter['order_start_date']) && $filter['order_start_date'] != '0000-00-00' && $filter['order_start_date'] != '' &&
-            empty($filter['order_end_date'])
+        if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
+            empty($filters['order_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_start_date'], $filter['order_start_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filters['order_start_date'], $filters['order_start_date']));
         }
 
-        if (isset($filter['order_end_date']) && $filter['order_end_date'] != '0000-00-00' && $filter['order_end_date'] != '' &&
-            empty($filter['order_start_date'])
+        if (isset($filters['order_end_date']) && $filters['order_end_date'] != '0000-00-00' && $filters['order_end_date'] != '' &&
+            empty($filters['order_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_end_date'], $filter['order_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filters['order_end_date'], $filters['order_end_date']));
         }
 
-        if (isset($filter['order_date']) && $filter['order_date'] != '0000-00-00' && $filter['order_date'] != '') {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filter['order_date'], $filter['order_date']));
+        if (isset($filters['order_date']) && $filters['order_date'] != '0000-00-00' && $filters['order_date'] != '') {
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), array($filters['order_date'], $filters['order_date']));
         }
 
-        if (isset($filter['created_at_start_date_time']) && $filter['created_at_start_date_time'] != '0000-00-00'
-            && $filter['created_at_start_date_time'] != '' &&
-            isset($filter['created_at_end_date_time']) && $filter['created_at_end_date_time'] != '0000-00-00'
-            && $filter['created_at_end_date_time'] != ''
+        if (isset($filters['created_at_start_date_time']) && $filters['created_at_start_date_time'] != '0000-00-00'
+            && $filters['created_at_start_date_time'] != '' &&
+            isset($filters['created_at_end_date_time']) && $filters['created_at_end_date_time'] != '0000-00-00'
+            && $filters['created_at_end_date_time'] != ''
         ) {
-            $query->whereBetween($modelTable.'.created_at', array($filter['created_at_start_date_time'], $filter['created_at_end_date_time']));
+            $query->whereBetween($modelTable.'.created_at', array($filters['created_at_start_date_time'], $filters['created_at_end_date_time']));
         }
 
-        if (isset($filter['created_at_start_date']) && $filter['created_at_start_date'] != '0000-00-00' && $filter['created_at_start_date'] != '' &&
-            isset($filter['created_at_end_date']) && $filter['created_at_end_date'] != '0000-00-00' && $filter['created_at_end_date'] != ''
+        if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
+            isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_start_date'], $filter['created_at_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filters['created_at_start_date'], $filters['created_at_end_date']));
         }
 
-        if (isset($filter['created_at_start_date']) && $filter['created_at_start_date'] != '0000-00-00' && $filter['created_at_start_date'] != '' &&
-            empty($filter['created_at_end_date'])
+        if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
+            empty($filters['created_at_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_start_date'], $filter['created_at_start_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filters['created_at_start_date'], $filters['created_at_start_date']));
         }
 
-        if (isset($filter['created_at_end_date']) && $filter['created_at_end_date'] != '0000-00-00' && $filter['created_at_end_date'] != '' &&
-            empty($filter['created_at_start_date'])
+        if (isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != '' &&
+            empty($filters['created_at_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_end_date'], $filter['created_at_end_date']));
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filters['created_at_end_date'], $filters['created_at_end_date']));
         }
 
-        if (isset($filter['created_at_date']) && $filter['created_at_date'] != '0000-00-00' && $filter['created_at_date'] != '') {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filter['created_at_date'], $filter['created_at_date']));
+        if (isset($filters['created_at_date']) && $filters['created_at_date'] != '0000-00-00' && $filters['created_at_date'] != '') {
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), array($filters['created_at_date'], $filters['created_at_date']));
         }
 
-        if (isset($filter['status']) && $filter['status']) {
-            $query->whereIn($modelTable.'.status', $filter['status']);
+        if (isset($filters['status']) && $filters['status']) {
+            $query->whereIn($modelTable.'.status', $filters['status']);
         }
 
-        if (isset($filter['status_not_equal']) && $filter['status_not_equal']) {
-            $query->where($modelTable.'.status', '!=', $filter['status_not_equal']);
+        if (isset($filters['status_not_equal']) && $filters['status_not_equal']) {
+            $query->where($modelTable.'.status', '!=', $filters['status_not_equal']);
         }
 
-        if (isset($filter['source_country_id']) && $filter['source_country_id']) {
-            $query->whereIn($modelTable.'.source_country_id', $filter['source_country_id']);
+        if (isset($filters['source_country_id']) && $filters['source_country_id']) {
+            $query->where($modelTable.'.source_country_id', $filters['source_country_id']);
         }
 
-        if (isset($filter['source_country_id_array']) && !empty($filter['source_country_id_array'])) {
-            $query->whereIn($modelTable.'.source_country_id', $filter['source_country_id_array']);
+        if (isset($filters['source_country_id_array']) && !empty($filters['source_country_id_array'])) {
+            $query->whereIn($modelTable.'.source_country_id', $filters['source_country_id_array']);
         }
 
-        if (isset($filter['destination_country_id']) && !empty($filter['destination_country_id'])) {
-            $query->where($modelTable.'.destination_country_id', $filter['destination_country_id']);
+        if (isset($filters['destination_country_id']) && !empty($filters['destination_country_id'])) {
+            $query->where($modelTable.'.destination_country_id', $filters['destination_country_id']);
         }
 
+        if (isset($filters['account_number']) && is_bool($filters['account_number'])) {
+            $query->where($modelTable.'.order_data->account_number', $filters['account_number']);
+        }
+
+        if (isset($filters['bank_id']) && is_bool($filters['bank_id'])) {
+            $query->where($modelTable.'.order_data->bank_id', $filters['bank_id']);
+        }
+
+        if (isset($filters['bank_branch_id']) && is_bool($filters['bank_branch_id'])) {
+            $query->where($modelTable.'.order_data->bank_branch_id', $filters['bank_branch_id']);
+        }
 
         //Display Trashed
         if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
@@ -183,7 +200,8 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
 
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
-
+        $sql = Str::replaceArray('?', $query->getBindings(), $query->toSql());
+        print_r($sql);exit();
         //Execute Output
         return $this->executeQuery($query, $filters);
 
