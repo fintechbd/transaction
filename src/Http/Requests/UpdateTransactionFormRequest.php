@@ -24,7 +24,7 @@ class UpdateTransactionFormRequest extends FormRequest
         return [
             'name' => ['string', 'required', 'min:1', 'min:255'],
             'code' => ['string', 'required', 'min:1', 'min:255'],
-            'enabled' => ['boolean', 'nullable']
+            'enabled' => ['boolean', 'nullable'],
         ];
     }
 
