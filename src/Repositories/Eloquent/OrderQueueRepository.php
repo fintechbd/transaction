@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\OrderQueueRepository as InterfacesOrderQueueRepository;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -37,7 +38,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -47,7 +48,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 
@@ -59,15 +60,21 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function addToQueue(string|int $sender_user_id): bool|string
     {
-        DB::select('INSERT INTO order_queues (user_id) SELECT "'.$sender_user_id.'" FROM DUAL WHERE NOT EXISTS (SELECT * FROM order_queues WHERE user_id='.$sender_user_id.' LIMIT 1)');
+        DB::select('INSERT INTO '.get_table('transaction.order_queue').'(user_id) SELECT "'.$sender_user_id.'" FROM DUAL WHERE NOT EXISTS (SELECT * FROM '.get_table('transaction.order_queue').' WHERE user_id='.$sender_user_id.' LIMIT 1)');
 
         return DB::getPdo()->lastInsertId();
     }
 
+    /**
+     * @throws BindingResolutionException
+     */
     public function removeFromQueue(string|int $sender_user_id): array
     {
-        return DB::select('DELETE FROM order_queues where user_id ='.$sender_user_id);
+        return DB::select('DELETE FROM '.get_table('transaction.order_queue').' where user_id ='.$sender_user_id);
     }
 }

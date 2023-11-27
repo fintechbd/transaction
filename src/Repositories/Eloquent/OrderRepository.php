@@ -37,7 +37,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query = $this->model->newQuery();
         $modelTable = $this->model->getTable();
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -61,6 +61,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['$filters']) && $filters['sender_receiver_id']) {
             $query->where($modelTable.'.sender_receiver_id', '=', $filters['sender_receiver_id']);
         }
+
         if (isset($filters['user_id_sender_receiver_id']) && $filters['user_id_sender_receiver_id']) {
             $query->where(function ($query) use ($filters, $modelTable) {
                 $query->where($modelTable.'.user_id', $filters['user_id_sender_receiver_id']);
@@ -105,6 +106,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['order_start_date_time']) && $filters['order_start_date_time'] != '0000-00-00' && $filters['order_start_date_time'] != '' &&
             isset($filters['order_end_date_time']) && $filters['order_end_date_time'] != '0000-00-00' && $filters['order_end_date_time'] != ''
         ) {
+
             $query->whereBetween($modelTable.'.order_date', [$filters['order_start_date_time'], $filters['order_end_date_time']]);
         }
 
@@ -130,6 +132,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->whereBetween(DB::raw('DATE('.$modelTable.'.ordered_at)'), [$filters['order_date'], $filters['order_date']]);
         }
 
+
         if (isset($filters['created_at_start_date_time']) && $filters['created_at_start_date_time'] != '0000-00-00'
             && $filters['created_at_start_date_time'] != '' &&
             isset($filters['created_at_end_date_time']) && $filters['created_at_end_date_time'] != '0000-00-00'
@@ -141,6 +144,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
             isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
         ) {
+
             $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
@@ -193,7 +197,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 

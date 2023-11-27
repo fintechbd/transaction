@@ -23,6 +23,8 @@ class UserAccountResource extends JsonResource
             'user_name' => null,
             'country_id' => $this->country_id,
             'country_name' => null,
+            'logo_svg' => null,
+            'logo_png' => null,
             'user_account_data' => $this->user_account_data ?? [],
             'enabled' => $this->enabled,
             'links' => $this->links,
@@ -35,6 +37,8 @@ class UserAccountResource extends JsonResource
         }
         if (Core::packageExists('MetaData')) {
             $data['country_name'] = $this->country?->name ?? null;
+            $data['logo_svg'] = $user_account->country?->getFirstMediaUrl('logo_svg') ?? null;
+            $data['logo_png'] = $user_account->country?->getFirstMediaUrl('logo_png') ?? null;
         }
 
         return $data;
