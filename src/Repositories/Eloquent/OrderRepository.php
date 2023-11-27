@@ -200,8 +200,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
 
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
-        $sql = Str::replaceArray('?', $query->getBindings(), $query->toSql());
-        print_r($sql);exit();
+
         //Execute Output
         return $this->executeQuery($query, $filters);
 
