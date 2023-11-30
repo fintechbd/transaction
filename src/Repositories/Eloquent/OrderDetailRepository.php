@@ -7,7 +7,6 @@ use Fintech\Transaction\Interfaces\OrderDetailRepository as InterfacesOrderDetai
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
 use InvalidArgumentException;
 
 /**
@@ -19,7 +18,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
     {
         $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
 
-        if (!$model instanceof Model) {
+        if (! $model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
         }
 
@@ -37,7 +36,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
         $query = $this->model->newQuery();
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -46,42 +45,41 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             }
         }
 
-        if (!empty($filters['order_id'])) {
+        if (! empty($filters['order_id'])) {
             $query->where('order_id', '=', $filters['order_id']);
         }
 
-        if (!empty($filters['source_country_id'])) {
+        if (! empty($filters['source_country_id'])) {
             $query->where('source_country_id', '=', $filters['source_country_id']);
         }
 
-        if (!empty($filters['destination_country_id'])) {
+        if (! empty($filters['destination_country_id'])) {
             $query->where('destination_country_id', '=', $filters['destination_country_id']);
         }
 
-        if (!empty($filters['order_detail_parent_id'])) {
+        if (! empty($filters['order_detail_parent_id'])) {
             $query->where('order_detail_parent_id', '=', $filters['order_detail_parent_id']);
         }
 
-        if (!empty($filters['sender_receiver_id'])) {
+        if (! empty($filters['sender_receiver_id'])) {
             $query->where('sender_receiver_id', '=', $filters['sender_receiver_id']);
         }
 
-        if (!empty($filters['user_id'])) {
+        if (! empty($filters['user_id'])) {
             $query->where('user_id', '=', $filters['user_id']);
         }
 
-        if (!empty($filters['service_id'])) {
+        if (! empty($filters['service_id'])) {
             $query->where('service_id', '=', $filters['service_id']);
         }
 
-        if (!empty($filters['transaction_form_id'])) {
+        if (! empty($filters['transaction_form_id'])) {
             $query->where('transaction_form_id', '=', $filters['transaction_form_id']);
         }
 
-        if (!empty($filters['order_detail_currency'])) {
+        if (! empty($filters['order_detail_currency'])) {
             $query->where('order_detail_currency', '=', $filters['order_detail_currency']);
         }
-
 
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
@@ -92,7 +90,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         if (isset($filters['get_order_detail_amount_sum']) && $filters['get_order_detail_amount_sum'] === true) {
-           return $query->sum('order_detail_amount');
+            return $query->sum('order_detail_amount');
         }
 
         //Execute Output
