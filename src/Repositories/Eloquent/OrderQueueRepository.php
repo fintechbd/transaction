@@ -4,7 +4,6 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\OrderQueueRepository as InterfacesOrderQueueRepository;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -61,7 +60,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
     }
 
     /**
-     * @param string|int $order_id
+     * @param  string|int  $order_id
      * @return array
      */
     public function addToQueueSenderWise(string|int $sender_user_id): bool|string
@@ -71,9 +70,8 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
         return DB::getPdo()->lastInsertId();
     }
 
-     /**
-     * @param string|int $order_id
-     * @return array
+    /**
+     * @param  string|int  $order_id
      */
     public function removeFromQueueSenderWise(string|int $sender_user_id): array
     {
@@ -81,7 +79,6 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
     }
 
     /**
-     * @param string|int $order_id
      * @return array
      */
     public function addToQueueOrderWise(string|int $order_id): bool|string
@@ -91,10 +88,6 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
         return DB::getPdo()->lastInsertId();
     }
 
-    /**
-     * @param string|int $order_id
-     * @return array
-     */
     public function removeFromQueueOrderWise(string|int $order_id): array
     {
         return DB::select('DELETE FROM '.get_table('transaction.order_queue').' where order_id ='.$order_id);
