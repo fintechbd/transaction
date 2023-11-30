@@ -59,15 +59,35 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     }
 
-    public function addToQueue(string|int $sender_user_id): bool|string
+    public function addToQueueSenderWise(string|int $sender_user_id): bool|string
     {
         DB::select('INSERT INTO order_queues (user_id) SELECT "'.$sender_user_id.'" FROM DUAL WHERE NOT EXISTS (SELECT * FROM order_queues WHERE user_id='.$sender_user_id.' LIMIT 1)');
 
         return DB::getPdo()->lastInsertId();
     }
 
-    public function removeFromQueue(string|int $sender_user_id): array
+    public function removeFromQueueSenderWise(string|int $sender_user_id): array
     {
         return DB::select('DELETE FROM order_queues where user_id ='.$sender_user_id);
+    }
+
+    /**
+     * @param string|int $order_id
+     * @return bool|string
+     */
+    public function addToQueueOrderWise(string|int $order_id): bool|string
+    {
+        DB::select('INSERT INTO order_queues (order_id) SELECT "'.$order_id.'" FROM DUAL WHERE NOT EXISTS (SELECT * FROM order_queues WHERE order_id='.$order_id.' LIMIT 1)');
+
+        return DB::getPdo()->lastInsertId();
+    }
+
+    /**
+     * @param string|int $order_id
+     * @return array
+     */
+    public function removeFromQueueOrderWise(string|int $order_id): array
+    {
+        return DB::select('DELETE FROM order_queues where order_id ='.$order_id);
     }
 }
