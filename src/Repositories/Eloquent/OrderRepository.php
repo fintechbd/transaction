@@ -106,7 +106,6 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['order_start_date_time']) && $filters['order_start_date_time'] != '0000-00-00' && $filters['order_start_date_time'] != '' &&
             isset($filters['order_end_date_time']) && $filters['order_end_date_time'] != '0000-00-00' && $filters['order_end_date_time'] != ''
         ) {
-
             $query->whereBetween($modelTable.'.order_date', [$filters['order_start_date_time'], $filters['order_end_date_time']]);
         }
 
@@ -143,7 +142,6 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
             isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
         ) {
-
             $query->whereBetween(DB::raw('DATE('.$modelTable.'..created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
