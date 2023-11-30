@@ -26,6 +26,8 @@ class UserAccountCollection extends ResourceCollection
                 'user_name' => null,
                 'country_id' => $user_account->country_id,
                 'country_name' => null,
+                'logo_svg' => null,
+                'logo_png' => null,
                 'currency' => $user_account->user_account_data['currency'] ?? null,
                 'currency_name' => $user_account->user_account_data['currency_name'] ?? null,
                 'currency_symbol' => $user_account->user_account_data['currency_symbol'] ?? null,
@@ -43,6 +45,8 @@ class UserAccountCollection extends ResourceCollection
             }
             if (Core::packageExists('MetaData')) {
                 $data['country_name'] = $user_account->country?->name ?? null;
+                $data['logo_svg'] = $user_account->country?->getFirstMediaUrl('logo_svg') ?? null;
+                $data['logo_png'] = $user_account->country?->getFirstMediaUrl('logo_png') ?? null;
             }
 
             return $data;

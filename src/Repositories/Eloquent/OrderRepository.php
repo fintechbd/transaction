@@ -37,7 +37,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query = $this->model->newQuery();
         $modelTable = $this->model->getTable();
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -61,6 +61,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['$filters']) && $filters['sender_receiver_id']) {
             $query->where($modelTable.'.sender_receiver_id', '=', $filters['sender_receiver_id']);
         }
+
         if (isset($filters['user_id_sender_receiver_id']) && $filters['user_id_sender_receiver_id']) {
             $query->where(function ($query) use ($filters, $modelTable) {
                 $query->where($modelTable.'.user_id', $filters['user_id_sender_receiver_id']);
@@ -193,7 +194,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 

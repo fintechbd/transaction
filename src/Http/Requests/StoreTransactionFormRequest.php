@@ -22,7 +22,9 @@ class StoreTransactionFormRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['string', 'required', 'min:1', 'min:255'],
+            'code' => ['string', 'required', 'min:1', 'min:255'],
+            'enabled' => ['boolean', 'nullable'],
         ];
     }
 

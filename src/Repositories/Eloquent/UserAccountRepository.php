@@ -36,7 +36,7 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -45,16 +45,16 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             }
         }
 
-        if (isset($filters['user_id']) && ! empty($filters['user_id'])) {
+        if (! empty($filters['user_id'])) {
             $query->where('user_id', '=', $filters['user_id']);
         }
 
-        if (isset($filters['country_id']) && ! empty($filters['country_id'])) {
+        if (! empty($filters['country_id'])) {
             $query->where('country_id', '=', $filters['country_id']);
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 

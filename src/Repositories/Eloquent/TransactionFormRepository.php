@@ -34,19 +34,24 @@ class TransactionFormRepository extends EloquentRepository implements Interfaces
     public function list(array $filters = [])
     {
         $query = $this->model->newQuery();
+        $modelTable = $this->model->getTable();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
-                $query->where('name', 'like', "%{$filters['search']}%");
-                $query->orWhere('transaction_form_data', 'like', "%{$filters['search']}%");
+                $query->where($modelTable.'.name', 'like', "%{$filters['search']}%");
+                $query->orWhere($modelTable.'.transaction_form_data', 'like', "%{$filters['search']}%");
             }
         }
 
+        if (! empty($filters['code'])) {
+            $query->where($modelTable.'.code', $filters['code']);
+        }
+
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 

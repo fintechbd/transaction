@@ -78,6 +78,7 @@ class OrderService
             $input['created_at_start_date_time'] = $created_at;
             $input['created_at_end_date_time'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['service_delay'] = 'yes';
+
             $service_type_parent = Business::service()->list(['service_id' => $input['service_id'], 'service_delay' => $input['service_delay']])->first();
             if ($service_type_parent) {
                 if (isset($data['order_data']['account_number']) && $data['order_data']['account_number'] != null) {
