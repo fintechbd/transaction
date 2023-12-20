@@ -36,6 +36,11 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
     {
         $query = $this->model->newQuery();
         $modelTable = $this->model->getTable();
+
+        $query->leftJoin(get_table('transaction.transaction_form'), get_table('transaction.transaction_form').'.id', '=', $modelTable.'.transaction_form_id');
+        $query->leftJoin(get_table('business.service'), get_table('business.service').'.id', '=', $modelTable.'.service_id');
+        $query->leftJoin(get_table('business.service_type'), get_table('business.service_type').'.id', '=', get_table('business.service').'.service_type_id');
+
         //Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
@@ -71,12 +76,20 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->orWhere($modelTable.'.sender_receiver_id', '=', $filters['user_id_sender_receiver_id']);*/
         }
 
+        if (isset($filters['service_type_slug']) && $filters['service_type_slug']) {
+            $query->where(get_table('business.service_type').'.service_type_slug', '=', $filters['service_type_slug']);
+        }
+
         if (isset($filters['service_id']) && $filters['service_id']) {
             $query->where($modelTable.'.service_id', '=', $filters['service_id']);
         }
 
         if (isset($filters['service_id_in']) && $filters['service_id_in']) {
             $query->whereIn($modelTable.'.service_id', $filters['service_id_in']);
+        }
+
+        if (isset($filters['transaction_form_code']) && $filters['transaction_form_code']) {
+            $query->where(get_table('transaction.transaction_form').'.code', '=', $filters['transaction_form_code']);
         }
 
         if (isset($filters['transaction_form_id']) && $filters['transaction_form_id']) {
