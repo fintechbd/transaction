@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\OrderDetailRepository as InterfacesOrderDetailRepository;
+use Fintech\Transaction\Models\OrderDetail;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
+        $model = app(config('fintech.transaction.order_detail_model', OrderDetail::class));
 
         if (! $model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
@@ -29,9 +30,10 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
      * return a list or pagination of items from
      * filtered options
      *
+     * @param array $filters
      * @return Paginator|Collection
      */
-    public function list(array $filters = [])
+    public function list(array $filters = []): Paginator|Collection
     {
         $query = $this->model->newQuery();
 
@@ -40,7 +42,8 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
-                $query->where('name', 'like', "%{$filters['search']}%");
+                $query->where('order_detail_number', 'like', "%{$filters['search']}%");
+                $query->orWhere('order_detail_response_id', 'like', "%{$filters['search']}%");
                 $query->orWhere('order_detail_data', 'like', "%{$filters['search']}%");
             }
         }
