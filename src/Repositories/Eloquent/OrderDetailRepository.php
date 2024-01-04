@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\OrderDetailRepository as InterfacesOrderDetailRepository;
+use Fintech\Transaction\Models\OrderDetail;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -16,7 +17,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
+        $model = app(config('fintech.transaction.order_detail_model', OrderDetail::class));
 
         if (! $model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
@@ -28,10 +29,8 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
     /**
      * return a list or pagination of items from
      * filtered options
-     *
-     * @return Paginator|Collection
      */
-    public function list(array $filters = [])
+    public function list(array $filters = []): Paginator|Collection
     {
         $query = $this->model->newQuery();
 
@@ -40,9 +39,46 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
-                $query->where('name', 'like', "%{$filters['search']}%");
+                $query->where('order_detail_number', 'like', "%{$filters['search']}%");
+                $query->orWhere('order_detail_response_id', 'like', "%{$filters['search']}%");
                 $query->orWhere('order_detail_data', 'like', "%{$filters['search']}%");
             }
+        }
+
+        if (! empty($filters['order_id'])) {
+            $query->where('order_id', '=', $filters['order_id']);
+        }
+
+        if (! empty($filters['source_country_id'])) {
+            $query->where('source_country_id', '=', $filters['source_country_id']);
+        }
+
+        if (! empty($filters['destination_country_id'])) {
+            $query->where('destination_country_id', '=', $filters['destination_country_id']);
+        }
+
+        if (! empty($filters['order_detail_parent_id'])) {
+            $query->where('order_detail_parent_id', '=', $filters['order_detail_parent_id']);
+        }
+
+        if (! empty($filters['sender_receiver_id'])) {
+            $query->where('sender_receiver_id', '=', $filters['sender_receiver_id']);
+        }
+
+        if (! empty($filters['user_id'])) {
+            $query->where('user_id', '=', $filters['user_id']);
+        }
+
+        if (! empty($filters['service_id'])) {
+            $query->where('service_id', '=', $filters['service_id']);
+        }
+
+        if (! empty($filters['transaction_form_id'])) {
+            $query->where('transaction_form_id', '=', $filters['transaction_form_id']);
+        }
+
+        if (! empty($filters['order_detail_currency'])) {
+            $query->where('order_detail_currency', '=', $filters['order_detail_currency']);
         }
 
         //Display Trashed
@@ -52,6 +88,10 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
 
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
+
+        if (isset($filters['get_order_detail_amount_sum']) && $filters['get_order_detail_amount_sum'] === true) {
+            return $query->sum('converted_amount');
+        }
 
         //Execute Output
         return $this->executeQuery($query, $filters);

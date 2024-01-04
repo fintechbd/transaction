@@ -56,7 +56,7 @@ class TransactionFormSeeder extends Seeder
             [
                 'id' => 5,
                 'name' => 'BD Top up',
-                'code' => 'top_up',
+                'code' => 'bangladesh_top_up',
                 'enabled' => true,
                 'transaction_form_data' => [],
             ],
@@ -70,7 +70,7 @@ class TransactionFormSeeder extends Seeder
             [
                 'id' => 7,
                 'name' => 'BD MB Reload',
-                'code' => 'bd_mb_reload',
+                'code' => 'bangladesh_mb_reload',
                 'enabled' => true,
                 'transaction_form_data' => [],
             ],

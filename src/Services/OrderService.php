@@ -94,6 +94,9 @@ class OrderService
                     $input['status'] = ['processing'];
                     unset($input['created_at_start_date_time'], $input['created_at_end_date_time']);
                 }
+                $input['sort'] = 'orders.id';
+                $input['dir'] = 'asc';
+
                 $orderCheck = Transaction::order()->list($input);
                 if ($orderCheck->first()) {
                     $returnValue['countValue'] = $orderCheck->count();
