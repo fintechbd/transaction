@@ -84,6 +84,10 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             $query->where('order_detail_currency', '=', $filters['order_detail_currency']);
         }
 
+        if (! empty($filters['converted_currency'])) {
+            $query->where('converted_currency', '=', $filters['converted_currency']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
