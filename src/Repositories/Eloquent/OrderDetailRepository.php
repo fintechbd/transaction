@@ -5,6 +5,7 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\OrderDetailRepository as InterfacesOrderDetailRepository;
 use Fintech\Transaction\Models\OrderDetail;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
@@ -29,8 +30,10 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
     /**
      * return a list or pagination of items from
      * filtered options
+     * @param array $filters
+     * @return Builder[]|Paginator|Collection|int|float|mixed
      */
-    public function list(array $filters = []): Paginator|Collection
+    public function list(array $filters = []): mixed
     {
         $query = $this->model->newQuery();
 
