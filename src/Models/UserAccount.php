@@ -6,15 +6,14 @@ use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class UserAccount extends Model
 {
     use AuditableTrait;
-    use SoftDeletes;
     use AuthRelations;
     use MetaDataRelations;
+    use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
