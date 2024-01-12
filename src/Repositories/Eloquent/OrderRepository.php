@@ -166,23 +166,23 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
             isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE(' . $modelTable . '..created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
+            $query->whereBetween(DB::raw('DATE(' . $modelTable . '.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
         if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
             empty($filters['created_at_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE(' . $modelTable . '..created_at)'), [$filters['created_at_start_date'], $filters['created_at_start_date']]);
+            $query->whereBetween(DB::raw('DATE(' . $modelTable . '.created_at)'), [$filters['created_at_start_date'], $filters['created_at_start_date']]);
         }
 
         if (isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != '' &&
             empty($filters['created_at_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE(' . $modelTable . '..created_at)'), [$filters['created_at_end_date'], $filters['created_at_end_date']]);
+            $query->whereBetween(DB::raw('DATE(' . $modelTable . '.created_at)'), [$filters['created_at_end_date'], $filters['created_at_end_date']]);
         }
 
         if (isset($filters['created_at_date']) && $filters['created_at_date'] != '0000-00-00' && $filters['created_at_date'] != '') {
-            $query->whereBetween(DB::raw('DATE(' . $modelTable . '..created_at)'), [$filters['created_at_date'], $filters['created_at_date']]);
+            $query->whereBetween(DB::raw('DATE(' . $modelTable . '.created_at)'), [$filters['created_at_date'], $filters['created_at_date']]);
         }
 
         if (isset($filters['status']) && $filters['status']) {
