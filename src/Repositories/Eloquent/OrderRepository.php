@@ -55,10 +55,14 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         //Searching
         if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
-                $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
+                $query->where($modelTable . '.' . $this->model->getKeyName(), 'like', "%{$filters['search']}%");
+                $query->where($modelTable . '.amount', 'like', "%{$filters['search']}%");
+                $query->where($modelTable . '.converted_amount', 'like', "%{$filters['search']}%");
             } else {
                 //$query->where('name', 'like', "%{$filters['search']}%");
-                $query->orWhere($modelTable . '.order_data', 'like', "%{$filters['search']}%");
+                $query->orWhere($modelTable . '.order_data', 'like', "%{$filters['search']}%")
+                    ->orWhere($modelTable . '.currency', 'like', "%{$filters['search']}%")
+                    ->orWhere($modelTable . '.order_number', 'like', "%{$filters['search']}%");
             }
         }
 
@@ -224,6 +228,8 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
 
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
+
+        $query->select($modelTable . '.*');
 
         //Execute Output
         return $this->executeQuery($query, $filters);

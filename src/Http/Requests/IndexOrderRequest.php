@@ -31,6 +31,22 @@ class IndexOrderRequest extends FormRequest
             'sort' => ['string', 'nullable', 'min:2', 'max:255'],
             'dir' => ['string', 'min:3', 'max:4'],
             'trashed' => ['boolean', 'nullable'],
+            'user_id_not_in' => ['array', 'nullable'],
+            'service_id_in' => ['array', 'nullable'],
+            'transaction_form_id_in' => ['array', 'nullable'],
+            'transaction_form_id_not_in' => ['array', 'nullable'],
+            'user_id' => ['integer', 'nullable'],
+            'order_id' => ['integer', 'nullable'],
+            'source_country_id' => ['integer', 'nullable'],
+            'sender_receiver_id' => ['integer', 'nullable'],
+            'service_type_slug' => ['string', 'nullable'],
+            'currency' => ['string', 'nullable'],
+            'transaction_form_code' => ['string', 'nullable'],
+            'service_id' => ['integer', 'nullable'],
+            'transaction_form_id' => ['integer', 'nullable'],
+            'order_start_date' => ['date', 'nullable'],
+            'order_end_date' => ['date', 'nullable'],
+            'status' => ['string', 'nullable'],
         ];
     }
 
