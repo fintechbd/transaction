@@ -21,6 +21,13 @@ if (Core::packageExists('MetaData')) {
                 config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class),
                 'destination_country_id');
         }
+
+        public function country(): BelongsTo
+        {
+            return $this->belongsTo(
+                config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class),
+            'country_id');
+        }
     }
 } else {
     trait MetaDataRelations

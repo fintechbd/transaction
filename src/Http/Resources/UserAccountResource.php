@@ -3,8 +3,12 @@
 namespace Fintech\Transaction\Http\Resources;
 
 use Fintech\Core\Facades\Core;
+use Fintech\Transaction\Models\UserAccount;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @see UserAccount
+ */
 class UserAccountResource extends JsonResource
 {
     /**

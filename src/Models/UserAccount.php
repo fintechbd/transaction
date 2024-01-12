@@ -3,6 +3,8 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Traits\AuditableTrait;
+use Fintech\Transaction\Traits\AuthRelations;
+use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -11,6 +13,8 @@ class UserAccount extends Model
 {
     use AuditableTrait;
     use SoftDeletes;
+    use AuthRelations;
+    use MetaDataRelations;
 
     /*
     |--------------------------------------------------------------------------
@@ -39,15 +43,7 @@ class UserAccount extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(config('fintech.auth.user_model', \Fintech\Auth\Models\User::class));
-    }
 
-    public function country(): BelongsTo
-    {
-        return $this->belongsTo(config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class));
-    }
     /*
     |--------------------------------------------------------------------------
     | SCOPES
