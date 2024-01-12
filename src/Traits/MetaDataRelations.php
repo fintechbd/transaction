@@ -26,7 +26,7 @@ if (Core::packageExists('MetaData')) {
         {
             return $this->belongsTo(
                 config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class),
-            'country_id');
+                'country_id');
         }
     }
 } else {
