@@ -234,7 +234,12 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
-        $query->select($modelTable.'.*');
+        if (isset($filters['sum_converted_amount']) && $filters['sum_converted_amount'] === true) {
+            $query->selectRaw("SUM(`{$modelTable}`.`converted_amount`) as `total`, `{$modelTable}`.`converted_currency` as `currency`")
+                ->groupBy("{$modelTable}.converted_currency");
+        } else {
+            $query->select($modelTable . '.*');
+        }
 
         //Execute Output
         return $this->executeQuery($query, $filters);

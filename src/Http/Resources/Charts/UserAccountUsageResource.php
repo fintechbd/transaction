@@ -18,7 +18,7 @@ class UserAccountUsageResource extends ResourceCollection
         return $this->collection->map(function ($entry) {
             return [
                 'label' => $entry->currency,
-                'data' => $entry->total,
+                'data' => round(floatval($entry->total), 2),
                 'color' => Currency::get($entry->currency)['color'] ?? '#000000',
             ];
         })->toArray();

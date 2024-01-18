@@ -23,7 +23,7 @@ class UserAccountUsageRequest extends FormRequest
     {
         return [
             'user_id' => ['required', 'integer', 'min:1'],
-            'type' => ['required', 'string', 'in:receive,transfer'],
+            'type' => ['nullable', 'string', 'in:receive,transfer'],
             'duration' => ['nullable', 'integer'],
         ];
     }
