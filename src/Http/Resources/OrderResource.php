@@ -28,6 +28,7 @@ class OrderResource extends JsonResource
             'user_name' => null,
             'service_id' => $this->service_id ?? null,
             'service_name' => null,
+            'service_type' => null,
             'transaction_form_id' => $this->transaction_form_id ?? null,
             'transaction_form_name' => $this->transactionForm?->name ?? null,
             'ordered_at' => $this->ordered_at ?? null,
@@ -55,6 +56,7 @@ class OrderResource extends JsonResource
 
         if (Core::packageExists('Business')) {
             $data['service_name'] = $this->service?->name ?? null;
+            $data['service_type'] = $order->service->serviceType?->all_parent_list ?? null;
         }
 
         return $data;
