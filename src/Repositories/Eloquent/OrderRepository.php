@@ -238,7 +238,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->selectRaw("SUM(`{$modelTable}`.`converted_amount`) as `total`, `{$modelTable}`.`converted_currency` as `currency`")
                 ->groupBy("{$modelTable}.converted_currency");
         } else {
-            $query->select($modelTable.'.*');
+            $query->select($modelTable.'.*', DB::raw(get_table('transaction.transaction_form').'.name AS transaction_form_name'));
         }
 
         //Execute Output
