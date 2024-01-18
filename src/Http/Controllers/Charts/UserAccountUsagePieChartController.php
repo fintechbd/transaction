@@ -25,7 +25,7 @@ class UserAccountUsagePieChartController extends Controller
                 'order_type' => $request->input('type', 'transfer'),
                 'paginate' => false,
                 'sort' => 'orders.currency',
-                'dir' => 'asc'
+                'dir' => 'asc',
             ];
 
             $orderSum = Transaction::order()->list($filters);
