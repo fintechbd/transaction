@@ -60,7 +60,6 @@ class UserAccountController extends Controller
      * Create a new *UserAccount* resource in storage.
      *
      * @lrd:end
-     *
      */
     public function store(StoreUserAccountRequest $request): JsonResponse
     {

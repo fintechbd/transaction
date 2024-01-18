@@ -14,11 +14,6 @@ class UserAccountUsagePieChartController extends Controller
 {
     use ApiResponseTrait;
 
-    /**
-     *
-     * @param UserAccountUsageRequest $request
-     * @return UserAccountUsageResource|JsonResponse
-     */
     public function __invoke(UserAccountUsageRequest $request): UserAccountUsageResource|JsonResponse
     {
         try {

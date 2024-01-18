@@ -31,7 +31,7 @@ class UserAccountUsageRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         $this->merge([
-            'duration' => $this->input('duration', 1)
+            'duration' => $this->input('duration', 1),
         ]);
     }
 }

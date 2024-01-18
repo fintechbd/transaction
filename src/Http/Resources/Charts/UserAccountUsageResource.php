@@ -15,7 +15,7 @@ class UserAccountUsageResource extends ResourceCollection
      */
     public function toArray(Request $request): array
     {
-        return $this->collection->map(function ($entry) use ($request) {
+        return $this->collection->map(function ($entry) {
             return [
                 'label' => $entry->currency,
                 'data' => $entry->total,
@@ -27,7 +27,6 @@ class UserAccountUsageResource extends ResourceCollection
     /**
      * Get additional data that should be returned with the resource array.
      *
-     * @param Request $request
      * @return array<string, mixed>
      */
     public function with(Request $request): array
@@ -42,8 +41,8 @@ class UserAccountUsageResource extends ResourceCollection
                     '1' => 'Today',
                     '7' => 'Last 7 Days',
                     '15' => 'Last 15 Days',
-                    '30' => 'Last 30 Days'
-                ]
+                    '30' => 'Last 30 Days',
+                ],
             ],
             'query' => $request->all(),
         ];
