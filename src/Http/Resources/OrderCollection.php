@@ -31,6 +31,7 @@ class OrderCollection extends ResourceCollection
                 'user_name' => null,
                 'service_id' => $order->service_id ?? null,
                 'service_name' => null,
+                'service_type' => null,
                 'transaction_form_id' => $order->transaction_form_id ?? null,
                 'transaction_form_name' => $order->transactionForm?->name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
@@ -58,6 +59,7 @@ class OrderCollection extends ResourceCollection
 
             if (Core::packageExists('Business')) {
                 $data['service_name'] = $order->service?->service_name ?? null;
+                $data['service_type'] = $order->service->serviceType?->all_parent_list ?? null;
             }
 
             return $data;
