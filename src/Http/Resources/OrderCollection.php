@@ -57,7 +57,7 @@ class OrderCollection extends ResourceCollection
             }
 
             if (Core::packageExists('Business')) {
-                $data['service_name'] = $order->service?->name ?? null;
+                $data['service_name'] = $order->service?->service_name ?? null;
             }
 
             return $data;
