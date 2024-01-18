@@ -174,20 +174,20 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->whereBetween(DB::raw('DATE('.$modelTable.'.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
-        if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
-            empty($filters['created_at_end_date'])
-        ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.created_at)'), [$filters['created_at_start_date'], $filters['created_at_start_date']]);
+        //@TODO using between for better result
+        if ((isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '')
+            && empty($filters['created_at_end_date'])) {
+            $query->whereBetween(DB::raw('DATE('.$modelTable.'.created_at)'), [$filters['created_at_start_date'], now()->format('Y-m-d')]);
         }
 
-        if (isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != '' &&
-            empty($filters['created_at_start_date'])
+        if (isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
+            && empty($filters['created_at_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.created_at)'), [$filters['created_at_end_date'], $filters['created_at_end_date']]);
+            $query->where(DB::raw('DATE('.$modelTable.'.created_at)'), '<=', $filters['created_at_end_date']);
         }
 
         if (isset($filters['created_at_date']) && $filters['created_at_date'] != '0000-00-00' && $filters['created_at_date'] != '') {
-            $query->whereBetween(DB::raw('DATE('.$modelTable.'.created_at)'), [$filters['created_at_date'], $filters['created_at_date']]);
+            $query->where(DB::raw('DATE('.$modelTable.'.created_at)'), '=', $filters['created_at_date']);
         }
 
         if (isset($filters['status']) && $filters['status']) {
@@ -202,12 +202,16 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where($modelTable.'.source_country_id', $filters['source_country_id']);
         }
 
-        if (isset($filters['source_country_id_array']) && ! empty($filters['source_country_id_array'])) {
+        if (! empty($filters['source_country_id_array'])) {
             $query->whereIn($modelTable.'.source_country_id', $filters['source_country_id_array']);
         }
 
-        if (isset($filters['destination_country_id']) && ! empty($filters['destination_country_id'])) {
+        if (! empty($filters['destination_country_id'])) {
             $query->where($modelTable.'.destination_country_id', $filters['destination_country_id']);
+        }
+
+        if (! empty($filters['destination_country_id_array'])) {
+            $query->where($modelTable.'.destination_country_id', $filters['destination_country_id_array']);
         }
 
         if (isset($filters['account_number']) && is_bool($filters['account_number'])) {
