@@ -39,6 +39,11 @@ if (Config::get('fintech.transaction.enabled')) {
 
         Route::apiResource('order-queues', \Fintech\Transaction\Http\Controllers\OrderQueueController::class)->only(['index', 'show', 'destroy']);
 
+        Route::prefix('charts')->name('charts.')->group(function () {
+            Route::get('user-account-usages-pie-chart', \Fintech\Transaction\Http\Controllers\Charts\UserAccountUsagePieChartController::class)
+                ->name('user-account-usages');
+        });
+
         //DO NOT REMOVE THIS LINE//
     });
 }

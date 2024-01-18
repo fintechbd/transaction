@@ -61,7 +61,6 @@ class UserAccountController extends Controller
      *
      * @lrd:end
      *
-     * @throws StoreOperationException
      */
     public function store(StoreUserAccountRequest $request): JsonResponse
     {
@@ -76,7 +75,7 @@ class UserAccountController extends Controller
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'User Account']),
-                'id' => $userAccount->id,
+                'id' => $userAccount->getKey(),
             ]);
 
         } catch (Exception $exception) {
