@@ -35,7 +35,6 @@ class UserAccountService
             throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class), $inputs['present_country_id']);
         }
 
-
         $inputs['account_no'] = $this->guessNextAccountNumber($country->getKey());
         $inputs['user_account_data'] = [
             'currency' => $country->currency,
@@ -84,7 +83,7 @@ class UserAccountService
         $accounts = $this->list(['country_id' => $country_id, 'sort' => 'id', 'dir' => 'desc', 'limit' => 1]);
 
         if ($accounts->isEmpty()) {
-            return $this->formatAccountNumber($country_id,'1');
+            return $this->formatAccountNumber($country_id, '1');
         }
 
         $lastEntry = $accounts->first();
@@ -105,6 +104,6 @@ class UserAccountService
 
     private function formatAccountNumber($county_id, $entry_number): string
     {
-        return Str::padLeft($county_id,3, '0'). Str::padLeft($entry_number,8,'0');
+        return Str::padLeft($county_id, 3, '0').Str::padLeft($entry_number, 8, '0');
     }
 }
