@@ -53,6 +53,10 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             $query->where('country_id', '=', $filters['country_id']);
         }
 
+        if (! empty($filters['limit'])) {
+            $query->limit($filters['limit']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();

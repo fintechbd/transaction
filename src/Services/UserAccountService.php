@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Services;
 
 use Fintech\Transaction\Interfaces\UserAccountRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Str;
 
 /**
  * Class UserAccountService
@@ -34,6 +35,8 @@ class UserAccountService
             throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class), $inputs['present_country_id']);
         }
 
+
+        $inputs['account_no'] = $this->guessNextAccountNumber($country->getKey());
         $inputs['user_account_data'] = [
             'currency' => $country->currency,
             'currency_name' => $country->currency_name,
@@ -74,5 +77,34 @@ class UserAccountService
     public function import(array $filters)
     {
         return $this->userAccountRepository->create($filters);
+    }
+
+    public function guessNextAccountNumber($country_id): string
+    {
+        $accounts = $this->list(['country_id' => $country_id, 'sort' => 'id', 'dir' => 'desc', 'limit' => 1]);
+
+        if ($accounts->isEmpty()) {
+            return $this->formatAccountNumber($country_id,'1');
+        }
+
+        $lastEntry = $accounts->first();
+
+        $account_info = [];
+
+        preg_match('/^(\d{3})(\d{8})$/', $lastEntry->account_no, $account_info);
+        //@TODO: worst case senior
+        if (empty($account_info[2])) {
+
+        }
+
+        $newEntry = intval($account_info[2]) + 1;
+
+        return $this->formatAccountNumber($country_id, $newEntry);
+
+    }
+
+    private function formatAccountNumber($county_id, $entry_number): string
+    {
+        return Str::padLeft($county_id,3, '0'). Str::padLeft($entry_number,8,'0');
     }
 }
