@@ -48,7 +48,7 @@ class Order extends Model
 
     public function transactionForm(): BelongsTo
     {
-        return $this->belongsTo(config('fintech.transaction.order_model', \Fintech\Transaction\Models\TransactionForm::class));
+        return $this->belongsTo(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
     }
 
     /*
