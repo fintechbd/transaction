@@ -26,6 +26,8 @@ class Order extends Model
 
     protected $primaryKey = 'id';
 
+    protected $table = 'orders';
+
     protected $guarded = ['id'];
 
     protected $appends = ['links'];
