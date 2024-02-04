@@ -23,7 +23,6 @@ class UpdateUserAccountRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'min:3', 'max:255'],
-            'account_no' => ['required', 'string', 'min:3', 'max:255'],
             'user_id' => ['required', 'integer', 'min:1'],
             'country_id' => ['required', 'integer', 'min:1'],
             'user_account_data' => ['nullable', 'array'],

@@ -2,11 +2,12 @@
 
 namespace Fintech\Transaction\Http\Requests;
 
+use Fintech\Core\Traits\HasPaginateQuery;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexUserAccountRequest extends FormRequest
 {
-    use \Fintech\Core\Traits\HasPaginateQuery;
+    use HasPaginateQuery;
 
     /**
      * Determine if the user is authorized to make this request.
