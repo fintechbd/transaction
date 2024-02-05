@@ -13,6 +13,6 @@
 
 return [
     'user_account' => [
-        'status_changed' => 'Currency Account status changed to :status.'
-    ]
+        'status_changed' => 'Currency Account status changed to :status.',
+    ],
 ];
