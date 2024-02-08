@@ -31,7 +31,7 @@ return [
     */
 
     'delay_time' => 15,
-
+    'minimum_balance' => 0,
     /*
     |--------------------------------------------------------------------------
     | TransactionForm Model
