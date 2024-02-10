@@ -10,7 +10,6 @@ use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Http\Requests\DropDownRequest;
 use Fintech\Core\Http\Resources\DropDownCollection;
 use Fintech\Core\Traits\ApiResponseTrait;
-use Fintech\MetaData\Facades\MetaData;
 use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportTransactionFormRequest;
 use Fintech\Transaction\Http\Requests\IndexTransactionFormRequest;
@@ -276,10 +275,6 @@ class TransactionFormController extends Controller
         }
     }
 
-    /**
-     * @param DropDownRequest $request
-     * @return DropDownCollection|JsonResponse
-     */
     public function dropdown(DropDownRequest $request): DropDownCollection|JsonResponse
     {
         try {
@@ -289,12 +284,12 @@ class TransactionFormController extends Controller
 
             $attribute = 'id';
 
-            if (!empty($filters['label'])) {
+            if (! empty($filters['label'])) {
                 $label = $filters['label'];
                 unset($filters['label']);
             }
 
-            if (!empty($filters['attribute'])) {
+            if (! empty($filters['attribute'])) {
                 $attribute = $filters['attribute'];
                 unset($filters['attribute']);
             }
