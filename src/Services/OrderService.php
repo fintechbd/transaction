@@ -93,6 +93,9 @@ class OrderService
                 } elseif ((isset($service_type_parent->serviceType->service_type_slug) ? $service_type_parent->serviceType->service_type_slug : null) == 'fund_deposit') {
                     $input['status'] = ['processing'];
                     unset($input['created_at_start_date_time'], $input['created_at_end_date_time']);
+                } elseif ((isset($service_type_parent->serviceType->service_type_slug) ? $service_type_parent->serviceType->service_type_slug : null) == 'currency_swap') {
+                    $input['status'] = ['processing'];
+                    unset($input['created_at_start_date_time'], $input['created_at_end_date_time']);
                 }
                 $input['sort'] = 'orders.id';
                 $input['dir'] = 'asc';
