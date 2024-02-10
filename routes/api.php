@@ -47,4 +47,7 @@ if (Config::get('fintech.transaction.enabled')) {
 
         //DO NOT REMOVE THIS LINE//
     });
+    Route::prefix('dropdown')->name('transaction.')->group(function () {
+        Route::get('transaction-forms', [\Fintech\Transaction\Http\Controllers\TransactionFormController::class, 'dropdown'])->name('transaction-forms.dropdown');
+    });
 }
