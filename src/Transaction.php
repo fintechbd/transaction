@@ -68,6 +68,15 @@ class Transaction
         return app(\Fintech\Transaction\Services\OrderQueueService::class);
     }
 
+    /**
+     * @return \Fintech\Transaction\Services\ManualRefundService
+     */
+    public function manualRefund()
+    {
+        return app(\Fintech\Transaction\Services\ManualRefundService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 }

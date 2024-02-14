@@ -104,6 +104,16 @@ return [
     */
     'order_queue_model' => \Fintech\Transaction\Models\OrderQueue::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | ManualRefund Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'manual_refund_model' => \Fintech\Transaction\Models\ManualRefund::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -130,6 +140,8 @@ return [
         \Fintech\Transaction\Interfaces\UserAccountRepository::class => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
 
         \Fintech\Transaction\Interfaces\OrderQueueRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
+
+        \Fintech\Transaction\Interfaces\ManualRefundRepository::class => \Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

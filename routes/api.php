@@ -45,7 +45,9 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->name('user-account-usages');
         });
 
-        //DO NOT REMOVE THIS LINE//
+        Route::apiResource('manual-refunds', \Fintech\Transaction\Http\Controllers\ManualRefundController::class);
+
+    //DO NOT REMOVE THIS LINE//
     });
     Route::prefix('dropdown')->name('transaction.')->group(function () {
         Route::get('transaction-forms', [\Fintech\Transaction\Http\Controllers\TransactionFormController::class, 'dropdown'])->name('transaction-forms.dropdown');
