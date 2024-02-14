@@ -6,24 +6,23 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\ManualRefundRepository as InterfacesManualRefundRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
 use InvalidArgumentException;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class ManualRefundRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class ManualRefundRepository extends MongodbRepository implements InterfacesManualRefundRepository
 {
     public function __construct()
     {
-       $model = app(config('fintech.transaction.manual_refund_model', \Fintech\Transaction\Models\ManualRefund::class));
+        $model = app(config('fintech.transaction.manual_refund_model', \Fintech\Transaction\Models\ManualRefund::class));
 
-       if (!$model instanceof Model) {
-           throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
-       }
+        if (! $model instanceof Model) {
+            throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
+        }
 
-       $this->model = $model;
+        $this->model = $model;
     }
 
     /**

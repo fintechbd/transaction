@@ -2,26 +2,22 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\ManualRefundRepository;
 
 /**
  * Class ManualRefundService
- * @package Fintech\Transaction\Services
- *
  */
 class ManualRefundService
 {
     /**
      * ManualRefundService constructor.
-     * @param ManualRefundRepository $manualRefundRepository
      */
-    public function __construct(ManualRefundRepository $manualRefundRepository) {
+    public function __construct(ManualRefundRepository $manualRefundRepository)
+    {
         $this->manualRefundRepository = $manualRefundRepository;
     }
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

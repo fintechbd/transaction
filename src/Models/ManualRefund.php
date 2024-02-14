@@ -2,13 +2,8 @@
 
 namespace Fintech\Transaction\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
-
 class ManualRefund extends Order
 {
-
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

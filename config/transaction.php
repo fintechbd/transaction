@@ -104,7 +104,6 @@ return [
     */
     'order_queue_model' => \Fintech\Transaction\Models\OrderQueue::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | ManualRefund Model
