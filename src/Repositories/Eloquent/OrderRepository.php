@@ -96,6 +96,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where(get_table('business.service_type').'.service_type_slug', '=', $filters['service_type_slug']);
         }
 
+        if (isset($filters['service_slug']) && $filters['service_slug']) {
+            $query->where(get_table('business.service').'.service_slug', '=', $filters['service_slug']);
+        }
+
         if (isset($filters['service_id']) && $filters['service_id']) {
             $query->where($modelTable.'.service_id', '=', $filters['service_id']);
         }
