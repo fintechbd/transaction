@@ -2,18 +2,27 @@
 
 namespace Fintech\Transaction\Facades;
 
+use Fintech\Transaction\Services\ChartClassService;
+use Fintech\Transaction\Services\ChartEntryService;
+use Fintech\Transaction\Services\ChartTypeService;
+use Fintech\Transaction\Services\ManualRefundService;
+use Fintech\Transaction\Services\OrderDetailService;
+use Fintech\Transaction\Services\OrderQueueService;
+use Fintech\Transaction\Services\OrderService;
+use Fintech\Transaction\Services\TransactionFormService;
+use Fintech\Transaction\Services\UserAccountService;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static \Fintech\Transaction\Services\TransactionFormService transactionForm()
- * @method static \Fintech\Transaction\Services\OrderService order()
- * @method static \Fintech\Transaction\Services\OrderDetailService orderDetail()
- * @method static \Fintech\Transaction\Services\ChartClassService chartClass()
- * @method static \Fintech\Transaction\Services\ChartTypeService chartType()
- * @method static \Fintech\Transaction\Services\ChartEntryService chartEntry()
- * @method static \Fintech\Transaction\Services\UserAccountService userAccount()
- * @method static \Fintech\Transaction\Services\OrderQueueService orderQueue()
- * @method static \Fintech\Transaction\Services\ManualRefundService manualRefund()
+ * @method static TransactionFormService transactionForm()
+ * @method static OrderService order()
+ * @method static OrderDetailService orderDetail()
+ * @method static ChartClassService chartClass()
+ * @method static ChartTypeService chartType()
+ * @method static ChartEntryService chartEntry()
+ * @method static UserAccountService userAccount()
+ * @method static OrderQueueService orderQueue()
+ * @method static ManualRefundService manualRefund()
  *                                                                                 // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction

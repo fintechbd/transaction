@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Mongodb;
 
 use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\ChartTypeRepository as InterfacesChartTypeRepository;
+use Fintech\Transaction\Models\ChartType;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
@@ -16,9 +17,9 @@ class ChartTypeRepository extends MongodbRepository implements InterfacesChartTy
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.chart_type_model', \Fintech\Transaction\Models\ChartType::class));
+        $model = app(config('fintech.transaction.chart_type_model', ChartType::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
         }
 
@@ -36,7 +37,7 @@ class ChartTypeRepository extends MongodbRepository implements InterfacesChartTy
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (isset($filters['search']) && !empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -46,7 +47,7 @@ class ChartTypeRepository extends MongodbRepository implements InterfacesChartTy
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

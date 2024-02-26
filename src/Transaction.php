@@ -2,78 +2,88 @@
 
 namespace Fintech\Transaction;
 
+use Fintech\Transaction\Services\ChartClassService;
+use Fintech\Transaction\Services\ChartEntryService;
+use Fintech\Transaction\Services\ChartTypeService;
+use Fintech\Transaction\Services\ManualRefundService;
+use Fintech\Transaction\Services\OrderDetailService;
+use Fintech\Transaction\Services\OrderQueueService;
+use Fintech\Transaction\Services\OrderService;
+use Fintech\Transaction\Services\TransactionFormService;
+use Fintech\Transaction\Services\UserAccountService;
+
 class Transaction
 {
     /**
-     * @return \Fintech\Transaction\Services\TransactionFormService
+     * @return TransactionFormService
      */
     public function transactionForm()
     {
-        return app(\Fintech\Transaction\Services\TransactionFormService::class);
+        return app(TransactionFormService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\OrderService
+     * @return OrderService
      */
     public function order()
     {
-        return app(\Fintech\Transaction\Services\OrderService::class);
+        return app(OrderService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\OrderDetailService
+     * @return OrderDetailService
      */
     public function orderDetail()
     {
-        return app(\Fintech\Transaction\Services\OrderDetailService::class);
+        return app(OrderDetailService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\ChartClassService
+     * @return ChartClassService
      */
     public function chartClass()
     {
-        return app(\Fintech\Transaction\Services\ChartClassService::class);
+        return app(ChartClassService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\ChartTypeService
+     * @return ChartTypeService
      */
     public function chartType()
     {
-        return app(\Fintech\Transaction\Services\ChartTypeService::class);
+        return app(ChartTypeService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\ChartEntryService
+     * @return ChartEntryService
      */
     public function chartEntry()
     {
-        return app(\Fintech\Transaction\Services\ChartEntryService::class);
+        return app(ChartEntryService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\UserAccountService
+     * @return UserAccountService
      */
     public function userAccount()
     {
-        return app(\Fintech\Transaction\Services\UserAccountService::class);
+        return app(UserAccountService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\OrderQueueService
+     * @return OrderQueueService
      */
     public function orderQueue()
     {
-        return app(\Fintech\Transaction\Services\OrderQueueService::class);
+        return app(OrderQueueService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\ManualRefundService
+     * @return ManualRefundService
      */
     public function manualRefund()
     {
-        return app(\Fintech\Transaction\Services\ManualRefundService::class);
+        return app(ManualRefundService::class);
     }
 
     //** Crud Service Method Point Do not Remove **//

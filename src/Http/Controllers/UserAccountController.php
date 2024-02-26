@@ -68,7 +68,7 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->create($inputs);
 
-            if (! $userAccount) {
+            if (!$userAccount) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.user_account_model'));
             }
 
@@ -97,49 +97,11 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id);
 
-            if (! $userAccount) {
+            if (!$userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
             return new UserAccountResource($userAccount);
-
-        } catch (ModelNotFoundException $exception) {
-
-            return $this->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
-
-            return $this->failed($exception->getMessage());
-        }
-    }
-
-    /**
-     * @lrd:start
-     * Update a specified *UserAccount* resource using id.
-     *
-     * @lrd:end
-     *
-     * @throws ModelNotFoundException
-     * @throws UpdateOperationException
-     */
-    public function update(UpdateUserAccountRequest $request, string|int $id): JsonResponse
-    {
-        try {
-
-            $userAccount = Transaction::userAccount()->find($id);
-
-            if (! $userAccount) {
-                throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
-            }
-
-            $inputs = $request->validated();
-
-            if (! Transaction::userAccount()->update($id, $inputs)) {
-
-                throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
-            }
-
-            return $this->updated(__('core::messages.resource.updated', ['model' => 'User Account']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -168,11 +130,11 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id);
 
-            if (! $userAccount) {
+            if (!$userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (! Transaction::userAccount()->destroy($id)) {
+            if (!Transaction::userAccount()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -204,11 +166,11 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id, true);
 
-            if (! $userAccount) {
+            if (!$userAccount) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (! Transaction::userAccount()->restore($id)) {
+            if (!Transaction::userAccount()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -289,15 +251,53 @@ class UserAccountController extends Controller
 
             $userAccount = Transaction::userAccount()->find($id);
 
-            if (! $userAccount) {
+            if (!$userAccount) {
                 throw (new ModelNotFoundException())->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (! Transaction::userAccount()->update($id, ['enabled' => ! $userAccount->enabled])) {
+            if (!Transaction::userAccount()->update($id, ['enabled' => !$userAccount->enabled])) {
                 throw (new UpdateOperationException())->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
             return $this->updated(__('metadata::messages.user_account.status_changed', ['status' => ($userAccount->enabled) ? 'Inactive' : 'Active']));
+
+        } catch (ModelNotFoundException $exception) {
+
+            return $this->notfound($exception->getMessage());
+
+        } catch (Exception $exception) {
+
+            return $this->failed($exception->getMessage());
+        }
+    }
+
+    /**
+     * @lrd:start
+     * Update a specified *UserAccount* resource using id.
+     *
+     * @lrd:end
+     *
+     * @throws ModelNotFoundException
+     * @throws UpdateOperationException
+     */
+    public function update(UpdateUserAccountRequest $request, string|int $id): JsonResponse
+    {
+        try {
+
+            $userAccount = Transaction::userAccount()->find($id);
+
+            if (!$userAccount) {
+                throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
+            }
+
+            $inputs = $request->validated();
+
+            if (!Transaction::userAccount()->update($id, $inputs)) {
+
+                throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
+            }
+
+            return $this->updated(__('core::messages.resource.updated', ['model' => 'User Account']));
 
         } catch (ModelNotFoundException $exception) {
 

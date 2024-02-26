@@ -4,9 +4,9 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\TransactionFormRepository as InterfacesTransactionFormRepository;
+use Fintech\Transaction\Models\TransactionForm;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -16,9 +16,9 @@ class TransactionFormRepository extends EloquentRepository implements Interfaces
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
+        $model = app(config('fintech.transaction.transaction_form_model', TransactionForm::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
         }
 
@@ -37,17 +37,17 @@ class TransactionFormRepository extends EloquentRepository implements Interfaces
         $modelTable = $this->model->getTable();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
-                $query->where($modelTable.'.name', 'like', "%{$filters['search']}%");
-                $query->orWhere($modelTable.'.transaction_form_data', 'like', "%{$filters['search']}%");
+                $query->where($modelTable . '.name', 'like', "%{$filters['search']}%");
+                $query->orWhere($modelTable . '.transaction_form_data', 'like', "%{$filters['search']}%");
             }
         }
 
-        if (! empty($filters['code'])) {
-            $query->where($modelTable.'.code', $filters['code']);
+        if (!empty($filters['code'])) {
+            $query->where($modelTable . '.code', $filters['code']);
         }
 
         //Display Trashed

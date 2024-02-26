@@ -20,20 +20,6 @@ class OrderService
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->orderRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->orderRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->orderRepository->find($id, $onlyTrashed);
@@ -59,9 +45,23 @@ class OrderService
         return $this->orderRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->orderRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->orderRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->orderRepository->create($inputs);
     }
 
     public function transactionDelayCheck($data): array
@@ -104,7 +104,7 @@ class OrderService
                 if ($orderCheck->first()) {
                     $returnValue['countValue'] = $orderCheck->count();
                     $remainingTime = strtotime($created_at) - strtotime($orderCheck->first()->order_at);
-                    $returnValue['remainingTime'] = $delayCheck - (int) ($remainingTime / 60);
+                    $returnValue['remainingTime'] = $delayCheck - (int)($remainingTime / 60);
                     $returnValue['delayTime'] = $delayCheck;
                 } else {
                     $returnValue['countValue'] = 0;

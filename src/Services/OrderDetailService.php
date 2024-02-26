@@ -16,20 +16,6 @@ class OrderDetailService
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->orderDetailRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->orderDetailRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->orderDetailRepository->find($id, $onlyTrashed);
@@ -55,9 +41,23 @@ class OrderDetailService
         return $this->orderDetailRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->orderDetailRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->orderDetailRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->orderDetailRepository->create($inputs);
     }
 
     public function orderDetailsDataArrange($data): array

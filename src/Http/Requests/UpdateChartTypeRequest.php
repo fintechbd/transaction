@@ -2,6 +2,8 @@
 
 namespace Fintech\Transaction\Http\Requests;
 
+use Fintech\Transaction\Models\ChartType;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateChartTypeRequest extends FormRequest
@@ -17,11 +19,11 @@ class UpdateChartTypeRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:'.config('fintech.transaction.chart_type_model', \Fintech\Transaction\Models\ChartType::class).',code,'.$this->route('chart_type');
+        $uniqueRule = 'unique:' . config('fintech.transaction.chart_type_model', ChartType::class) . ',code,' . $this->route('chart_type');
 
         return [
             'chart_class_id' => ['required', 'integer', 'min:1'],

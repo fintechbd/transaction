@@ -17,20 +17,6 @@ class ManualRefundService
         $this->manualRefundRepository = $manualRefundRepository;
     }
 
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->manualRefundRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->manualRefundRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->manualRefundRepository->find($id, $onlyTrashed);
@@ -56,8 +42,22 @@ class ManualRefundService
         return $this->manualRefundRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->manualRefundRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->manualRefundRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->manualRefundRepository->create($inputs);
     }
 }

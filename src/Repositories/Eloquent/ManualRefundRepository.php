@@ -3,10 +3,10 @@
 namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Transaction\Interfaces\ManualRefundRepository as InterfacesManualRefundRepository;
+use Fintech\Transaction\Models\ManualRefund;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -16,9 +16,9 @@ class ManualRefundRepository extends OrderRepository implements InterfacesManual
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.manual_refund_model', \Fintech\Transaction\Models\ManualRefund::class));
+        $model = app(config('fintech.transaction.manual_refund_model', ManualRefund::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
         }
 

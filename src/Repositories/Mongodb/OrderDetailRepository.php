@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Mongodb;
 
 use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\OrderDetailRepository as InterfacesOrderDetailRepository;
+use Fintech\Transaction\Models\OrderDetail;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
@@ -16,9 +17,9 @@ class OrderDetailRepository extends MongodbRepository implements InterfacesOrder
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.order_detail_model', \Fintech\Transaction\Models\OrderDetail::class));
+        $model = app(config('fintech.transaction.order_detail_model', OrderDetail::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
         }
 
@@ -36,7 +37,7 @@ class OrderDetailRepository extends MongodbRepository implements InterfacesOrder
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (isset($filters['search']) && !empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -46,7 +47,7 @@ class OrderDetailRepository extends MongodbRepository implements InterfacesOrder
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

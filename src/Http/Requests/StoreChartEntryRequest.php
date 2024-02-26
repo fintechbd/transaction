@@ -2,6 +2,8 @@
 
 namespace Fintech\Transaction\Http\Requests;
 
+use Fintech\Transaction\Models\ChartEntry;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreChartEntryRequest extends FormRequest
@@ -17,11 +19,11 @@ class StoreChartEntryRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:'.config('fintech.transaction.chart_entry_model', \Fintech\Transaction\Models\ChartEntry::class).',code';
+        $uniqueRule = 'unique:' . config('fintech.transaction.chart_entry_model', ChartEntry::class) . ',code';
 
         return [
             'chart_type_id' => ['required', 'integer', 'min:1'],

@@ -2,6 +2,8 @@
 
 namespace Fintech\Transaction\Http\Requests;
 
+use Fintech\Transaction\Models\OrderQueue;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateOrderQueueRequest extends FormRequest
@@ -17,11 +19,11 @@ class UpdateOrderQueueRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {
-        $uniqueRule = 'unique:'.config('fintech.transaction.order_queue_model', \Fintech\Transaction\Models\OrderQueue::class).',user_id,'.$this->route('order_queue');
+        $uniqueRule = 'unique:' . config('fintech.transaction.order_queue_model', OrderQueue::class) . ',user_id,' . $this->route('order_queue');
 
         return [
             'user_id' => ['integer', 'required', 'min:1', $uniqueRule],

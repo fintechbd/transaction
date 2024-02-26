@@ -4,8 +4,8 @@ namespace Fintech\Transaction\Services;
 
 use Fintech\Transaction\Interfaces\OrderQueueRepository;
 use Illuminate\Contracts\Pagination\Paginator;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
+use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class OrderQueueService
@@ -19,23 +19,12 @@ class OrderQueueService
     {
     }
 
-    public function list(array $filters = []): Collection|Paginator
-    {
-        return $this->orderQueueRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = []): Model|\MongoDB\Laravel\Eloquent\Model|null
-    {
-        return $this->orderQueueRepository->create($inputs);
-    }
-
-    public function find($id, bool $onlyTrashed = false): Model|\MongoDB\Laravel\Eloquent\Model|null
+    public function find($id, bool $onlyTrashed = false): Model|Model|null
     {
         return $this->orderQueueRepository->find($id, $onlyTrashed);
     }
 
-    public function update($id, array $inputs = []): Model|\MongoDB\Laravel\Eloquent\Model|null
+    public function update($id, array $inputs = []): Model|Model|null
     {
         return $this->orderQueueRepository->update($id, $inputs);
     }
@@ -55,9 +44,20 @@ class OrderQueueService
         return $this->orderQueueRepository->list($filters);
     }
 
-    public function import(array $filters): Model|\MongoDB\Laravel\Eloquent\Model|null
+    public function list(array $filters = []): Collection|Paginator
+    {
+        return $this->orderQueueRepository->list($filters);
+
+    }
+
+    public function import(array $filters): Model|Model|null
     {
         return $this->orderQueueRepository->create($filters);
+    }
+
+    public function create(array $inputs = []): Model|Model|null
+    {
+        return $this->orderQueueRepository->create($inputs);
     }
 
     public function addToQueueUserWise($user_id): mixed

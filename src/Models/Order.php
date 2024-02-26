@@ -2,15 +2,15 @@
 
 namespace Fintech\Transaction\Models;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\BusinessRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Order extends Model
+class Order extends BaseModel
 {
     use AuditableTrait;
     use AuthRelations;
@@ -50,7 +50,7 @@ class Order extends Model
 
     public function transactionForm(): BelongsTo
     {
-        return $this->belongsTo(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
+        return $this->belongsTo(config('fintech.transaction.transaction_form_model', TransactionForm::class));
     }
 
     /*

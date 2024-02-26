@@ -1,6 +1,25 @@
 <?php
 
 // config for Fintech/Transaction
+use Fintech\Transaction\Models\ChartClass;
+use Fintech\Transaction\Models\ChartEntry;
+use Fintech\Transaction\Models\ChartType;
+use Fintech\Transaction\Models\ManualRefund;
+use Fintech\Transaction\Models\Order;
+use Fintech\Transaction\Models\OrderDetail;
+use Fintech\Transaction\Models\OrderQueue;
+use Fintech\Transaction\Models\TransactionForm;
+use Fintech\Transaction\Models\UserAccount;
+use Fintech\Transaction\Repositories\Eloquent\ChartClassRepository;
+use Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository;
+use Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository;
+use Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository;
+use Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository;
+use Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository;
+use Fintech\Transaction\Repositories\Eloquent\OrderRepository;
+use Fintech\Transaction\Repositories\Eloquent\TransactionFormRepository;
+use Fintech\Transaction\Repositories\Eloquent\UserAccountRepository;
+
 return [
 
     /*
@@ -39,7 +58,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'transaction_form_model' => \Fintech\Transaction\Models\TransactionForm::class,
+    'transaction_form_model' => TransactionForm::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -48,7 +67,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'order_model' => \Fintech\Transaction\Models\Order::class,
+    'order_model' => Order::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -57,7 +76,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'order_detail_model' => \Fintech\Transaction\Models\OrderDetail::class,
+    'order_detail_model' => OrderDetail::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -66,7 +85,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'chart_class_model' => \Fintech\Transaction\Models\ChartClass::class,
+    'chart_class_model' => ChartClass::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -75,7 +94,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'chart_type_model' => \Fintech\Transaction\Models\ChartType::class,
+    'chart_type_model' => ChartType::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -84,7 +103,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'chart_entry_model' => \Fintech\Transaction\Models\ChartEntry::class,
+    'chart_entry_model' => ChartEntry::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +112,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'user_account_model' => \Fintech\Transaction\Models\UserAccount::class,
+    'user_account_model' => UserAccount::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -102,7 +121,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'order_queue_model' => \Fintech\Transaction\Models\OrderQueue::class,
+    'order_queue_model' => OrderQueue::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -111,7 +130,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'manual_refund_model' => \Fintech\Transaction\Models\ManualRefund::class,
+    'manual_refund_model' => ManualRefund::class,
 
     //** Model Config Point Do not Remove **//
 
@@ -124,23 +143,23 @@ return [
     */
 
     'repositories' => [
-        \Fintech\Transaction\Interfaces\TransactionFormRepository::class => \Fintech\Transaction\Repositories\Eloquent\TransactionFormRepository::class,
+        \Fintech\Transaction\Interfaces\TransactionFormRepository::class => TransactionFormRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderRepository::class,
+        \Fintech\Transaction\Interfaces\OrderRepository::class => OrderRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderDetailRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository::class,
+        \Fintech\Transaction\Interfaces\OrderDetailRepository::class => OrderDetailRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartClassRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartClassRepository::class,
+        \Fintech\Transaction\Interfaces\ChartClassRepository::class => ChartClassRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartTypeRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
+        \Fintech\Transaction\Interfaces\ChartTypeRepository::class => ChartTypeRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartEntryRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
+        \Fintech\Transaction\Interfaces\ChartEntryRepository::class => ChartEntryRepository::class,
 
-        \Fintech\Transaction\Interfaces\UserAccountRepository::class => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
+        \Fintech\Transaction\Interfaces\UserAccountRepository::class => UserAccountRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderQueueRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
+        \Fintech\Transaction\Interfaces\OrderQueueRepository::class => OrderQueueRepository::class,
 
-        \Fintech\Transaction\Interfaces\ManualRefundRepository::class => \Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository::class,
+        \Fintech\Transaction\Interfaces\ManualRefundRepository::class => ManualRefundRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

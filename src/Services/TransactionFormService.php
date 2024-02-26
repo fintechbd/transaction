@@ -16,20 +16,6 @@ class TransactionFormService
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->transactionFormRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->transactionFormRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->transactionFormRepository->find($id, $onlyTrashed);
@@ -55,8 +41,22 @@ class TransactionFormService
         return $this->transactionFormRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->transactionFormRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->transactionFormRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->transactionFormRepository->create($inputs);
     }
 }

@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Http\Requests;
 
 use Fintech\Core\Traits\HasPaginateQuery;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class IndexUserAccountRequest extends FormRequest
@@ -20,7 +21,7 @@ class IndexUserAccountRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
+     * @return array<string, ValidationRule|array|string>
      */
     public function rules(): array
     {

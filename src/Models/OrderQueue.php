@@ -2,10 +2,11 @@
 
 namespace Fintech\Transaction\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Fintech\Auth\Models\User;
+use Fintech\Core\Abstracts\BaseModel;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class OrderQueue extends Model
+class OrderQueue extends BaseModel
 {
     /*
     |--------------------------------------------------------------------------
@@ -32,12 +33,12 @@ class OrderQueue extends Model
     */
     public function order(): BelongsTo
     {
-        return $this->belongsTo(config('fintech.transaction.order_model', \Fintech\Transaction\Models\Order::class));
+        return $this->belongsTo(config('fintech.transaction.order_model', Order::class));
     }
 
     public function user(): BelongsTo
     {
-        return $this->belongsTo(config('fintech.auth.user_model', \Fintech\Auth\Models\User::class));
+        return $this->belongsTo(config('fintech.auth.user_model', User::class));
     }
     /*
     |--------------------------------------------------------------------------

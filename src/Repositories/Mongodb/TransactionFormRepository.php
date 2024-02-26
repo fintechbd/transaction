@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Mongodb;
 
 use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\TransactionFormRepository as InterfacesTransactionFormRepository;
+use Fintech\Transaction\Models\TransactionForm;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
@@ -16,9 +17,9 @@ class TransactionFormRepository extends MongodbRepository implements InterfacesT
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.transaction_form_model', \Fintech\Transaction\Models\TransactionForm::class));
+        $model = app(config('fintech.transaction.transaction_form_model', TransactionForm::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
         }
 
@@ -36,7 +37,7 @@ class TransactionFormRepository extends MongodbRepository implements InterfacesT
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && ! empty($filters['search'])) {
+        if (isset($filters['search']) && !empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -46,7 +47,7 @@ class TransactionFormRepository extends MongodbRepository implements InterfacesT
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

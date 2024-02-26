@@ -1,11 +1,11 @@
 <?php
 
+use Fintech\Core\Enums\Auth\RiskProfile;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->string('order_detail_number')->nullable();
             $table->string('order_detail_response_id')->nullable();
             $table->integer('step')->default(0);
-            $table->string('risk')->default(\Fintech\Core\Enums\Auth\RiskProfile::Low->value)->nullable();
+            $table->string('risk')->default(RiskProfile::Low->value)->nullable();
             $table->longText('notes')->nullable();
             $table->boolean('is_refundable')->nullable()->default(false);
             $table->json('order_detail_data')->nullable();

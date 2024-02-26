@@ -2,6 +2,8 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\MetaData\Facades\MetaData;
+use Fintech\MetaData\Models\Country;
 use Fintech\Transaction\Interfaces\UserAccountRepository;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Str;
@@ -16,41 +18,6 @@ class UserAccountService
      */
     public function __construct(private readonly UserAccountRepository $userAccountRepository)
     {
-    }
-
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->userAccountRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        $country = \Fintech\MetaData\Facades\MetaData::country()->find($inputs['country_id']);
-
-        if (! $country) {
-            throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', \Fintech\MetaData\Models\Country::class), $inputs['present_country_id']);
-        }
-
-        $inputs['account_no'] = $this->guessNextAccountNumber($country->getKey());
-        $inputs['user_account_data'] = [
-            'currency' => $country->currency,
-            'currency_name' => $country->currency_name,
-            'currency_symbol' => $country->currency_symbol,
-            'deposit_amount' => 0,
-            'available_amount' => 0,
-            'spent_amount' => 0,
-        ];
-
-        return $this->userAccountRepository->create($inputs);
-    }
-
-    public function find($id, $onlyTrashed = false)
-    {
-        return $this->userAccountRepository->find($id, $onlyTrashed);
     }
 
     public function update($id, array $inputs = [])
@@ -73,9 +40,44 @@ class UserAccountService
         return $this->userAccountRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->userAccountRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->userAccountRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        $country = MetaData::country()->find($inputs['country_id']);
+
+        if (!$country) {
+            throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', Country::class), $inputs['present_country_id']);
+        }
+
+        $inputs['account_no'] = $this->guessNextAccountNumber($country->getKey());
+        $inputs['user_account_data'] = [
+            'currency' => $country->currency,
+            'currency_name' => $country->currency_name,
+            'currency_symbol' => $country->currency_symbol,
+            'deposit_amount' => 0,
+            'available_amount' => 0,
+            'spent_amount' => 0,
+        ];
+
+        return $this->userAccountRepository->create($inputs);
+    }
+
+    public function find($id, $onlyTrashed = false)
+    {
+        return $this->userAccountRepository->find($id, $onlyTrashed);
     }
 
     public function guessNextAccountNumber($country_id): string
@@ -104,6 +106,6 @@ class UserAccountService
 
     private function formatAccountNumber($county_id, $entry_number): string
     {
-        return Str::padLeft($county_id, 3, '0').Str::padLeft($entry_number, 8, '0');
+        return Str::padLeft($county_id, 3, '0') . Str::padLeft($entry_number, 8, '0');
     }
 }

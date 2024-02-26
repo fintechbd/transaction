@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Mongodb;
 
 use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\ManualRefundRepository as InterfacesManualRefundRepository;
+use Fintech\Transaction\Models\ManualRefund;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use InvalidArgumentException;
@@ -16,9 +17,9 @@ class ManualRefundRepository extends MongodbRepository implements InterfacesManu
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.manual_refund_model', \Fintech\Transaction\Models\ManualRefund::class));
+        $model = app(config('fintech.transaction.manual_refund_model', ManualRefund::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
         }
 
@@ -36,7 +37,7 @@ class ManualRefundRepository extends MongodbRepository implements InterfacesManu
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {

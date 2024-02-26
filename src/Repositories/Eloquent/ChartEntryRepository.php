@@ -4,9 +4,9 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\ChartEntryRepository as InterfacesChartEntryRepository;
+use Fintech\Transaction\Models\ChartEntry;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -16,9 +16,9 @@ class ChartEntryRepository extends EloquentRepository implements InterfacesChart
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.chart_entry_model', \Fintech\Transaction\Models\ChartEntry::class));
+        $model = app(config('fintech.transaction.chart_entry_model', ChartEntry::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
         }
 
@@ -36,7 +36,7 @@ class ChartEntryRepository extends EloquentRepository implements InterfacesChart
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {

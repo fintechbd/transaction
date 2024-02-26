@@ -16,20 +16,6 @@ class ChartEntryService
     {
     }
 
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->chartEntryRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->chartEntryRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->chartEntryRepository->find($id, $onlyTrashed);
@@ -55,8 +41,22 @@ class ChartEntryService
         return $this->chartEntryRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->chartEntryRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->chartEntryRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->chartEntryRepository->create($inputs);
     }
 }

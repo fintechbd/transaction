@@ -2,13 +2,13 @@
 
 namespace Fintech\Transaction\Models;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserAccount extends Model
+class UserAccount extends BaseModel
 {
     use AuditableTrait;
     use AuthRelations;

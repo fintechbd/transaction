@@ -4,9 +4,9 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\UserAccountRepository as InterfacesUserAccountRepository;
+use Fintech\Transaction\Models\UserAccount;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
 use InvalidArgumentException;
 
 /**
@@ -16,9 +16,9 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.user_account_model', \Fintech\Transaction\Models\UserAccount::class));
+        $model = app(config('fintech.transaction.user_account_model', UserAccount::class));
 
-        if (! $model instanceof Model) {
+        if (!$model instanceof Model) {
             throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
         }
 
@@ -36,7 +36,7 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -45,19 +45,19 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             }
         }
 
-        if (! empty($filters['currency'])) {
+        if (!empty($filters['currency'])) {
             $query->where('user_account_data->currency', '=', $filters['currency']);
         }
 
-        if (! empty($filters['user_id'])) {
+        if (!empty($filters['user_id'])) {
             $query->where('user_id', '=', $filters['user_id']);
         }
 
-        if (! empty($filters['country_id'])) {
+        if (!empty($filters['country_id'])) {
             $query->where('country_id', '=', $filters['country_id']);
         }
 
-        if (! empty($filters['limit'])) {
+        if (!empty($filters['limit'])) {
             $query->limit($filters['limit']);
         }
 
