@@ -30,7 +30,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
      * return a list or pagination of items from
      * filtered options
      *
-     * @return Builder[]|Paginator|Collection|int|float|mixed
+     * @return Paginator|Collection|int|float|mixed
      */
     public function list(array $filters = []): mixed
     {
