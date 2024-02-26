@@ -16,15 +16,13 @@ use InvalidArgumentException;
  */
 class OrderRepository extends EloquentRepository implements InterfacesOrderRepository
 {
-    public function __construct()
+    public function __construct(string $overwriteClass = null)
     {
-        $model = app(config('fintech.transaction.order_model', Order::class));
+        $className = ($overwriteClass != null)
+            ? $overwriteClass
+            : config('fintech.transaction.order_model', Order::class);
 
-        if (!$model instanceof Model) {
-            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
+        parent::__construct($className);
     }
 
     /**
