@@ -23,7 +23,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static UserAccountService userAccount()
  * @method static OrderQueueService orderQueue()
  * @method static ManualRefundService manualRefund()
- *                                                                                 // Crud Service Method Point Do not Remove //
+ *                                                   // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction
  */

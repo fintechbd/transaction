@@ -7,7 +7,6 @@ use Fintech\Transaction\Interfaces\ChartTypeRepository as InterfacesChartTypeRep
 use Fintech\Transaction\Models\ChartType;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use InvalidArgumentException;
 
 /**
  * Class ChartTypeRepository
@@ -30,7 +29,7 @@ class ChartTypeRepository extends EloquentRepository implements InterfacesChartT
         $query = $this->model->newQuery();
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {

@@ -38,7 +38,7 @@ interface OrderRepository
     /**
      * find and delete a entry from records
      *
-     * @param bool $onlyTrashed
+     * @param  bool  $onlyTrashed
      * @return EloquentModel|MongodbModel|null
      */
     public function find(int|string $id, $onlyTrashed = false);
