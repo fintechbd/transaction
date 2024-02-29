@@ -16,13 +16,7 @@ class ManualRefundRepository extends OrderRepository implements InterfacesManual
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.manual_refund_model', ManualRefund::class));
-
-        if (!$model instanceof Model) {
-            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
+        parent::__construct(config('fintech.transaction.manual_refund_model', ManualRefund::class));
     }
 
     /**

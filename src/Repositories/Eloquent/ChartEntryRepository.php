@@ -16,13 +16,7 @@ class ChartEntryRepository extends EloquentRepository implements InterfacesChart
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.chart_entry_model', ChartEntry::class));
-
-        if (!$model instanceof Model) {
-            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
+        parent::__construct(config('fintech.transaction.chart_entry_model', ChartEntry::class));
     }
 
     /**

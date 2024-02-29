@@ -17,13 +17,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 {
     public function __construct()
     {
-        $model = app(config('fintech.transaction.order_queue_model', OrderQueue::class));
-
-        if (!$model instanceof Model) {
-            throw new InvalidArgumentException("Eloquent repository require model class to be `Illuminate\Database\Eloquent\Model` instance.");
-        }
-
-        $this->model = $model;
+        parent::__construct(config('fintech.transaction.order_queue_model', OrderQueue::class));
     }
 
     /**
