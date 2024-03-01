@@ -86,6 +86,24 @@ class Transaction
         return app(ManualRefundService::class);
     }
 
+    /**
+     * @return \Fintech\Transaction\Services\RewardPointService
+     */
+    public function rewardPoint()
+    {
+        return app(\Fintech\Transaction\Services\RewardPointService::class);
+    }
+
+    /**
+     * @return \Fintech\Transaction\Services\RedeemPointService
+     */
+    public function redeemPoint()
+    {
+        return app(\Fintech\Transaction\Services\RedeemPointService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
+
 
 }

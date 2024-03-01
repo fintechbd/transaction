@@ -132,6 +132,26 @@ return [
     */
     'manual_refund_model' => ManualRefund::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | RewardPoint Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'reward_point_model' => \Fintech\Transaction\Models\RewardPoint::class,
+
+    
+    /*
+    |--------------------------------------------------------------------------
+    | RedeemPoint Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'redeem_point_model' => \Fintech\Transaction\Models\RedeemPoint::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -160,6 +180,10 @@ return [
         \Fintech\Transaction\Interfaces\OrderQueueRepository::class => OrderQueueRepository::class,
 
         \Fintech\Transaction\Interfaces\ManualRefundRepository::class => ManualRefundRepository::class,
+
+        \Fintech\Transaction\Interfaces\RewardPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RewardPointRepository::class,
+
+        \Fintech\Transaction\Interfaces\RedeemPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],
