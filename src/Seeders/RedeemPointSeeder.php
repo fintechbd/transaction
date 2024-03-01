@@ -2,8 +2,8 @@
 
 namespace Fintech\Transaction\Seeders;
 
-use Illuminate\Database\Seeder;
 use Fintech\Transaction\Facades\Transaction;
+use Illuminate\Database\Seeder;
 
 class RedeemPointSeeder extends Seeder
 {
@@ -24,6 +24,6 @@ class RedeemPointSeeder extends Seeder
 
     private function data()
     {
-        return array();
+        return [];
     }
 }

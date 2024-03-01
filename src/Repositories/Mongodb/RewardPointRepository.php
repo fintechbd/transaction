@@ -6,18 +6,15 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\RewardPointRepository as InterfacesRewardPointRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class RewardPointRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class RewardPointRepository extends MongodbRepository implements InterfacesRewardPointRepository
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.transaction.reward_point_model', \Fintech\Transaction\Models\RewardPoint::class));
+        parent::__construct(config('fintech.transaction.reward_point_model', \Fintech\Transaction\Models\RewardPoint::class));
     }
 
     /**

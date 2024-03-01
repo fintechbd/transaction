@@ -2,26 +2,22 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\RedeemPointRepository;
 
 /**
  * Class RedeemPointService
- * @package Fintech\Transaction\Services
- *
  */
 class RedeemPointService
 {
     /**
      * RedeemPointService constructor.
-     * @param RedeemPointRepository $redeemPointRepository
      */
-    public function __construct(RedeemPointRepository $redeemPointRepository) {
+    public function __construct(RedeemPointRepository $redeemPointRepository)
+    {
         $this->redeemPointRepository = $redeemPointRepository;
     }
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

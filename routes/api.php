@@ -58,12 +58,12 @@ if (Config::get('fintech.transaction.enabled')) {
         Route::apiResource('manual-refunds', ManualRefundController::class);
 
         Route::apiResource('reward-points', \Fintech\Transaction\Http\Controllers\RewardPointController::class);
-    Route::post('reward-points/{reward_point}/restore', [\Fintech\Transaction\Http\Controllers\RewardPointController::class, 'restore'])->name('reward-points.restore');
+        Route::post('reward-points/{reward_point}/restore', [\Fintech\Transaction\Http\Controllers\RewardPointController::class, 'restore'])->name('reward-points.restore');
 
-    Route::apiResource('redeem-points', \Fintech\Transaction\Http\Controllers\RedeemPointController::class);
-    Route::post('redeem-points/{redeem_point}/restore', [\Fintech\Transaction\Http\Controllers\RedeemPointController::class, 'restore'])->name('redeem-points.restore');
+        Route::apiResource('redeem-points', \Fintech\Transaction\Http\Controllers\RedeemPointController::class);
+        Route::post('redeem-points/{redeem_point}/restore', [\Fintech\Transaction\Http\Controllers\RedeemPointController::class, 'restore'])->name('redeem-points.restore');
 
-    //DO NOT REMOVE THIS LINE//
+        //DO NOT REMOVE THIS LINE//
     });
     Route::prefix('dropdown')->name('transaction.')->group(function () {
         Route::get('transaction-forms', [TransactionFormController::class, 'dropdown'])->name('transaction-forms.dropdown');
