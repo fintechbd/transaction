@@ -6,18 +6,15 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\RedeemPointRepository as InterfacesRedeemPointRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class RedeemPointRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class RedeemPointRepository extends MongodbRepository implements InterfacesRedeemPointRepository
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.transaction.redeem_point_model', \Fintech\Transaction\Models\RedeemPoint::class));
+        parent::__construct(config('fintech.transaction.redeem_point_model', \Fintech\Transaction\Models\RedeemPoint::class));
     }
 
     /**

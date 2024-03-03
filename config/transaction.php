@@ -132,7 +132,6 @@ return [
     */
     'manual_refund_model' => ManualRefund::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | RewardPoint Model
@@ -142,7 +141,6 @@ return [
     */
     'reward_point_model' => \Fintech\Transaction\Models\RewardPoint::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | RedeemPoint Model

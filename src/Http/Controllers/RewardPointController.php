@@ -1,34 +1,33 @@
 <?php
 
 namespace Fintech\Transaction\Http\Controllers;
+
 use Exception;
-use Fintech\Core\Exceptions\StoreOperationException;
-use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
+use Fintech\Core\Exceptions\StoreOperationException;
+use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Traits\ApiResponseTrait;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Http\Resources\RewardPointResource;
-use Fintech\Transaction\Http\Resources\RewardPointCollection;
 use Fintech\Transaction\Http\Requests\ImportRewardPointRequest;
+use Fintech\Transaction\Http\Requests\IndexRewardPointRequest;
 use Fintech\Transaction\Http\Requests\StoreRewardPointRequest;
 use Fintech\Transaction\Http\Requests\UpdateRewardPointRequest;
-use Fintech\Transaction\Http\Requests\IndexRewardPointRequest;
+use Fintech\Transaction\Http\Resources\RewardPointCollection;
+use Fintech\Transaction\Http\Resources\RewardPointResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
 /**
  * Class RewardPointController
- * @package Fintech\Transaction\Http\Controllers
  *
  * @lrd:start
  * This class handle create, display, update, delete & restore
  * operation related to RewardPoint
- * @lrd:end
  *
+ * @lrd:end
  */
-
 class RewardPointController extends Controller
 {
     use ApiResponseTrait;
@@ -38,10 +37,8 @@ class RewardPointController extends Controller
      * Return a listing of the *RewardPoint* resource as collection.
      *
      * *```paginate=false``` returns all resource as list not pagination*
-     * @lrd:end
      *
-     * @param IndexRewardPointRequest $request
-     * @return RewardPointCollection|JsonResponse
+     * @lrd:end
      */
     public function index(IndexRewardPointRequest $request): RewardPointCollection|JsonResponse
     {
@@ -61,10 +58,9 @@ class RewardPointController extends Controller
     /**
      * @lrd:start
      * Create a new *RewardPoint* resource in storage.
+     *
      * @lrd:end
      *
-     * @param StoreRewardPointRequest $request
-     * @return JsonResponse
      * @throws StoreOperationException
      */
     public function store(StoreRewardPointRequest $request): JsonResponse
@@ -74,14 +70,14 @@ class RewardPointController extends Controller
 
             $rewardPoint = Transaction::rewardPoint()->create($inputs);
 
-            if (!$rewardPoint) {
+            if (! $rewardPoint) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.reward_point_model'));
             }
 
             return $this->created([
                 'message' => __('core::messages.resource.created', ['model' => 'Reward Point']),
-                'id' => $rewardPoint->id
-             ]);
+                'id' => $rewardPoint->id,
+            ]);
 
         } catch (Exception $exception) {
 
@@ -92,10 +88,9 @@ class RewardPointController extends Controller
     /**
      * @lrd:start
      * Return a specified *RewardPoint* resource found by id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
-     * @return RewardPointResource|JsonResponse
      * @throws ModelNotFoundException
      */
     public function show(string|int $id): RewardPointResource|JsonResponse
@@ -104,7 +99,7 @@ class RewardPointController extends Controller
 
             $rewardPoint = Transaction::rewardPoint()->find($id);
 
-            if (!$rewardPoint) {
+            if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
@@ -123,11 +118,9 @@ class RewardPointController extends Controller
     /**
      * @lrd:start
      * Update a specified *RewardPoint* resource using id.
+     *
      * @lrd:end
      *
-     * @param UpdateRewardPointRequest $request
-     * @param string|int $id
-     * @return JsonResponse
      * @throws ModelNotFoundException
      * @throws UpdateOperationException
      */
@@ -137,13 +130,13 @@ class RewardPointController extends Controller
 
             $rewardPoint = Transaction::rewardPoint()->find($id);
 
-            if (!$rewardPoint) {
+            if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
             $inputs = $request->validated();
 
-            if (!Transaction::rewardPoint()->update($id, $inputs)) {
+            if (! Transaction::rewardPoint()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -163,10 +156,11 @@ class RewardPointController extends Controller
     /**
      * @lrd:start
      * Soft delete a specified *RewardPoint* resource using id.
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
+     *
      * @throws ModelNotFoundException
      * @throws DeleteOperationException
      */
@@ -176,11 +170,11 @@ class RewardPointController extends Controller
 
             $rewardPoint = Transaction::rewardPoint()->find($id);
 
-            if (!$rewardPoint) {
+            if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
-            if (!Transaction::rewardPoint()->destroy($id)) {
+            if (! Transaction::rewardPoint()->destroy($id)) {
 
                 throw (new DeleteOperationException())->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -201,9 +195,9 @@ class RewardPointController extends Controller
      * @lrd:start
      * Restore the specified *RewardPoint* resource from trash.
      * ** ```Soft Delete``` needs to enabled to use this feature**
+     *
      * @lrd:end
      *
-     * @param string|int $id
      * @return JsonResponse
      */
     public function restore(string|int $id)
@@ -212,11 +206,11 @@ class RewardPointController extends Controller
 
             $rewardPoint = Transaction::rewardPoint()->find($id, true);
 
-            if (!$rewardPoint) {
+            if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
-            if (!Transaction::rewardPoint()->restore($id)) {
+            if (! Transaction::rewardPoint()->restore($id)) {
 
                 throw (new RestoreOperationException())->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -239,9 +233,6 @@ class RewardPointController extends Controller
      * After export job is done system will fire  export completed event
      *
      * @lrd:end
-     *
-     * @param IndexRewardPointRequest $request
-     * @return JsonResponse
      */
     public function export(IndexRewardPointRequest $request): JsonResponse
     {
@@ -265,7 +256,6 @@ class RewardPointController extends Controller
      *
      * @lrd:end
      *
-     * @param ImportRewardPointRequest $request
      * @return RewardPointCollection|JsonResponse
      */
     public function import(ImportRewardPointRequest $request): JsonResponse

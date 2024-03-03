@@ -9,7 +9,6 @@ use Fintech\Core\Abstracts\BaseModel;
 
 /**
  * Interface RedeemPointRepository
- * @package Fintech\Transaction\Interfaces
  */
 interface RedeemPointRepository
 {
@@ -17,7 +16,6 @@ interface RedeemPointRepository
      * return a list or pagination of items from
      * filtered options
      *
-     * @param array $filters
      * @return Paginator|Collection
      */
     public function list(array $filters = []);
@@ -50,14 +48,12 @@ interface RedeemPointRepository
 
     /**
      * find and delete a entry from records
-     * @param int|string $id
      */
     public function delete(int|string $id);
 
     /**
      * find and restore a entry from records
      *
-     * @param int|string $id
      * @throws \InvalidArgumentException
      */
     public function restore(int|string $id);
