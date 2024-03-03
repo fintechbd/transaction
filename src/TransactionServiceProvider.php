@@ -18,6 +18,9 @@ class TransactionServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             __DIR__.'/../config/transaction.php', 'fintech.transaction'
         );
+
+        $this->app->register(RouteServiceProvider::class);
+        $this->app->register(RepositoryServiceProvider::class);
     }
 
     /**

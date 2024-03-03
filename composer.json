@@ -60,9 +60,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Fintech\\Transaction\\TransactionServiceProvider",
-                "Fintech\\Transaction\\RepositoryServiceProvider",
-                "Fintech\\Transaction\\RouteServiceProvider"
+                "Fintech\\Transaction\\TransactionServiceProvider"
             ],
             "aliases": {
                 "Transaction": "Fintech\\Transaction\\Facades\\Transaction"
