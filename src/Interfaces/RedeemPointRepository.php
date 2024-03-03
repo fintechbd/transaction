@@ -2,10 +2,9 @@
 
 namespace Fintech\Transaction\Interfaces;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use Fintech\Core\Abstracts\BaseModel;
-
 
 /**
  * Interface RedeemPointRepository
@@ -23,7 +22,6 @@ interface RedeemPointRepository
     /**
      * Create a new entry resource
      *
-     * @param array $attributes
      * @return BaseModel
      */
     public function create(array $attributes = []);
@@ -31,8 +29,6 @@ interface RedeemPointRepository
     /**
      * find and update a resource attributes
      *
-     * @param int|string $id
-     * @param array $attributes
      * @return BaseModel
      */
     public function update(int|string $id, array $attributes = []);
@@ -40,8 +36,7 @@ interface RedeemPointRepository
     /**
      * find and delete a entry from records
      *
-     * @param int|string $id
-     * @param bool $onlyTrashed
+     * @param  bool  $onlyTrashed
      * @return BaseModel
      */
     public function find(int|string $id, $onlyTrashed = false);
