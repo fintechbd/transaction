@@ -19,12 +19,12 @@ class OrderQueueService
     {
     }
 
-    public function find($id, bool $onlyTrashed = false): Model|Model|null
+    public function find($id, bool $onlyTrashed = false): Model|null
     {
         return $this->orderQueueRepository->find($id, $onlyTrashed);
     }
 
-    public function update($id, array $inputs = []): Model|Model|null
+    public function update($id, array $inputs = []): Model|null
     {
         return $this->orderQueueRepository->update($id, $inputs);
     }
@@ -50,12 +50,12 @@ class OrderQueueService
 
     }
 
-    public function import(array $filters): Model|Model|null
+    public function import(array $filters): Model|null
     {
         return $this->orderQueueRepository->create($filters);
     }
 
-    public function create(array $inputs = []): Model|Model|null
+    public function create(array $inputs = []): Model|null
     {
         return $this->orderQueueRepository->create($inputs);
     }
