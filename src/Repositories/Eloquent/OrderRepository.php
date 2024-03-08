@@ -40,7 +40,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query->leftJoin('service_types', 'service_types.id', '=', 'services.service_type_id');
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->orWhere('orders.' . $this->model->getKeyName(), 'like', "%{$filters['search']}%")
                     ->orWhere('orders.amount', 'like', "%{$filters['search']}%")
@@ -72,7 +72,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         if (isset($filters['user_id_sender_receiver_id']) && $filters['user_id_sender_receiver_id']) {
-            $query->where(function ($query) use ($filters, $modelTable) {
+            $query->where(function ($query) use ($filters) {
                 $query->where('orders.user_id', $filters['user_id_sender_receiver_id']);
                 $query->orWhere('orders.sender_receiver_id', $filters['user_id_sender_receiver_id']);
             });
