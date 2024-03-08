@@ -63,6 +63,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.id', '=', $filters['order_id']);
         }
 
+        if (isset($filters['parent_id']) && $filters['parent_id']) {
+            $query->where('orders.parent_id', '=', $filters['parent_id']);
+        }
+
         if (isset($filters['user_id']) && $filters['user_id']) {
             $query->where('orders.user_id', '=', $filters['user_id']);
         }
