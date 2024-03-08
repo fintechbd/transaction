@@ -42,7 +42,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         //Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
-                $query->where('orders.' . $this->model->getKeyName(), 'like', "%{$filters['search']}%")
+                $query->where('orders.'.$this->model->getKeyName(), 'like', "%{$filters['search']}%")
                     ->orWhere('orders.amount', 'like', "%{$filters['search']}%")
                     ->orWhere('orders.converted_amount', 'like', "%{$filters['search']}%");
             } else {
@@ -133,23 +133,23 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
             isset($filters['order_end_date']) && $filters['order_end_date'] != '0000-00-00' && $filters['order_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_end_date']]);
+            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_end_date']]);
         }
 
         if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
             empty($filters['order_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_start_date']]);
+            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_start_date']]);
         }
 
         if (isset($filters['order_end_date']) && $filters['order_end_date'] != '0000-00-00' && $filters['order_end_date'] != '' &&
             empty($filters['order_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_end_date'], $filters['order_end_date']]);
+            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_end_date'], $filters['order_end_date']]);
         }
 
         if (isset($filters['order_date']) && $filters['order_date'] != '0000-00-00' && $filters['order_date'] != '') {
-            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_date'], $filters['order_date']]);
+            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_date'], $filters['order_date']]);
         }
 
         if (isset($filters['created_at_start_date_time']) && $filters['created_at_start_date_time'] != '0000-00-00'
@@ -163,23 +163,23 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
             isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE(' . 'orders.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
+            $query->whereBetween(DB::raw('DATE('.'orders.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
         //@TODO using between for better result
         if ((isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '')
             && empty($filters['created_at_end_date'])) {
-            $query->whereBetween(DB::raw('DATE(' . 'orders.created_at)'), [$filters['created_at_start_date'], now()->format('Y-m-d')]);
+            $query->whereBetween(DB::raw('DATE('.'orders.created_at)'), [$filters['created_at_start_date'], now()->format('Y-m-d')]);
         }
 
         if (isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
             && empty($filters['created_at_start_date'])
         ) {
-            $query->where(DB::raw('DATE(' . 'orders.created_at)'), '<=', $filters['created_at_end_date']);
+            $query->where(DB::raw('DATE('.'orders.created_at)'), '<=', $filters['created_at_end_date']);
         }
 
         if (isset($filters['created_at_date']) && $filters['created_at_date'] != '0000-00-00' && $filters['created_at_date'] != '') {
-            $query->where(DB::raw('DATE(' . 'orders.created_at)'), '=', $filters['created_at_date']);
+            $query->where(DB::raw('DATE('.'orders.created_at)'), '=', $filters['created_at_date']);
         }
 
         if (isset($filters['status']) && $filters['status']) {
@@ -194,15 +194,15 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.source_country_id', $filters['source_country_id']);
         }
 
-        if (!empty($filters['source_country_id_array'])) {
+        if (! empty($filters['source_country_id_array'])) {
             $query->whereIn('orders.source_country_id', $filters['source_country_id_array']);
         }
 
-        if (!empty($filters['destination_country_id'])) {
+        if (! empty($filters['destination_country_id'])) {
             $query->where('orders.destination_country_id', $filters['destination_country_id']);
         }
 
-        if (!empty($filters['destination_country_id_array'])) {
+        if (! empty($filters['destination_country_id_array'])) {
             $query->where('orders.destination_country_id', $filters['destination_country_id_array']);
         }
 
@@ -227,8 +227,8 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         if (isset($filters['sum_converted_amount']) && $filters['sum_converted_amount'] === true) {
-            $query->selectRaw("SUM(`orders`.`converted_amount`) as `total`, `orders`.`converted_currency` as `currency`")
-                ->groupBy("orders.converted_currency");
+            $query->selectRaw('SUM(`orders`.`converted_amount`) as `total`, `orders`.`converted_currency` as `currency`')
+                ->groupBy('orders.converted_currency');
         } else {
             $query->select('orders.*', DB::raw('transaction_forms.name AS transaction_form_name'));
         }
