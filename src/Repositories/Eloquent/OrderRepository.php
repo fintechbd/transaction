@@ -42,16 +42,29 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         //Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
-                $query->where('orders.'.$this->model->getKeyName(), 'like', "%{$filters['search']}%")
+                $query->where(function ($query) use ($filters) {
+                    $query->where('orders.'.$this->model->getKeyName(), 'like', "%{$filters['search']}%");
+                    $query->orWhere('orders.amount', 'like', "%{$filters['search']}%");
+                    $query->orWhere('orders.converted_amount', 'like', "%{$filters['search']}%");
+                });
+                /*$query->where('orders.'.$this->model->getKeyName(), 'like', "%{$filters['search']}%")
                     ->orWhere('orders.amount', 'like', "%{$filters['search']}%")
-                    ->orWhere('orders.converted_amount', 'like', "%{$filters['search']}%");
+                    ->orWhere('orders.converted_amount', 'like', "%{$filters['search']}%");*/
             } else {
-                $query->orWhere('orders.order_data', 'like', "%{$filters['search']}%")
+                $query->where(function ($query) use ($filters) {
+                    $query->where('orders.order_data', 'like', "%{$filters['search']}%");
+                    $query->orWhere('orders.currency', 'like', "%{$filters['search']}%");
+                    $query->orWhere('orders.converted_currency', 'like', "%{$filters['search']}%");
+                    $query->orWhere('orders.order_number', 'like', "%{$filters['search']}%");
+                    $query->orWhere('orders.status', 'like', "%{$filters['search']}%");
+                    $query->orWhere('services.service_name', 'like', "%{$filters['search']}%");
+                });
+                /*$query->orWhere('orders.order_data', 'like', "%{$filters['search']}%")
                     ->orWhere('orders.currency', 'like', "%{$filters['search']}%")
                     ->orWhere('orders.converted_currency', 'like', "%{$filters['search']}%")
                     ->orWhere('orders.order_number', 'like', "%{$filters['search']}%")
                     ->orWhere('orders.status', 'like', "%{$filters['search']}%")
-                    ->orWhere('services.service_name', 'like', "%{$filters['search']}%");
+                    ->orWhere('services.service_name', 'like', "%{$filters['search']}%");*/
             }
         }
 
