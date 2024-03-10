@@ -19,7 +19,7 @@ class UserAccountUsageResource extends ResourceCollection
             return [
                 'label' => $entry->currency,
                 'data' => round(floatval($entry->total), 2),
-                'color' => Currency::get($entry->currency)['color'] ?? '#000000',
+                'color' => Currency::config($entry->currency)['color'] ?? '#000000',
             ];
         })->toArray();
     }
