@@ -2,12 +2,15 @@
 
 namespace Fintech\Transaction;
 
+use Fintech\Core\Traits\RegisterPackageTrait;
 use Fintech\Transaction\Commands\InstallCommand;
 use Fintech\Transaction\Commands\TransactionCommand;
 use Illuminate\Support\ServiceProvider;
 
 class TransactionServiceProvider extends ServiceProvider
 {
+    use RegisterPackageTrait;
+
     /**
      * Register any application services.
      *
@@ -15,6 +18,8 @@ class TransactionServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->packageCode = 'transaction';
+
         $this->mergeConfigFrom(
             __DIR__.'/../config/transaction.php', 'fintech.transaction'
         );
@@ -28,6 +33,8 @@ class TransactionServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        $this->injectOnConfig();
+
         $this->publishes([
             __DIR__.'/../config/transaction.php' => config_path('fintech/transaction.php'),
         ]);
