@@ -5,6 +5,8 @@ namespace Fintech\Transaction;
 use Fintech\Core\Traits\RegisterPackageTrait;
 use Fintech\Transaction\Commands\InstallCommand;
 use Fintech\Transaction\Commands\TransactionCommand;
+use Fintech\Transaction\Providers\RepositoryServiceProvider;
+use Fintech\Transaction\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class TransactionServiceProvider extends ServiceProvider
