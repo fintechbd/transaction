@@ -4,9 +4,7 @@ namespace Fintech\Transaction;
 
 use Fintech\Core\Traits\RegisterPackageTrait;
 use Fintech\Transaction\Commands\InstallCommand;
-use Fintech\Transaction\Commands\TransactionCommand;
 use Fintech\Transaction\Providers\RepositoryServiceProvider;
-use Fintech\Transaction\Providers\RouteServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
 class TransactionServiceProvider extends ServiceProvider
@@ -26,7 +24,6 @@ class TransactionServiceProvider extends ServiceProvider
             __DIR__.'/../config/transaction.php', 'fintech.transaction'
         );
 
-        $this->app->register(RouteServiceProvider::class);
         $this->app->register(RepositoryServiceProvider::class);
     }
 
@@ -57,8 +54,7 @@ class TransactionServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
             $this->commands([
-                InstallCommand::class,
-                TransactionCommand::class,
+                InstallCommand::class
             ]);
         }
     }
