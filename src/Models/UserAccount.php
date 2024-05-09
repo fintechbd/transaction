@@ -63,9 +63,9 @@ class UserAccount extends BaseModel
         $primaryKey = $this->getKey();
 
         $links = [
-            'show' => action_link(route('transaction.user-accounts.show', $primaryKey), __('core::messages.action.show'), 'get'),
-            'destroy' => action_link(route('transaction.user-accounts.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
-            'restore' => action_link(route('transaction.user-accounts.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
+            'show' => action_link(route('transaction.user-accounts.show', $primaryKey), __('restapi::messages.action.show'), 'get'),
+            'destroy' => action_link(route('transaction.user-accounts.destroy', $primaryKey), __('restapi::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('transaction.user-accounts.restore', $primaryKey), __('restapi::messages.action.restore'), 'post'),
         ];
 
         if ($this->getAttribute('deleted_at') == null) {
