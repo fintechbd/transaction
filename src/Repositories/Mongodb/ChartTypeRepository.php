@@ -19,7 +19,7 @@ class ChartTypeRepository extends MongodbRepository implements InterfacesChartTy
     {
         $model = app(config('fintech.transaction.chart_type_model', ChartType::class));
 
-        if (!$model instanceof Model) {
+        if (! $model instanceof Model) {
             throw new InvalidArgumentException("Mongodb repository require model class to be `MongoDB\Laravel\Eloquent\Model` instance.");
         }
 
@@ -37,7 +37,7 @@ class ChartTypeRepository extends MongodbRepository implements InterfacesChartTy
         $query = $this->model->newQuery();
 
         //Searching
-        if (isset($filters['search']) && !empty($filters['search'])) {
+        if (isset($filters['search']) && ! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -47,7 +47,7 @@ class ChartTypeRepository extends MongodbRepository implements InterfacesChartTy
         }
 
         //Display Trashed
-        if (isset($filters['trashed']) && !empty($filters['trashed'])) {
+        if (isset($filters['trashed']) && ! empty($filters['trashed'])) {
             $query->onlyTrashed();
         }
 

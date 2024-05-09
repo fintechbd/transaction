@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static ManualRefundService manualRefund()
  * @method static RewardPointService rewardPoint()
  * @method static RedeemPointService redeemPoint()
- *                                                                               // Crud Service Method Point Do not Remove //
+ *                                                 // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction
  */
