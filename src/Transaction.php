@@ -9,6 +9,8 @@ use Fintech\Transaction\Services\ManualRefundService;
 use Fintech\Transaction\Services\OrderDetailService;
 use Fintech\Transaction\Services\OrderQueueService;
 use Fintech\Transaction\Services\OrderService;
+use Fintech\Transaction\Services\RedeemPointService;
+use Fintech\Transaction\Services\RewardPointService;
 use Fintech\Transaction\Services\TransactionFormService;
 use Fintech\Transaction\Services\UserAccountService;
 
@@ -87,19 +89,19 @@ class Transaction
     }
 
     /**
-     * @return \Fintech\Transaction\Services\RewardPointService
+     * @return RewardPointService
      */
     public function rewardPoint()
     {
-        return app(\Fintech\Transaction\Services\RewardPointService::class);
+        return app(RewardPointService::class);
     }
 
     /**
-     * @return \Fintech\Transaction\Services\RedeemPointService
+     * @return RedeemPointService
      */
     public function redeemPoint()
     {
-        return app(\Fintech\Transaction\Services\RedeemPointService::class);
+        return app(RedeemPointService::class);
     }
 
     //** Crud Service Method Point Do not Remove **//

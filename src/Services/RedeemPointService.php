@@ -17,20 +17,6 @@ class RedeemPointService
         $this->redeemPointRepository = $redeemPointRepository;
     }
 
-    /**
-     * @return mixed
-     */
-    public function list(array $filters = [])
-    {
-        return $this->redeemPointRepository->list($filters);
-
-    }
-
-    public function create(array $inputs = [])
-    {
-        return $this->redeemPointRepository->create($inputs);
-    }
-
     public function find($id, $onlyTrashed = false)
     {
         return $this->redeemPointRepository->find($id, $onlyTrashed);
@@ -56,8 +42,22 @@ class RedeemPointService
         return $this->redeemPointRepository->list($filters);
     }
 
+    /**
+     * @return mixed
+     */
+    public function list(array $filters = [])
+    {
+        return $this->redeemPointRepository->list($filters);
+
+    }
+
     public function import(array $filters)
     {
         return $this->redeemPointRepository->create($filters);
+    }
+
+    public function create(array $inputs = [])
+    {
+        return $this->redeemPointRepository->create($inputs);
     }
 }

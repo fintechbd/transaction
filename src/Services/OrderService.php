@@ -104,7 +104,7 @@ class OrderService
                 if ($orderCheck->first()) {
                     $returnValue['countValue'] = $orderCheck->count();
                     $remainingTime = strtotime($created_at) - strtotime($orderCheck->first()->order_at);
-                    $returnValue['remainingTime'] = $delayCheck - (int) ($remainingTime / 60);
+                    $returnValue['remainingTime'] = $delayCheck - (int)($remainingTime / 60);
                     $returnValue['delayTime'] = $delayCheck;
                 } else {
                     $returnValue['countValue'] = 0;

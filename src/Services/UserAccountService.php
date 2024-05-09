@@ -58,7 +58,7 @@ class UserAccountService
     {
         $country = MetaData::country()->find($inputs['country_id']);
 
-        if (! $country) {
+        if (!$country) {
             throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', Country::class), $inputs['present_country_id']);
         }
 
@@ -106,6 +106,6 @@ class UserAccountService
 
     private function formatAccountNumber($county_id, $entry_number): string
     {
-        return Str::padLeft($county_id, 3, '0').Str::padLeft($entry_number, 8, '0');
+        return Str::padLeft($county_id, 3, '0') . Str::padLeft($entry_number, 8, '0');
     }
 }

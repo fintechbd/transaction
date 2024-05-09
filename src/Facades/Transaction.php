@@ -9,6 +9,8 @@ use Fintech\Transaction\Services\ManualRefundService;
 use Fintech\Transaction\Services\OrderDetailService;
 use Fintech\Transaction\Services\OrderQueueService;
 use Fintech\Transaction\Services\OrderService;
+use Fintech\Transaction\Services\RedeemPointService;
+use Fintech\Transaction\Services\RewardPointService;
 use Fintech\Transaction\Services\TransactionFormService;
 use Fintech\Transaction\Services\UserAccountService;
 use Illuminate\Support\Facades\Facade;
@@ -23,8 +25,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static UserAccountService userAccount()
  * @method static OrderQueueService orderQueue()
  * @method static ManualRefundService manualRefund()
- * @method static \Fintech\Transaction\Services\RewardPointService rewardPoint()
- * @method static \Fintech\Transaction\Services\RedeemPointService redeemPoint()
+ * @method static RewardPointService rewardPoint()
+ * @method static RedeemPointService redeemPoint()
  *                                                                               // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction

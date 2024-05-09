@@ -8,6 +8,8 @@ use Fintech\Transaction\Models\ManualRefund;
 use Fintech\Transaction\Models\Order;
 use Fintech\Transaction\Models\OrderDetail;
 use Fintech\Transaction\Models\OrderQueue;
+use Fintech\Transaction\Models\RedeemPoint;
+use Fintech\Transaction\Models\RewardPoint;
 use Fintech\Transaction\Models\TransactionForm;
 use Fintech\Transaction\Models\UserAccount;
 use Fintech\Transaction\Repositories\Eloquent\ChartClassRepository;
@@ -17,6 +19,8 @@ use Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository;
 use Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository;
 use Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository;
 use Fintech\Transaction\Repositories\Eloquent\OrderRepository;
+use Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository;
+use Fintech\Transaction\Repositories\Eloquent\RewardPointRepository;
 use Fintech\Transaction\Repositories\Eloquent\TransactionFormRepository;
 use Fintech\Transaction\Repositories\Eloquent\UserAccountRepository;
 
@@ -139,7 +143,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'reward_point_model' => \Fintech\Transaction\Models\RewardPoint::class,
+    'reward_point_model' => RewardPoint::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -148,7 +152,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'redeem_point_model' => \Fintech\Transaction\Models\RedeemPoint::class,
+    'redeem_point_model' => RedeemPoint::class,
 
     //** Model Config Point Do not Remove **//
 
@@ -179,9 +183,9 @@ return [
 
         \Fintech\Transaction\Interfaces\ManualRefundRepository::class => ManualRefundRepository::class,
 
-        \Fintech\Transaction\Interfaces\RewardPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RewardPointRepository::class,
+        \Fintech\Transaction\Interfaces\RewardPointRepository::class => RewardPointRepository::class,
 
-        \Fintech\Transaction\Interfaces\RedeemPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository::class,
+        \Fintech\Transaction\Interfaces\RedeemPointRepository::class => RedeemPointRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

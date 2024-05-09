@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Mongodb;
 
 use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\RewardPointRepository as InterfacesRewardPointRepository;
+use Fintech\Transaction\Models\RewardPoint;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,7 +15,7 @@ class RewardPointRepository extends MongodbRepository implements InterfacesRewar
 {
     public function __construct()
     {
-        parent::__construct(config('fintech.transaction.reward_point_model', \Fintech\Transaction\Models\RewardPoint::class));
+        parent::__construct(config('fintech.transaction.reward_point_model', RewardPoint::class));
     }
 
     /**
@@ -28,7 +29,7 @@ class RewardPointRepository extends MongodbRepository implements InterfacesRewar
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
