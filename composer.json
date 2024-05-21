@@ -35,7 +35,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Fintech\\Transaction\\": "src/"
+            "Fintech\\Transaction\\": "src/",
+            "Fintech\\Transaction\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {

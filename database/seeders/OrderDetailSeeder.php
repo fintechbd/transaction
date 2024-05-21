@@ -1,11 +1,11 @@
 <?php
 
-namespace Fintech\Transaction\Seeders;
+namespace seeders;
 
 use Fintech\Transaction\Facades\Transaction;
 use Illuminate\Database\Seeder;
 
-class ChartTypeSeeder extends Seeder
+class OrderDetailSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,7 +17,7 @@ class ChartTypeSeeder extends Seeder
         foreach (array_chunk($data, 200) as $block) {
             set_time_limit(2100);
             foreach ($block as $entry) {
-                Transaction::chartType()->create($entry);
+                Transaction::orderDetail()->create($entry);
             }
         }
     }
