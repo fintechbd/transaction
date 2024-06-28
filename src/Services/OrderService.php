@@ -16,9 +16,7 @@ class OrderService
     /**
      * OrderService constructor.
      */
-    public function __construct(private readonly OrderRepository $orderRepository)
-    {
-    }
+    public function __construct(private readonly OrderRepository $orderRepository) {}
 
     public function find($id, $onlyTrashed = false)
     {

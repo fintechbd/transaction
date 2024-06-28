@@ -16,9 +16,7 @@ class UserAccountService
     /**
      * UserAccountService constructor.
      */
-    public function __construct(private readonly UserAccountRepository $userAccountRepository)
-    {
-    }
+    public function __construct(private readonly UserAccountRepository $userAccountRepository) {}
 
     public function update($id, array $inputs = [])
     {
