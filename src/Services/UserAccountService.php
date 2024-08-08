@@ -57,7 +57,7 @@ class UserAccountService
         $country = MetaData::country()->find($inputs['country_id']);
 
         if (! $country) {
-            throw (new ModelNotFoundException())->setModel(config('fintech.metadata.country_model', Country::class), $inputs['present_country_id']);
+            throw (new ModelNotFoundException)->setModel(config('fintech.metadata.country_model', Country::class), $inputs['present_country_id']);
         }
 
         $inputs['account_no'] = $this->guessNextAccountNumber($country->getKey());
