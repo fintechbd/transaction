@@ -53,6 +53,11 @@ class Order extends BaseModel
         return $this->belongsTo(config('fintech.transaction.transaction_form_model', TransactionForm::class));
     }
 
+    public function assignedUser(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.auth.user_model', \Fintech\Auth\Models\User::class));
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
