@@ -18,8 +18,6 @@ class OrderQueue extends BaseModel
 
     protected $guarded = ['id'];
 
-
-
     /*
     |--------------------------------------------------------------------------
     | FUNCTIONS

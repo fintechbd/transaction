@@ -21,8 +21,6 @@ class RewardPoint extends BaseModel
 
     protected $guarded = ['id'];
 
-
-
     protected $casts = ['reward_point_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];

@@ -25,8 +25,6 @@ class UserAccount extends BaseModel
 
     protected $guarded = ['id'];
 
-
-
     protected $casts = ['user_account_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
