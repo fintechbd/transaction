@@ -30,7 +30,7 @@ class Order extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['order_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

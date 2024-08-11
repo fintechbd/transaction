@@ -22,7 +22,7 @@ class ChartEntry extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['chart_entry_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

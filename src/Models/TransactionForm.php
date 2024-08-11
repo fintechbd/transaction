@@ -21,7 +21,7 @@ class TransactionForm extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['transaction_form_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

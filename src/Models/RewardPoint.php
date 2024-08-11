@@ -21,7 +21,7 @@ class RewardPoint extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['reward_point_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

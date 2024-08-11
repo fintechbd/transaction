@@ -21,7 +21,7 @@ class RedeemPoint extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['redeem_point_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

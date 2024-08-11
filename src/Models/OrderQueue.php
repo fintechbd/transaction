@@ -18,7 +18,7 @@ class OrderQueue extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     /*
     |--------------------------------------------------------------------------

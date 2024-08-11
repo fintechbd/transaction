@@ -21,7 +21,7 @@ class OrderDetail extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['order_detail_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

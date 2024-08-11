@@ -22,7 +22,7 @@ class ChartType extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $appends = ['links'];
+
 
     protected $casts = ['chart_type_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 
