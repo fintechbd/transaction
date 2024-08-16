@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->foreignId('service_vendor_id')->nullable()->after('service_id');
+            $table->foreignId('service_vendor_id')->default(config('fintech.business.default_vendor', 1))->after('service_id');
             $table->json('timeline')->nullable()->after('status');
         });
     }
