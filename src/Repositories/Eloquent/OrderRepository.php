@@ -135,7 +135,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['order_start_date_time']) && $filters['order_start_date_time'] != '0000-00-00' && $filters['order_start_date_time'] != '' &&
             isset($filters['order_end_date_time']) && $filters['order_end_date_time'] != '0000-00-00' && $filters['order_end_date_time'] != ''
         ) {
-            $query->whereBetween('orders.order_date', [$filters['order_start_date_time'], $filters['order_end_date_time']]);
+            $query->whereBetween('orders.ordered_at', [$filters['order_start_date_time'], $filters['order_end_date_time']]);
         }
 
         if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
@@ -232,7 +232,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         //Handle Sorting
-        $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
+        $query->orderBy($filters['sort'] ?? 'orders.'.$this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         if (isset($filters['sum_converted_amount']) && $filters['sum_converted_amount'] === true) {
             $query->selectRaw('SUM(`orders`.`converted_amount`) as `total`, `orders`.`converted_currency` as `currency`')
