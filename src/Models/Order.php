@@ -56,6 +56,11 @@ class Order extends BaseModel
         return $this->belongsTo(config('fintech.auth.user_model', \Fintech\Auth\Models\User::class));
     }
 
+    public function serviceVendor(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.business.service_vendor_model', \Fintech\Business\Models\ServiceVendor::class));
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES
