@@ -258,12 +258,12 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
     public function create(array $attributes = []): mixed
     {
         if (Core::packageExists('MetaData')) {
-            if (!empty($attributes['order_data']['fund_source'])) {
+            if (! empty($attributes['order_data']['fund_source'])) {
                 $attributes['order_data']['fund_source_name'] = \Fintech\MetaData\Facades\MetaData::fundSource()
                     ->find($attributes['order_data']['fund_source'])->name ?? null;
             }
 
-            if (!empty($attributes['order_data']['remittance_purpose'])) {
+            if (! empty($attributes['order_data']['remittance_purpose'])) {
                 $attributes['order_data']['remittance_purpose_name'] = \Fintech\MetaData\Facades\MetaData::remittancePurpose()
                     ->find($attributes['order_data']['remittance_purpose'])->name ?? null;
             }
