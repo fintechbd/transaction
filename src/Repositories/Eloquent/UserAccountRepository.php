@@ -42,6 +42,14 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             $query->where('user_account_data->currency', '=', $filters['currency']);
         }
 
+        if (!empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getKeyName(), (array)$filters['id_not_in']);
+        }
+
+        if (!empty($filters['id_in'])) {
+            $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
+        }
+
         if (! empty($filters['user_id'])) {
             $query->where('user_id', '=', $filters['user_id']);
         }
