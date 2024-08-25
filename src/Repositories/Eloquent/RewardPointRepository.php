@@ -38,12 +38,12 @@ class RewardPointRepository extends EloquentRepository implements InterfacesRewa
             }
         }
 
-        if (!empty($filters['id_not_in'])) {
-            $query->whereNotIn($this->model->getKeyName(), (array)$filters['id_not_in']);
+        if (! empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getKeyName(), (array) $filters['id_not_in']);
         }
 
-        if (!empty($filters['id_in'])) {
-            $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
+        if (! empty($filters['id_in'])) {
+            $query->whereIn($this->model->getKeyName(), (array) $filters['id_in']);
         }
 
         //Display Trashed
