@@ -21,6 +21,10 @@ return new class extends Migration
                 $table->foreignId('sender_receiver_id')->nullable();
                 $table->foreignId('user_id')->nullable();
                 $table->foreignId('service_id')->nullable();
+                $table->foreignId('service_vendor_id')
+                    ->default(config('fintech.business.default_vendor', 1));
+                $table->string('vendor')
+                    ->default(Str::slug(config('fintech.business.default_vendor_name'), '_'));
                 $table->foreignId('transaction_form_id')->nullable();
                 $table->dateTime('ordered_at')->nullable();
                 $table->decimal('amount', 19, 6)->nullable();
@@ -33,6 +37,8 @@ return new class extends Migration
                 $table->boolean('is_refunded')->nullable()->default(false)->comment('if money has refunded');
                 $table->json('order_data')->nullable();
                 $table->string('status')->default(OrderStatus::Processing->value);
+                $table->foreignId('assigned_user_id')->nullable();
+                $table->json('timeline')->nullable();
                 $table->foreignId('creator_id')->nullable();
                 $table->foreignId('editor_id')->nullable();
                 $table->foreignId('destroyer_id')->nullable();
