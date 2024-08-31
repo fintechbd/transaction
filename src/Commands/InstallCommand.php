@@ -2,17 +2,18 @@
 
 namespace Fintech\Transaction\Commands;
 
+use Fintech\Banco\Seeders\BeneficiaryTypeSeeder;
 use Fintech\Core\Traits\HasCoreSettingTrait;
+use Fintech\Transaction\Seeders\TransactionFormSeeder;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 
 class InstallCommand extends Command
 {
-    public $signature = 'transaction:install';
-
     use HasCoreSettingTrait;
 
+    public $signature = 'transaction:install';
     public $description = 'Configure the system for the `fintech/transaction` module';
-
     private array $settings = [
         [
             'package' => 'transaction',
@@ -31,20 +32,29 @@ class InstallCommand extends Command
             'value' => '0.00'
         ],
     ];
+    private string $module = 'Banco';
 
     public function handle(): int
     {
-        try {
+        $this->addSettings();
 
-            $this->addOverwriteSetting();
+        $this->addUtilityOptions();
 
-            return self::SUCCESS;
+        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] Installation", "<fg=green;options=bold>COMPLETED</>");
 
-        } catch (\Exception $e) {
+        return self::SUCCESS;
+    }
 
-            $this->components->twoColumnDetail($e->getMessage(), '<fg=red;options=bold>ERROR</>');
+    private function addUtilityOptions(): void
+    {
+        $seeders = [
+            TransactionFormSeeder::class => 'transaction form',
+        ];
 
-            return self::FAILURE;
+        foreach ($seeders as $class => $label) {
+            $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Populating {$label} data", function () use ($class) {
+                Artisan::call('db:seed --class=' . addslashes($class) . ' --quiet');
+            });
         }
     }
 }
