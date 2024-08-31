@@ -2,7 +2,6 @@
 
 namespace Fintech\Transaction\Commands;
 
-use Fintech\Banco\Seeders\BeneficiaryTypeSeeder;
 use Fintech\Core\Traits\HasCoreSettingTrait;
 use Fintech\Transaction\Seeders\TransactionFormSeeder;
 use Illuminate\Console\Command;
@@ -13,7 +12,9 @@ class InstallCommand extends Command
     use HasCoreSettingTrait;
 
     public $signature = 'transaction:install';
+
     public $description = 'Configure the system for the `fintech/transaction` module';
+
     private array $settings = [
         [
             'package' => 'transaction',
@@ -32,6 +33,7 @@ class InstallCommand extends Command
             'value' => '0.00',
         ],
     ];
+
     private string $module = 'Banco';
 
     public function handle(): int
@@ -40,7 +42,7 @@ class InstallCommand extends Command
 
         $this->addUtilityOptions();
 
-        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] Installation", "<fg=green;options=bold>COMPLETED</>");
+        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] Installation", '<fg=green;options=bold>COMPLETED</>');
 
         return self::SUCCESS;
     }
@@ -53,7 +55,7 @@ class InstallCommand extends Command
 
         foreach ($seeders as $class => $label) {
             $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Populating {$label} data", function () use ($class) {
-                Artisan::call('db:seed --class=' . addslashes($class) . ' --quiet');
+                Artisan::call('db:seed --class='.addslashes($class).' --quiet');
             });
         }
     }
