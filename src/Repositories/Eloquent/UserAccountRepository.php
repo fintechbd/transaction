@@ -29,7 +29,7 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
         $query = $this->model->newQuery();
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -38,27 +38,27 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             }
         }
 
-        if (!empty($filters['currency'])) {
+        if (! empty($filters['currency'])) {
             $query->where('user_account_data->currency', '=', $filters['currency']);
         }
 
-        if (!empty($filters['id_not_in'])) {
-            $query->whereNotIn($this->model->getKeyName(), (array)$filters['id_not_in']);
+        if (! empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getKeyName(), (array) $filters['id_not_in']);
         }
 
-        if (!empty($filters['id_in'])) {
-            $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
+        if (! empty($filters['id_in'])) {
+            $query->whereIn($this->model->getKeyName(), (array) $filters['id_in']);
         }
 
-        if (!empty($filters['user_id'])) {
+        if (! empty($filters['user_id'])) {
             $query->where('user_id', '=', $filters['user_id']);
         }
 
-        if (!empty($filters['country_id'])) {
+        if (! empty($filters['country_id'])) {
             $query->where('country_id', '=', $filters['country_id']);
         }
 
-        if (!empty($filters['limit'])) {
+        if (! empty($filters['limit'])) {
             $query->limit($filters['limit']);
         }
 

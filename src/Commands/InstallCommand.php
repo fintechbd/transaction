@@ -21,7 +21,7 @@ class InstallCommand extends Command
             'description' => 'Transaction Delay Time',
             'key' => 'delay_time',
             'type' => 'integer',
-            'value' => '15'
+            'value' => '15',
         ],
         [
             'package' => 'transaction',
@@ -29,7 +29,7 @@ class InstallCommand extends Command
             'description' => 'Transaction Minimum Balance',
             'key' => 'minimum_balance',
             'type' => 'float',
-            'value' => '0.00'
+            'value' => '0.00',
         ],
     ];
     private string $module = 'Banco';

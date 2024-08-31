@@ -30,25 +30,25 @@ class TransactionFormRepository extends EloquentRepository implements Interfaces
         $modelTable = $this->model->getTable();
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
-                $query->where($modelTable . '.name', 'like', "%{$filters['search']}%");
-                $query->orWhere($modelTable . '.transaction_form_data', 'like', "%{$filters['search']}%");
+                $query->where($modelTable.'.name', 'like', "%{$filters['search']}%");
+                $query->orWhere($modelTable.'.transaction_form_data', 'like', "%{$filters['search']}%");
             }
         }
 
-        if (!empty($filters['id_not_in'])) {
-            $query->whereNotIn($this->model->getKeyName(), (array)$filters['id_not_in']);
+        if (! empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getKeyName(), (array) $filters['id_not_in']);
         }
 
-        if (!empty($filters['id_in'])) {
-            $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
+        if (! empty($filters['id_in'])) {
+            $query->whereIn($this->model->getKeyName(), (array) $filters['id_in']);
         }
 
-        if (!empty($filters['code'])) {
-            $query->where($modelTable . '.code', $filters['code']);
+        if (! empty($filters['code'])) {
+            $query->where($modelTable.'.code', $filters['code']);
         }
 
         //Display Trashed
