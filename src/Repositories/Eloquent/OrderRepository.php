@@ -41,10 +41,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query->leftJoin('service_types', 'service_types.id', '=', 'services.service_type_id');
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where(function ($query) use ($filters) {
-                    $query->where('orders.'.$this->model->getKeyName(), 'like', "%{$filters['search']}%");
+                    $query->where('orders.' . $this->model->getKeyName(), 'like', "%{$filters['search']}%");
                     $query->orWhere('orders.amount', 'like', "%{$filters['search']}%");
                     $query->orWhere('orders.converted_amount', 'like', "%{$filters['search']}%");
                 });
@@ -68,12 +68,12 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.id', '=', $filters['order_id']);
         }
 
-        if (! empty($filters['id_not_in'])) {
-            $query->whereNotIn($this->model->getTable().'.'.$this->model->getKeyName(), (array) $filters['id_not_in']);
+        if (!empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getTable() . '.' . $this->model->getKeyName(), (array)$filters['id_not_in']);
         }
 
-        if (! empty($filters['id_in'])) {
-            $query->whereIn($this->model->getTable().'.'.$this->model->getKeyName(), (array) $filters['id_in']);
+        if (!empty($filters['id_in'])) {
+            $query->whereIn($this->model->getTable() . '.' . $this->model->getKeyName(), (array)$filters['id_in']);
         }
 
         if (isset($filters['parent_id']) && $filters['parent_id']) {
@@ -150,23 +150,23 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
             isset($filters['order_end_date']) && $filters['order_end_date'] != '0000-00-00' && $filters['order_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_end_date']]);
+            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_end_date']]);
         }
 
         if (isset($filters['order_start_date']) && $filters['order_start_date'] != '0000-00-00' && $filters['order_start_date'] != '' &&
             empty($filters['order_end_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_start_date']]);
+            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_start_date'], $filters['order_start_date']]);
         }
 
         if (isset($filters['order_end_date']) && $filters['order_end_date'] != '0000-00-00' && $filters['order_end_date'] != '' &&
             empty($filters['order_start_date'])
         ) {
-            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_end_date'], $filters['order_end_date']]);
+            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_end_date'], $filters['order_end_date']]);
         }
 
         if (isset($filters['order_date']) && $filters['order_date'] != '0000-00-00' && $filters['order_date'] != '') {
-            $query->whereBetween(DB::raw('DATE('.'orders.ordered_at)'), [$filters['order_date'], $filters['order_date']]);
+            $query->whereBetween(DB::raw('DATE(' . 'orders.ordered_at)'), [$filters['order_date'], $filters['order_date']]);
         }
 
         if (isset($filters['created_at_start_date_time']) && $filters['created_at_start_date_time'] != '0000-00-00'
@@ -180,23 +180,23 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '' &&
             isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
         ) {
-            $query->whereBetween(DB::raw('DATE('.'orders.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
+            $query->whereBetween(DB::raw('DATE(' . 'orders.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
         //@TODO using between for better result
         if ((isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '')
             && empty($filters['created_at_end_date'])) {
-            $query->whereBetween(DB::raw('DATE('.'orders.created_at)'), [$filters['created_at_start_date'], now()->format('Y-m-d')]);
+            $query->whereBetween(DB::raw('DATE(' . 'orders.created_at)'), [$filters['created_at_start_date'], now()->format('Y-m-d')]);
         }
 
         if (isset($filters['created_at_end_date']) && $filters['created_at_end_date'] != '0000-00-00' && $filters['created_at_end_date'] != ''
             && empty($filters['created_at_start_date'])
         ) {
-            $query->where(DB::raw('DATE('.'orders.created_at)'), '<=', $filters['created_at_end_date']);
+            $query->where(DB::raw('DATE(' . 'orders.created_at)'), '<=', $filters['created_at_end_date']);
         }
 
         if (isset($filters['created_at_date']) && $filters['created_at_date'] != '0000-00-00' && $filters['created_at_date'] != '') {
-            $query->where(DB::raw('DATE('.'orders.created_at)'), '=', $filters['created_at_date']);
+            $query->where(DB::raw('DATE(' . 'orders.created_at)'), '=', $filters['created_at_date']);
         }
 
         if (isset($filters['status']) && $filters['status']) {
@@ -211,15 +211,15 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.source_country_id', $filters['source_country_id']);
         }
 
-        if (! empty($filters['source_country_id_array'])) {
+        if (!empty($filters['source_country_id_array'])) {
             $query->whereIn('orders.source_country_id', $filters['source_country_id_array']);
         }
 
-        if (! empty($filters['destination_country_id'])) {
+        if (!empty($filters['destination_country_id'])) {
             $query->where('orders.destination_country_id', $filters['destination_country_id']);
         }
 
-        if (! empty($filters['destination_country_id_array'])) {
+        if (!empty($filters['destination_country_id_array'])) {
             $query->where('orders.destination_country_id', $filters['destination_country_id_array']);
         }
 
@@ -241,7 +241,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         //Handle Sorting
-        $query->orderBy($filters['sort'] ?? 'orders.'.$this->model->getKeyName(), $filters['dir'] ?? 'asc');
+        $query->orderBy($filters['sort'] ?? 'orders.' . $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         if (isset($filters['sum_converted_amount']) && $filters['sum_converted_amount'] === true) {
             $query->selectRaw('SUM(`orders`.`converted_amount`) as `total`, `orders`.`converted_currency` as `currency`')
@@ -258,12 +258,12 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
     public function create(array $attributes = []): mixed
     {
         if (Core::packageExists('MetaData')) {
-            if (! empty($attributes['order_data']['fund_source'])) {
+            if (!empty($attributes['order_data']['fund_source'])) {
                 $attributes['order_data']['fund_source_name'] = \Fintech\MetaData\Facades\MetaData::fundSource()
                     ->find($attributes['order_data']['fund_source'])->name ?? null;
             }
 
-            if (! empty($attributes['order_data']['remittance_purpose'])) {
+            if (!empty($attributes['order_data']['remittance_purpose'])) {
                 $attributes['order_data']['remittance_purpose_name'] = \Fintech\MetaData\Facades\MetaData::remittancePurpose()
                     ->find($attributes['order_data']['remittance_purpose'])->name ?? null;
             }
