@@ -34,7 +34,7 @@ class InstallCommand extends Command
         ],
     ];
 
-    private string $module = 'Banco';
+    private string $module = 'Transaction';
 
     public function handle(): int
     {
