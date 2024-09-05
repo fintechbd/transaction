@@ -29,7 +29,7 @@ class RedeemPointRepository extends EloquentRepository implements InterfacesRede
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -38,12 +38,12 @@ class RedeemPointRepository extends EloquentRepository implements InterfacesRede
             }
         }
 
-        if (! empty($filters['id_not_in'])) {
-            $query->whereNotIn($this->model->getKeyName(), (array) $filters['id_not_in']);
+        if (!empty($filters['id_not_in'])) {
+            $query->whereNotIn($this->model->getKeyName(), (array)$filters['id_not_in']);
         }
 
-        if (! empty($filters['id_in'])) {
-            $query->whereIn($this->model->getKeyName(), (array) $filters['id_in']);
+        if (!empty($filters['id_in'])) {
+            $query->whereIn($this->model->getKeyName(), (array)$filters['id_in']);
         }
 
         //Display Trashed

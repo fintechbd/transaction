@@ -55,7 +55,7 @@ class InstallCommand extends Command
 
         foreach ($seeders as $class => $label) {
             $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Populating {$label} data", function () use ($class) {
-                Artisan::call('db:seed --class='.addslashes($class).' --quiet');
+                Artisan::call('db:seed --class=' . addslashes($class) . ' --quiet');
             });
         }
     }

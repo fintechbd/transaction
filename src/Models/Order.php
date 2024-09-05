@@ -2,6 +2,8 @@
 
 namespace Fintech\Transaction\Models;
 
+use Fintech\Auth\Models\User;
+use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
@@ -53,12 +55,12 @@ class Order extends BaseModel
 
     public function assignedUser(): BelongsTo
     {
-        return $this->belongsTo(config('fintech.auth.user_model', \Fintech\Auth\Models\User::class));
+        return $this->belongsTo(config('fintech.auth.user_model', User::class));
     }
 
     public function serviceVendor(): BelongsTo
     {
-        return $this->belongsTo(config('fintech.business.service_vendor_model', \Fintech\Business\Models\ServiceVendor::class));
+        return $this->belongsTo(config('fintech.business.service_vendor_model', ServiceVendor::class));
     }
 
     /*
