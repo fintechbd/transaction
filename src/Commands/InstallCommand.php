@@ -42,7 +42,7 @@ class InstallCommand extends Command
 
         $this->addUtilityOptions();
 
-        $this->components->twoColumnDetail("[<fg=yellow;options=bold>{$this->module}</>] Installation", '<fg=green;options=bold>COMPLETED</>');
+        $this->components->twoColumnDetail("<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Installation", '<fg=green;options=bold>COMPLETED</>');
 
         return self::SUCCESS;
     }
@@ -54,7 +54,7 @@ class InstallCommand extends Command
         ];
 
         foreach ($seeders as $class => $label) {
-            $this->components->task("[<fg=yellow;options=bold>{$this->module}</>] Populating {$label} data", function () use ($class) {
+            $this->components->task("<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Populating {$label} data", function () use ($class) {
                 Artisan::call('db:seed --class='.addslashes($class).' --quiet');
             });
         }
