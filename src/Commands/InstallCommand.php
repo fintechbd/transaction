@@ -38,11 +38,12 @@ class InstallCommand extends Command
 
     public function handle(): int
     {
-        $this->addSettings();
+        $this->task("Module Installation", function () {
+            $this->addSettings();
 
-        $this->addUtilityOptions();
+            $this->addUtilityOptions();
 
-        $this->components->twoColumnDetail("<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Installation", '<fg=green;options=bold>COMPLETED</>');
+        }, "COMPETED");
 
         return self::SUCCESS;
     }
@@ -54,8 +55,8 @@ class InstallCommand extends Command
         ];
 
         foreach ($seeders as $class => $label) {
-            $this->components->task("<fg=black;bg=bright-yellow;options=bold> {$this->module} </> Populating {$label} data", function () use ($class) {
-                Artisan::call('db:seed --class='.addslashes($class).' --quiet');
+            $this->task("Populating {$label} data", function () use ($class) {
+                Artisan::call('db:seed --class=' . addslashes($class) . ' --quiet');
             });
         }
     }

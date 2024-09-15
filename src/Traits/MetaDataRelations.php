@@ -31,5 +31,7 @@ if (Core::packageExists('MetaData')) {
         }
     }
 } else {
-    trait MetaDataRelations {}
+    trait MetaDataRelations
+    {
+    }
 }

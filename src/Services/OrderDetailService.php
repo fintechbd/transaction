@@ -12,7 +12,9 @@ class OrderDetailService
     /**
      * OrderDetailService constructor.
      */
-    public function __construct(private readonly OrderDetailRepository $orderDetailRepository) {}
+    public function __construct(private readonly OrderDetailRepository $orderDetailRepository)
+    {
+    }
 
     public function find($id, $onlyTrashed = false)
     {

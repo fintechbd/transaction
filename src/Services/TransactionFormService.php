@@ -12,7 +12,9 @@ class TransactionFormService
     /**
      * TransactionFormService constructor.
      */
-    public function __construct(private readonly TransactionFormRepository $transactionFormRepository) {}
+    public function __construct(private readonly TransactionFormRepository $transactionFormRepository)
+    {
+    }
 
     public function find($id, $onlyTrashed = false)
     {

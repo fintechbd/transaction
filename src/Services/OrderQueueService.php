@@ -15,7 +15,9 @@ class OrderQueueService
     /**
      * OrderQueueService constructor.
      */
-    public function __construct(private readonly OrderQueueRepository $orderQueueRepository) {}
+    public function __construct(private readonly OrderQueueRepository $orderQueueRepository)
+    {
+    }
 
     public function find($id, bool $onlyTrashed = false): ?Model
     {
