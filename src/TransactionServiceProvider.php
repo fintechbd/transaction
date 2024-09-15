@@ -21,7 +21,7 @@ class TransactionServiceProvider extends ServiceProvider
         $this->packageCode = 'transaction';
 
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/transaction.php', 'fintech.transaction'
+            __DIR__.'/../config/transaction.php', 'fintech.transaction'
         );
 
         $this->app->register(RepositoryServiceProvider::class);
@@ -35,23 +35,23 @@ class TransactionServiceProvider extends ServiceProvider
         $this->injectOnConfig();
 
         $this->publishes([
-            __DIR__ . '/../config/transaction.php' => config_path('fintech/transaction.php'),
+            __DIR__.'/../config/transaction.php' => config_path('fintech/transaction.php'),
         ]);
 
-        $this->loadMigrationsFrom(__DIR__ . '/../database/migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'transaction');
+        $this->loadTranslationsFrom(__DIR__.'/../lang', 'transaction');
 
         $this->publishes([
-            __DIR__ . '/../lang' => $this->app->langPath('vendor/transaction'),
+            __DIR__.'/../lang' => $this->app->langPath('vendor/transaction'),
         ]);
 
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'transaction');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'transaction');
 
-        $this->loadRoutesFrom(__DIR__ . '/../routes/api.php');
+        $this->loadRoutesFrom(__DIR__.'/../routes/api.php');
 
         $this->publishes([
-            __DIR__ . '/../resources/views' => resource_path('views/vendor/transaction'),
+            __DIR__.'/../resources/views' => resource_path('views/vendor/transaction'),
         ]);
 
         if ($this->app->runningInConsole()) {

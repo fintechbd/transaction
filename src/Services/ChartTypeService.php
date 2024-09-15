@@ -12,9 +12,7 @@ class ChartTypeService
     /**
      * ChartTypeService constructor.
      */
-    public function __construct(private readonly ChartTypeRepository $chartTypeRepository)
-    {
-    }
+    public function __construct(private readonly ChartTypeRepository $chartTypeRepository) {}
 
     public function find($id, $onlyTrashed = false)
     {

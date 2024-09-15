@@ -38,9 +38,9 @@ class InstallCommand extends Command
 
     public function handle(): int
     {
-        $this->infoMessage("Module Installation", 'RUNNING');
+        $this->infoMessage('Module Installation', 'RUNNING');
 
-        $this->task("Module Installation", function () {
+        $this->task('Module Installation', function () {
             $this->addSettings();
 
             $this->addUtilityOptions();
@@ -58,7 +58,7 @@ class InstallCommand extends Command
 
         foreach ($seeders as $class => $label) {
             $this->task("Populating {$label} data", function () use ($class) {
-                Artisan::call('db:seed --class=' . addslashes($class) . ' --quiet');
+                Artisan::call('db:seed --class='.addslashes($class).' --quiet');
             });
         }
     }
