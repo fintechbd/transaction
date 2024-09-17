@@ -2,10 +2,10 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Transaction\Interfaces\OrderQueueRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
-use MongoDB\Laravel\Eloquent\Model;
 
 /**
  * Class OrderQueueService
@@ -17,12 +17,12 @@ class OrderQueueService
      */
     public function __construct(private readonly OrderQueueRepository $orderQueueRepository) {}
 
-    public function find($id, bool $onlyTrashed = false): ?Model
+    public function find($id, bool $onlyTrashed = false): ?BaseModel
     {
         return $this->orderQueueRepository->find($id, $onlyTrashed);
     }
 
-    public function update($id, array $inputs = []): ?Model
+    public function update($id, array $inputs = []): ?BaseModel
     {
         return $this->orderQueueRepository->update($id, $inputs);
     }
@@ -48,12 +48,12 @@ class OrderQueueService
 
     }
 
-    public function import(array $filters): ?Model
+    public function import(array $filters): ?BaseModel
     {
         return $this->orderQueueRepository->create($filters);
     }
 
-    public function create(array $inputs = []): ?Model
+    public function create(array $inputs = []): ?BaseModel
     {
         return $this->orderQueueRepository->create($inputs);
     }
