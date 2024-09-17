@@ -5,7 +5,6 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\OrderQueueRepository as InterfacesOrderQueueRepository;
 use Fintech\Transaction\Models\OrderQueue;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +30,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
         $query = $this->model->newQuery();
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -53,32 +52,20 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     }
 
-    /**
-     * @param string|int $sender_user_id
-     * @return bool|string
-     */
     public function addToQueueSenderWise(string|int $sender_user_id): bool|string
     {
-        if(DB::statement("INSERT INTO order_queues(user_id) SELECT ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `user_id`=? LIMIT 1)", [$sender_user_id, $sender_user_id])) {
+        if (DB::statement('INSERT INTO order_queues(user_id) SELECT ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `user_id`=? LIMIT 1)', [$sender_user_id, $sender_user_id])) {
             return DB::getPdo()->lastInsertId();
         }
 
         return 0;
     }
 
-    /**
-     * @param string|int $sender_user_id
-     * @return array
-     */
     public function removeFromQueueSenderWise(string|int $sender_user_id): array
     {
         return DB::select("DELETE FROM `order_queues` where `user_id` ={$sender_user_id}");
     }
 
-    /**
-     * @param string|int $order_id
-     * @return bool|string
-     */
     public function addToQueueOrderWise(string|int $order_id): bool|string
     {
         DB::select("INSERT INTO order_queues(order_id) SELECT \"{$order_id}\" FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `order_id`={$order_id} LIMIT 1)");
