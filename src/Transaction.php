@@ -19,89 +19,89 @@ class Transaction
     /**
      * @return TransactionFormService
      */
-    public function transactionForm()
-    {
-        return app(TransactionFormService::class);
+    public function transactionForm($filters = null)
+{
+	return \singleton(TransactionFormService::class, $filters);
     }
 
     /**
      * @return OrderService
      */
-    public function order()
-    {
-        return app(OrderService::class);
+    public function order($filters = null)
+{
+	return \singleton(OrderService::class, $filters);
     }
 
     /**
      * @return OrderDetailService
      */
-    public function orderDetail()
-    {
-        return app(OrderDetailService::class);
+    public function orderDetail($filters = null)
+{
+	return \singleton(OrderDetailService::class, $filters);
     }
 
     /**
      * @return ChartClassService
      */
-    public function chartClass()
-    {
-        return app(ChartClassService::class);
+    public function chartClass($filters = null)
+{
+	return \singleton(ChartClassService::class, $filters);
     }
 
     /**
      * @return ChartTypeService
      */
-    public function chartType()
-    {
-        return app(ChartTypeService::class);
+    public function chartType($filters = null)
+{
+	return \singleton(ChartTypeService::class, $filters);
     }
 
     /**
      * @return ChartEntryService
      */
-    public function chartEntry()
-    {
-        return app(ChartEntryService::class);
+    public function chartEntry($filters = null)
+{
+	return \singleton(ChartEntryService::class, $filters);
     }
 
     /**
      * @return UserAccountService
      */
-    public function userAccount()
-    {
-        return app(UserAccountService::class);
+    public function userAccount($filters = null)
+{
+	return \singleton(UserAccountService::class, $filters);
     }
 
     /**
      * @return OrderQueueService
      */
-    public function orderQueue()
-    {
-        return app(OrderQueueService::class);
+    public function orderQueue($filters = null)
+{
+	return \singleton(OrderQueueService::class, $filters);
     }
 
     /**
      * @return ManualRefundService
      */
-    public function manualRefund()
-    {
-        return app(ManualRefundService::class);
+    public function manualRefund($filters = null)
+{
+	return \singleton(ManualRefundService::class, $filters);
     }
 
     /**
      * @return RewardPointService
      */
-    public function rewardPoint()
-    {
-        return app(RewardPointService::class);
+    public function rewardPoint($filters = null)
+{
+	return \singleton(RewardPointService::class, $filters);
     }
 
     /**
      * @return RedeemPointService
      */
-    public function redeemPoint()
-    {
-        return app(RedeemPointService::class);
+    public function redeemPoint($filters = null)
+{
+	return \singleton(RedeemPointService::class, $filters);
     }
 
     //** Crud Service Method Point Do not Remove **//
