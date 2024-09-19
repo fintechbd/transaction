@@ -16,17 +16,17 @@ use Fintech\Transaction\Services\UserAccountService;
 use Illuminate\Support\Facades\Facade;
 
 /**
- * @method static TransactionFormService transactionForm()
- * @method static OrderService order()
- * @method static OrderDetailService orderDetail()
- * @method static ChartClassService chartClass()
- * @method static ChartTypeService chartType()
- * @method static ChartEntryService chartEntry()
- * @method static UserAccountService userAccount()
- * @method static OrderQueueService orderQueue()
- * @method static ManualRefundService manualRefund()
- * @method static RewardPointService rewardPoint()
- * @method static RedeemPointService redeemPoint()
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|TransactionFormService transactionForm(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|OrderService order(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|OrderDetailService orderDetail(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ChartClassService chartClass(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ChartTypeService chartType(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ChartEntryService chartEntry(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|UserAccountService userAccount(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|OrderQueueService orderQueue(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ManualRefundService manualRefund(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|RewardPointService rewardPoint(array $filters = null)
+ * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|RedeemPointService redeemPoint(array $filters = null)
  *                                                 // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction
