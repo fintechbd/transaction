@@ -30,7 +30,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
         $query = $this->model->newQuery();
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
             } else {
@@ -54,7 +54,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     public function addToQueueSenderWise(string|int $sender_user_id): bool|string
     {
-        if (DB::statement('INSERT INTO order_queues(user_id) SELECT ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `user_id`=? LIMIT 1)', [$sender_user_id, $sender_user_id])) {
+        if (DB::statement('INSERT INTO order_queues(user_id, created_at) SELECT ?, ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `user_id`=? LIMIT 1)', [$sender_user_id, (string)now(), $sender_user_id])) {
             return DB::getPdo()->lastInsertId();
         }
 
@@ -68,9 +68,11 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     public function addToQueueOrderWise(string|int $order_id): bool|string
     {
-        DB::select("INSERT INTO order_queues(order_id) SELECT \"{$order_id}\" FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `order_id`={$order_id} LIMIT 1)");
+        if (DB::statement("INSERT INTO order_queues(order_id, created_at) SELECT ?, ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `order_id`=? LIMIT 1)", [(string)$order_id, (string)now(), (string)$order_id])) {
 
-        return DB::getPdo()->lastInsertId();
+            return DB::getPdo()->lastInsertId();
+        }
+        return 0;
     }
 
     public function removeFromQueueOrderWise(string|int $order_id): array
