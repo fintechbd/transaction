@@ -10,8 +10,10 @@ use Illuminate\Support\Collection;
 /**
  * Class OrderQueueService
  */
-class OrderQueueService extends \Fintech\Core\Abstracts\Service
+class OrderQueueService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * OrderQueueService constructor.
      */

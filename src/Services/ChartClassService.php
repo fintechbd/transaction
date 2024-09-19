@@ -7,8 +7,10 @@ use Fintech\Transaction\Interfaces\ChartClassRepository;
 /**
  * Class ChartClassService
  */
-class ChartClassService extends \Fintech\Core\Abstracts\Service
+class ChartClassService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * ChartClassService constructor.
      */

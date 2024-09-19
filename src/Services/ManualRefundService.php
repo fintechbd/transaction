@@ -7,8 +7,10 @@ use Fintech\Transaction\Interfaces\ManualRefundRepository;
 /**
  * Class ManualRefundService
  */
-class ManualRefundService extends \Fintech\Core\Abstracts\Service
+class ManualRefundService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * ManualRefundService constructor.
      */

@@ -11,8 +11,10 @@ use Illuminate\Support\Str;
 /**
  * Class UserAccountService
  */
-class UserAccountService extends \Fintech\Core\Abstracts\Service
+class UserAccountService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * UserAccountService constructor.
      */

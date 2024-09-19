@@ -7,8 +7,10 @@ use Fintech\Transaction\Interfaces\TransactionFormRepository;
 /**
  * Class TransactionFormService
  */
-class TransactionFormService extends \Fintech\Core\Abstracts\Service
+class TransactionFormService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * TransactionFormService constructor.
      */

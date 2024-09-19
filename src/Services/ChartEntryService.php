@@ -7,8 +7,10 @@ use Fintech\Transaction\Interfaces\ChartEntryRepository;
 /**
  * Class ChartEntryService
  */
-class ChartEntryService extends \Fintech\Core\Abstracts\Service
+class ChartEntryService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * ChartEntryService constructor.
      */

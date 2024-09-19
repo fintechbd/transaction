@@ -7,8 +7,10 @@ use Fintech\Transaction\Interfaces\RedeemPointRepository;
 /**
  * Class RedeemPointService
  */
-class RedeemPointService extends \Fintech\Core\Abstracts\Service
+class RedeemPointService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * RedeemPointService constructor.
      */

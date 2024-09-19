@@ -11,8 +11,10 @@ use Fintech\Transaction\Interfaces\OrderRepository;
 /**
  * Class OrderService
  */
-class OrderService extends \Fintech\Core\Abstracts\Service
+class OrderService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * OrderService constructor.
      */

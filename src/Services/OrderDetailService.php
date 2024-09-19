@@ -7,8 +7,10 @@ use Fintech\Transaction\Interfaces\OrderDetailRepository;
 /**
  * Class OrderDetailService
  */
-class OrderDetailService extends \Fintech\Core\Abstracts\Service
+class OrderDetailService
 {
+    use \Fintech\Core\Traits\HasFindWhereSearch;
+
     /**
      * OrderDetailService constructor.
      */
