@@ -27,7 +27,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|ManualRefundService manualRefund(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|RewardPointService rewardPoint(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|RedeemPointService redeemPoint(array $filters = null)
- *                                                 // Crud Service Method Point Do not Remove //
+ *                                                                                                                                                // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction
  */
