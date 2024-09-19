@@ -79,11 +79,11 @@ class OrderService
             $input['created_at_end_date_time'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['service_delay'] = 'yes';
 
-            $service_type_parent = Business::service()->list(['service_id' => $input['service_id'], 'service_delay' => $input['service_delay']])->first();
+            $service_type_parent = Business::service()->findWhere(['service_id' => $input['service_id'], 'service_delay' => $input['service_delay']]);
             if ($service_type_parent) {
                 if (isset($data['order_data']['account_number']) && $data['order_data']['account_number'] != null) {
                     if ((isset($service_type_parent->serviceType->service_type_slug) ? $service_type_parent->serviceType->service_type_slug : null) == 'wallet_transfer') {
-                        $country = MetaData::country()->list(['country_id' => $input['destination_country_id']])->first();
+                        $country = MetaData::country()->findWhere(['country_id' => $input['destination_country_id']]);
                         $input['account_number'] = $country->phone_code + $data['order_data']['account_number'];
                     } else {
                         $input['account_number'] = $data['order_data']['account_number'];
