@@ -11,7 +11,7 @@ use Fintech\Transaction\Interfaces\OrderRepository;
 /**
  * Class OrderService
  */
-class OrderService
+class OrderService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * OrderService constructor.
@@ -72,7 +72,7 @@ class OrderService
             $input['currency'] = $data['currency'];
             $input['source_country_id'] = $data['source_country_id'];
             $input['destination_country_id'] = $data['destination_country_id'];
-            $created_at = Carbon::now()->subMinute($delayCheck)->format('Y-m-d H:i:s');
+            $created_at = Carbon::now()->subMinutes($delayCheck)->format('Y-m-d H:i:s');
             $input['created_at_start_date_time'] = $created_at;
             $input['created_at_end_date_time'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['service_delay'] = 'yes';

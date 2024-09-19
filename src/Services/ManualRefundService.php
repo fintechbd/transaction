@@ -7,7 +7,7 @@ use Fintech\Transaction\Interfaces\ManualRefundRepository;
 /**
  * Class ManualRefundService
  */
-class ManualRefundService
+class ManualRefundService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * ManualRefundService constructor.

@@ -10,7 +10,7 @@ use Illuminate\Support\Collection;
 /**
  * Class OrderQueueService
  */
-class OrderQueueService
+class OrderQueueService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * OrderQueueService constructor.

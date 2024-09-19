@@ -7,7 +7,7 @@ use Fintech\Transaction\Interfaces\RewardPointRepository;
 /**
  * Class RewardPointService
  */
-class RewardPointService
+class RewardPointService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * RewardPointService constructor.

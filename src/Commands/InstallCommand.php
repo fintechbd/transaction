@@ -2,14 +2,14 @@
 
 namespace Fintech\Transaction\Commands;
 
-use Fintech\Core\Traits\HasCoreSettingTrait;
+use Fintech\Core\Traits\HasCoreSetting;
 use Fintech\Transaction\Seeders\TransactionFormSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 
 class InstallCommand extends Command
 {
-    use HasCoreSettingTrait;
+    use HasCoreSetting;
 
     public $signature = 'transaction:install';
 

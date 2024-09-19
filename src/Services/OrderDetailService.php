@@ -7,7 +7,7 @@ use Fintech\Transaction\Interfaces\OrderDetailRepository;
 /**
  * Class OrderDetailService
  */
-class OrderDetailService
+class OrderDetailService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * OrderDetailService constructor.

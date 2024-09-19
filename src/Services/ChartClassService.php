@@ -7,7 +7,7 @@ use Fintech\Transaction\Interfaces\ChartClassRepository;
 /**
  * Class ChartClassService
  */
-class ChartClassService
+class ChartClassService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * ChartClassService constructor.

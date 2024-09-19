@@ -7,7 +7,7 @@ use Fintech\Transaction\Interfaces\TransactionFormRepository;
 /**
  * Class TransactionFormService
  */
-class TransactionFormService
+class TransactionFormService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * TransactionFormService constructor.

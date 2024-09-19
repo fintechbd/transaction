@@ -11,7 +11,7 @@ use Illuminate\Support\Str;
 /**
  * Class UserAccountService
  */
-class UserAccountService
+class UserAccountService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * UserAccountService constructor.

@@ -7,7 +7,7 @@ use Fintech\Transaction\Interfaces\RedeemPointRepository;
 /**
  * Class RedeemPointService
  */
-class RedeemPointService
+class RedeemPointService extends \Fintech\Core\Abstracts\Service
 {
     /**
      * RedeemPointService constructor.
