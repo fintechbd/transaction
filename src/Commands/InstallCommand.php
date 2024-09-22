@@ -38,8 +38,8 @@ class InstallCommand extends Command
             'description' => 'Static Counter to keep track the next purchase number',
             'key' => 'purchase_count',
             'type' => 'integer',
-            'value' => '1'
-        ]
+            'value' => '1',
+        ],
     ];
 
     private string $module = 'Transaction';
@@ -67,7 +67,7 @@ class InstallCommand extends Command
 
         foreach ($seeders as $class => $label) {
             $this->task("Populating {$label} data", function () use ($class) {
-                Artisan::call('db:seed --class=' . addslashes($class) . ' --quiet');
+                Artisan::call('db:seed --class='.addslashes($class).' --quiet');
             });
         }
     }
