@@ -12,6 +12,7 @@ use Fintech\RestApi\Http\Controllers\Transaction\OrderDetailController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderQueueController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderStatusDropdownController;
 use Fintech\RestApi\Http\Controllers\Transaction\RedeemPointController;
+use Fintech\RestApi\Http\Controllers\Transaction\RequestPlatformDropdownController;
 use Fintech\RestApi\Http\Controllers\Transaction\RewardPointController;
 use Fintech\RestApi\Http\Controllers\Transaction\TransactionFormController;
 use Fintech\RestApi\Http\Controllers\Transaction\UserAccountController;
@@ -88,6 +89,9 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->name('transaction-forms.dropdown');
             Route::get('order-statuses', OrderStatusDropdownController::class)
                 ->name('order-statuses.dropdown');
+            Route::get('request-platforms', RequestPlatformDropdownController::class)
+                ->name('request-platforms.dropdown');
+
         });
     });
 }
