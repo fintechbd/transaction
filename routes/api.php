@@ -29,7 +29,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 if (Config::get('fintech.transaction.enabled')) {
-    Route::prefix(config('fintech.transaction.root_prefix', 'api/'))->middleware(['api', 'http_log', 'encrypted'])->group(function () {
+    Route::prefix(config('fintech.transaction.root_prefix', 'api/'))->middleware(['api'])->group(function () {
         Route::prefix('transaction')->name('transaction.')->group(function () {
             Route::apiResource('transaction-forms', TransactionFormController::class);
             //         Route::post('transaction-forms/{transaction_form}/restore', [TransactionFormController::class, 'restore'])->name('transaction-forms.restore');
