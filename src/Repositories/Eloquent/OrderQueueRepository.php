@@ -68,7 +68,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     public function addToQueueOrderWise(string|int $order_id): bool|string
     {
-        if (DB::statement('INSERT INTO order_queues(order_id, created_at) SELECT ?, ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `order_id`=? LIMIT 1)', [(string) $order_id, (string) now(), (string) $order_id])) {
+        if (DB::statement('INSERT INTO order_queues(order_id, created_at) SELECT ?, ? FROM DUAL WHERE NOT EXISTS (SELECT * FROM `order_queues` WHERE `order_id`=? LIMIT 1)', [$order_id, (string) now(), $order_id])) {
 
             return DB::getPdo()->lastInsertId();
         }
