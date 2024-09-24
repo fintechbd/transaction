@@ -55,6 +55,7 @@ return [
 
     'delay_time' => 15,
     'minimum_balance' => 0,
+    'purchase_count' => 1,
     /*
     |--------------------------------------------------------------------------
     | TransactionForm Model
