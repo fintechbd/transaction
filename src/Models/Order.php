@@ -11,6 +11,7 @@ use Fintech\Transaction\Traits\BusinessRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
 /**
  * @property \Fintech\Core\Enums\Reload\DepositStatus $status
  */
