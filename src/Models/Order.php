@@ -3,7 +3,6 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Auth\Models\User;
-use Fintech\Business\Models\Service;
 use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Transaction\OrderStatus;
