@@ -63,7 +63,7 @@ class OrderQueueRepository extends EloquentRepository implements InterfacesOrder
 
     public function removeFromQueueSenderWise(string|int $sender_user_id): bool
     {
-        return DB::statement("DELETE FROM `order_queues` where `user_id` =?", [$sender_user_id]);
+        return DB::statement('DELETE FROM `order_queues` where `user_id` =?', [$sender_user_id]);
     }
 
     public function addToQueueOrderWise(string|int $order_id): bool|string
