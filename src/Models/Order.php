@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Auth\Models\User;
+use Fintech\Business\Models\Service;
 use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Transaction\OrderStatus;
@@ -11,6 +12,7 @@ use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\BusinessRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -71,6 +73,11 @@ class Order extends BaseModel
     public function serviceVendor(): BelongsTo
     {
         return $this->belongsTo(config('fintech.business.service_vendor_model', ServiceVendor::class));
+    }
+
+    public function orderDetails(): HasMany
+    {
+        return $this->hasMany(config('fintech.transaction.order_detail_model', OrderDetail::class));
     }
 
     /*
