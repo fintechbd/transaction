@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Transaction\Interfaces\OrderDetailRepository;
 
 /**
@@ -60,29 +61,29 @@ class OrderDetailService
         return $this->orderDetailRepository->create($inputs);
     }
 
-    public function orderDetailsDataArrange($data): array
+    public function orderDetailsDataArrange(BaseModel $order): array
     {
-        $orderData['order_id'] = $data->getKey();
-        $orderData['source_country_id'] = $data->source_country_id;
-        $orderData['destination_country_id'] = $data->destination_country_id;
-        $orderData['order_detail_parent_id'] = $data->order_detail_parent_id ?? null;
-        $orderData['sender_receiver_id'] = $data->sender_receiver_id;
-        $orderData['user_id'] = $data->user_id;
-        $orderData['service_id'] = $data->service_id;
-        $orderData['transaction_form_id'] = $data->transaction_form_id;
-        $orderData['order_detail_date'] = $data->ordered_at;
-        $orderData['order_detail_cause_name'] = $data->order_detail_cause_name;
-        $orderData['order_detail_amount'] = $data->amount;
-        $orderData['order_detail_currency'] = $data->currency;
-        $orderData['converted_amount'] = $data->converted_amount;
-        $orderData['converted_currency'] = $data->converted_currency;
-        $orderData['order_detail_number'] = $data->order_detail_number ?? null;
-        $orderData['order_detail_response_id'] = $data->order_detail_response_id ?? null;
-        $orderData['step'] = $data->step ?? 1;
-        $orderData['risk'] = $data->risk_profile ?? null;
-        $orderData['notes'] = $data->notes ?? null;
-        $orderData['is_refundable'] = $data->is_refundable ?? null;
-        $orderData['order_detail_data'] = $data->order_data;
+        $orderData['order_id'] = $order->getKey();
+        $orderData['source_country_id'] = $order->source_country_id;
+        $orderData['destination_country_id'] = $order->destination_country_id;
+        $orderData['order_detail_parent_id'] = $order->order_detail_parent_id ?? null;
+        $orderData['sender_receiver_id'] = $order->sender_receiver_id;
+        $orderData['user_id'] = $order->user_id;
+        $orderData['service_id'] = $order->service_id;
+        $orderData['transaction_form_id'] = $order->transaction_form_id;
+        $orderData['order_detail_date'] = $order->ordered_at;
+        $orderData['order_detail_cause_name'] = $order->order_detail_cause_name;
+        $orderData['order_detail_amount'] = $order->amount;
+        $orderData['order_detail_currency'] = $order->currency;
+        $orderData['converted_amount'] = $order->converted_amount;
+        $orderData['converted_currency'] = $order->converted_currency;
+        $orderData['order_detail_number'] = $order->order_detail_number ?? null;
+        $orderData['order_detail_response_id'] = $order->order_detail_response_id ?? null;
+        $orderData['step'] = $order->step ?? 1;
+        $orderData['risk'] = $order->risk_profile ?? null;
+        $orderData['notes'] = $order->notes ?? null;
+        $orderData['is_refundable'] = $order->is_refundable ?? null;
+        $orderData['order_detail_data'] = $order->order_data;
         $orderData['status'] = 'success';
 
         return $orderData;
