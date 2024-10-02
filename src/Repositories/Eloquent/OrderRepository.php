@@ -237,7 +237,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         if (isset($filters['order_number'])) {
-            $query->where('orders.order_number', "=", $filters['order_number']);
+            $query->where('orders.order_number', '=', $filters['order_number']);
         }
 
         //Display Trashed
