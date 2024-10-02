@@ -236,6 +236,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.order_data->bank_branch_id', $filters['bank_branch_id']);
         }
 
+        if (isset($filters['order_number'])) {
+            $query->where('orders.order_number', "=", $filters['order_number']);
+        }
+
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
