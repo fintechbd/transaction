@@ -110,6 +110,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.service_id', '=', $filters['service_id']);
         }
 
+        if (isset($filters['purchase_number']) && $filters['purchase_number']) {
+            $query->where('orders.order_data->purchase_number', '=', $filters['purchase_number']);
+        }
+
         if (isset($filters['service_id_in']) && $filters['service_id_in']) {
             $query->whereIn('orders.service_id', $filters['service_id_in']);
         }
