@@ -5,6 +5,7 @@ namespace Fintech\Transaction\Models;
 use Fintech\Auth\Models\User;
 use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Core\Enums\Transaction\OrderStatus;
 use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
@@ -43,6 +44,7 @@ class Order extends BaseModel
         'restored_at' => 'datetime',
         'enabled' => 'bool',
         'status' => OrderStatus::class,
+        'risk_profile' => RiskProfile::class,
     ];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
