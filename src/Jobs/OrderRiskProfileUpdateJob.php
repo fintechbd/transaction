@@ -59,16 +59,14 @@ class OrderRiskProfileUpdateJob implements ShouldQueue
 
             if ($order_data['risk_profile_avg'] >= 67) {
                 $riskProfile = RiskProfile::High;
-            }
-
-            else if ($order_data['risk_profile_avg'] >= 34) {
+            } elseif ($order_data['risk_profile_avg'] >= 34) {
                 $riskProfile = RiskProfile::Moderate;
             }
 
             Transaction::order()->update($this->transaction->getKey(), [
                 'status' => OrderStatus::Processing,
                 'risk_profile' => $riskProfile,
-                'order_data' => $order_data
+                'order_data' => $order_data,
             ]);
         }
     }
