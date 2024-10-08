@@ -205,7 +205,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         if (isset($filters['status']) && $filters['status']) {
-            $query->whereIn('orders.status', $filters['status']);
+            $query->whereIn('orders.status', (array)$filters['status']);
         }
 
         if (isset($filters['status_not_equal']) && $filters['status_not_equal']) {
