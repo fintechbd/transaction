@@ -11,7 +11,7 @@ use Illuminate\Queue\SerializesModels;
 
 class SuspiciousTransactionJob implements ShouldQueue
 {
-
+    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Create a new job instance.
@@ -26,8 +26,6 @@ class SuspiciousTransactionJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if ($this->batch()->cancelled()) {
-            return;
-        }
+        //
     }
 }

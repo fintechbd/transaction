@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Jobs\Compliance;
 
+use Fintech\Transaction\Traits\HasCompliance;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -13,21 +14,13 @@ class LargeCashTransferJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    /**
-     * Create a new job instance.
-     */
-    public function __construct()
-    {
-        //
-    }
+    use HasCompliance;
 
     /**
      * Execute the job.
      */
     public function handle(): void
     {
-        if ($this->batch()->canceled()) {
-            return;
-        }
+
     }
 }
