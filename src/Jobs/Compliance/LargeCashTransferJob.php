@@ -13,14 +13,10 @@ use Illuminate\Queue\SerializesModels;
 class LargeCashTransferJob implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     use HasCompliance;
 
     /**
      * Execute the job.
      */
-    public function handle(): void
-    {
-
-    }
+    public function handle(): void {}
 }

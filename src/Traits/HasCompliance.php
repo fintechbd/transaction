@@ -10,6 +10,7 @@ trait HasCompliance
     public $order;
 
     public RiskProfile $riskProfile;
+
     /**
      * Create a new job instance.
      */
