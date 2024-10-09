@@ -12,24 +12,25 @@ trait HasCompliance
 
     public $order;
 
-    public string $remarks;
+    public ?string $remarks;
 
-    protected RiskProfile $priority;
+    protected ?RiskProfile $priority;
 
-    protected string $title;
+    protected ?string $title;
 
-    protected RiskProfile $riskProfile;
+    protected ?RiskProfile $riskProfile;
 
     /**
      * Create a new job instance.
      */
     public function __construct($orderId)
     {
-        $this->resolvePolicyName();
-
+        $this->remarks = null;
+        $this->priority = null;
         $this->order = Transaction::order()->find($orderId);
-
         $this->riskProfile = $this->order->risk_profile;
+
+        $this->resolvePolicyName();
     }
 
     public function resolvePolicyName(): void
