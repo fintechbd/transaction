@@ -21,6 +21,7 @@ class AccountVelocityPolicy implements ShouldQueue
     public function handle(): void
     {
         $this->setPriority(RiskProfile::Low);
+
         if ($this->order->amount >= 10_000) {
             $this->riskProfile = RiskProfile::High;
         } elseif ($this->order->amount >= 5_000) {

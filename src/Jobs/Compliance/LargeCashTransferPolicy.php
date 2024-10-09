@@ -21,7 +21,8 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
      */
     public function handle(): void
     {
-        $this->setPriority(RiskProfile::Low);
+        $this->setPriority(RiskProfile::High);
+
         if ($this->order->amount >= 100) {
             $this->riskProfile = RiskProfile::High;
         } elseif ($this->order->amount >= 20) {
