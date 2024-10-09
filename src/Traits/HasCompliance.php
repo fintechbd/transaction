@@ -4,7 +4,6 @@ namespace Fintech\Transaction\Traits;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Transaction\Facades\Transaction;
-use Fintech\Transaction\Models\Order;
 use Illuminate\Support\Str;
 
 trait HasCompliance
@@ -14,6 +13,7 @@ trait HasCompliance
     public $order;
 
     protected string $title;
+
     protected RiskProfile $riskProfile;
 
     /**
@@ -31,7 +31,7 @@ trait HasCompliance
 
     public function resolvePolicyName(): void
     {
-        $this->title = trim(preg_replace('([A-Z])', " $0", class_basename($this)));
+        $this->title = trim(preg_replace('([A-Z])', ' $0', class_basename($this)));
     }
 
     public function title(string $title): void
@@ -54,15 +54,15 @@ trait HasCompliance
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
-            'timestamp' => now()
+            'timestamp' => now(),
         ];
 
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title) . ' compliance policy verification completed with risk level (' . $this->riskProfile->value . ').',
+            'message' => ucfirst($this->title).' compliance policy verification completed with risk level ('.$this->riskProfile->value.').',
             'flag' => 'info',
-            'timestamp' => now()
+            'timestamp' => now(),
         ];
 
         Transaction::order()->update($this->order->getKey(), ['order_data' => $order_data, 'timeline' => $timeline]);
@@ -77,7 +77,6 @@ trait HasCompliance
         };
     }
 
-
     public function failed(?\Throwable $exception): void
     {
         $order_data = $this->order->order_data;
@@ -90,15 +89,15 @@ trait HasCompliance
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
-            'timestamp' => now()
+            'timestamp' => now(),
         ];
 
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title) . ' verification reported a error: ' . $exception->getMessage(),
+            'message' => ucfirst($this->title).' verification reported a error: '.$exception->getMessage(),
             'flag' => 'error',
-            'timestamp' => now()
+            'timestamp' => now(),
         ];
 
         Transaction::order()->update($this->order->getKey(), ['order_data' => $order_data, 'timeline' => $timeline]);
@@ -106,6 +105,6 @@ trait HasCompliance
 
     public function uniqueId(): string
     {
-        return Str::slug(get_class($this) . '-' . $this->order->getKey());
+        return Str::slug(get_class($this).'-'.$this->order->getKey());
     }
 }

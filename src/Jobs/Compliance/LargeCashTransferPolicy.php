@@ -12,9 +12,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class LargeCashTransferPolicy implements ShouldQueue, ShouldBeUnique
+class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
 {
-    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels, HasCompliance;
+    use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
      * Execute the job.
