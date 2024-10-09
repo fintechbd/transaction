@@ -17,6 +17,10 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
+    private $highThreshold = 100;
+    private $moderateThreshold = 50;
+    private $lowThreshold = 20;
+
     /**
      * Execute the job.
      */
@@ -32,12 +36,15 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
             'sum_amount' => true
         ])['total'];
 
-        if ($order_amount_sum >= 100) {
+        if ($order_amount_sum >= $this->highThreshold) {
             $this->riskProfile = RiskProfile::High;
-        } elseif ($order_amount_sum >= 20) {
+            $this->remarks = \currency($order_amount_sum, $this->order->currency) . " amount transferred in last 24 hours has crossed the " . \currency($this->highThreshold, $this->order->currency) . " threshold limit.";
+        } elseif ($order_amount_sum >= $this->moderateThreshold) {
             $this->riskProfile = RiskProfile::Moderate;
+            $this->remarks = \currency($order_amount_sum, $this->order->currency) . " amount transferred in last 24 hours has crossed the " . \currency($this->moderateThreshold, $this->order->currency) . " threshold limit.";
         } else {
             $this->riskProfile = RiskProfile::Low;
+            $this->remarks = \currency($order_amount_sum, $this->order->currency) . " amount transferred in last 24 hours has crossed the " . \currency($this->lowThreshold, $this->order->currency) . " threshold limit.";
         }
 
         $this->updateComplianceReport();
