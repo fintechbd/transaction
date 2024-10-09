@@ -255,7 +255,14 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (isset($filters['sum_converted_amount']) && $filters['sum_converted_amount'] === true) {
             $query->selectRaw('SUM(`orders`.`converted_amount`) as `total`, `orders`.`converted_currency` as `currency`')
                 ->groupBy('orders.converted_currency');
-        } else {
+        }
+
+        else if (isset($filters['sum_amount']) && $filters['sum_amount'] === true) {
+            $query->selectRaw('SUM(`orders`.`amount`) as `total`, `orders`.`currency` as `currency`')
+                ->groupBy('orders.currency');
+        }
+
+        else {
             $query->select('orders.*', DB::raw('transaction_forms.name AS transaction_form_name'));
         }
 

@@ -12,11 +12,13 @@ trait HasCompliance
 
     public $order;
 
-    protected $priority;
+    public string $remarks;
+
+    protected RiskProfile $priority;
 
     protected string $title;
 
-    protected $riskProfile;
+    protected RiskProfile $riskProfile;
 
     /**
      * Create a new job instance.
@@ -46,13 +48,14 @@ trait HasCompliance
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
             'priority' => $this->priority,
+            'remarks' => $this->remarks,
             'timestamp' => now(),
         ];
 
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title).' compliance policy verification completed with risk level ('.$this->riskProfile->value.').',
+            'message' => ucfirst($this->title) . ' compliance policy verification completed with risk level (' . $this->riskProfile->value . ').',
             'flag' => 'info',
             'timestamp' => now(),
         ];
@@ -87,13 +90,14 @@ trait HasCompliance
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
             'priority' => $this->priority,
+            'remarks' => "Internal Server Error: " . $exception->getMessage(),
             'timestamp' => now(),
         ];
 
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title).' verification reported a error: '.$exception->getMessage(),
+            'message' => ucfirst($this->title) . ' verification reported a error: ' . $exception->getMessage(),
             'flag' => 'error',
             'timestamp' => now(),
         ];
@@ -103,6 +107,6 @@ trait HasCompliance
 
     public function uniqueId(): string
     {
-        return Str::slug(get_class($this).'-'.$this->order->getKey());
+        return Str::slug(get_class($this) . '-' . $this->order->getKey());
     }
 }
