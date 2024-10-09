@@ -15,6 +15,8 @@ class ClientDueDiligencePolicy implements ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $priority = RiskProfile::Low;
+
     /**
      * Execute the job.
      */

@@ -15,6 +15,8 @@ class HighRiskCountryTransferPolicy implements ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
+    protected $priority = RiskProfile::Low;
+
     /**
      * Execute the job.
      */

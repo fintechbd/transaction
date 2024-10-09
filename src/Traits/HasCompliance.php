@@ -12,11 +12,11 @@ trait HasCompliance
 
     public $order;
 
-    public $priority;
+    protected $priority;
 
     protected string $title;
 
-    protected RiskProfile $riskProfile;
+    protected $riskProfile;
 
     /**
      * Create a new job instance.
@@ -28,7 +28,6 @@ trait HasCompliance
         $this->order = Transaction::order()->find($orderId);
 
         $this->riskProfile = $this->order->risk_profile;
-
     }
 
     public function resolvePolicyName(): void
