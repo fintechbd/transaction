@@ -48,7 +48,7 @@ trait HasCompliance
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
-            'priority' => $this->priority,
+            'priority' => $this->priority->value,
             'remarks' => $this->remarks,
             'timestamp' => now(),
         ];
