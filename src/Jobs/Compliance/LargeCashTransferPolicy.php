@@ -36,7 +36,7 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
             'user_id' => $this->order->user_id,
             'currency' => $this->order->currency,
             'sum_amount' => true,
-        ])?->total ?? "0");
+        ])?->total ?? '0');
 
         if ($order_amount_sum >= $this->highThreshold) {
             $this->riskProfile = RiskProfile::High;
