@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class SuspiciousTransactionJob implements ShouldQueue
+class PepDetectionPolicy implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,6 +26,8 @@ class SuspiciousTransactionJob implements ShouldQueue
      */
     public function handle(): void
     {
-        //
+        if ($this->batch()->cancelled()) {
+            return;
+        }
     }
 }

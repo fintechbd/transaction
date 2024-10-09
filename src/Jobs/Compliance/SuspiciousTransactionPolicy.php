@@ -9,7 +9,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class DormantAccountActivityJob implements ShouldQueue
+class SuspiciousTransactionPolicy implements ShouldQueue
 {
     use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -26,8 +26,6 @@ class DormantAccountActivityJob implements ShouldQueue
      */
     public function handle(): void
     {
-        if ($this->batch()->cancelled()) {
-            return;
-        }
+        //
     }
 }
