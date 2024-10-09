@@ -46,7 +46,7 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
             $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
         } else {
             $this->riskProfile = RiskProfile::Low;
-            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->lowThreshold, $this->order->currency).' threshold limit.';
+            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours is below the '.\currency($this->lowThreshold, $this->order->currency).' threshold limit.';
         }
 
         $this->updateComplianceReport();
