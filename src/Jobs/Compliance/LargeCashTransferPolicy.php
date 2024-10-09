@@ -30,13 +30,13 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
     {
         $this->setPriority(RiskProfile::High);
 
-        $order_amount_sum = Transaction::order()->list([
+        $order_amount_sum = floatval(Transaction::order()->findWhere([
             'created_at_start_date' => now()->format('Y-m-d'),
             'created_at_end_date' => now()->subHours(24)->format('Y-m-d'),
             'user_id' => $this->order->user_id,
             'currency' => $this->order->currency,
             'sum_amount' => true,
-        ])['total'];
+        ])?->total ?? "0");
 
         if ($order_amount_sum >= $this->highThreshold) {
             $this->riskProfile = RiskProfile::High;
