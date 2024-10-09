@@ -13,6 +13,8 @@ trait HasCompliance
 
     public $order;
 
+    public $priority;
+
     protected string $title;
     protected RiskProfile $riskProfile;
 
@@ -34,16 +36,6 @@ trait HasCompliance
         $this->title = trim(preg_replace('([A-Z])', " $0", class_basename($this)));
     }
 
-    public function title(string $title): void
-    {
-        $this->title = $title;
-    }
-
-    public function riskProfile(RiskProfile $risk): void
-    {
-        $this->riskProfile = $risk;
-    }
-
     private function updateComplianceReport(): void
     {
         $order_data = $this->order->order_data;
@@ -54,6 +46,7 @@ trait HasCompliance
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
+            'priority' => $this->priority,
             'timestamp' => now()
         ];
 
@@ -77,19 +70,19 @@ trait HasCompliance
         };
     }
 
-
     public function failed(?\Throwable $exception): void
     {
         $order_data = $this->order->order_data;
 
         $timeline = $this->order->timeline;
 
-        $this->riskProfile(RiskProfile::High);
+        $this->riskProfile = RiskProfile::High;
 
         $report = [
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
+            'priority' => $this->priority,
             'timestamp' => now()
         ];
 
