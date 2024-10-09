@@ -90,7 +90,7 @@ trait HasCompliance
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile->value,
-            'priority' => $this->priority,
+            'priority' => $this->priority->value,
             'remarks' => 'Internal Server Error: '.$exception->getMessage(),
             'timestamp' => now(),
         ];
