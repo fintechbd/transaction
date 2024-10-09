@@ -16,15 +16,13 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
-
-
     /**
      * Execute the job.
      */
     public function handle(): void
-	{
-		$this->setPriority(RiskProfile::Low);
-		if ($this->order->amount >= 100) {
+    {
+        $this->setPriority(RiskProfile::Low);
+        if ($this->order->amount >= 100) {
             $this->riskProfile = RiskProfile::High;
         } elseif ($this->order->amount >= 20) {
             $this->riskProfile = RiskProfile::Moderate;
