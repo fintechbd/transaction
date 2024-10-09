@@ -15,14 +15,15 @@ class ThirdPartyTransferPolicy implements ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected $priority = RiskProfile::Low;
+
 
     /**
      * Execute the job.
      */
     public function handle(): void
-    {
-        if ($this->order->amount >= 10_000) {
+	{
+		$this->setPriority(RiskProfile::Low);
+		if ($this->order->amount >= 10_000) {
             $this->riskProfile = RiskProfile::High;
         } elseif ($this->order->amount >= 5_000) {
             $this->riskProfile = RiskProfile::Moderate;
