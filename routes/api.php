@@ -37,6 +37,7 @@ if (Config::get('fintech.transaction.enabled')) {
 
             Route::apiResource('orders', OrderController::class)->only(['index', 'store', 'show']);
             //         Route::post('orders/{order}/restore', [OrderController::class, 'restore'])->name('orders.restore');
+                     Route::get('orders/{order}/track', [OrderController::class, 'track'])->name('orders.track');
 
             Route::apiResource('order-details', OrderDetailController::class)->only(['index', 'show']);
             //         Route::post('order-details/{order_detail}/restore', [OrderDetailController::class, 'restore'])->name('order-details.restore');
