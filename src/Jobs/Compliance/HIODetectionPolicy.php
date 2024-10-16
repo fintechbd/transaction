@@ -22,7 +22,7 @@ class HIODetectionPolicy implements ShouldQueue
     {
         $this->setPriority(RiskProfile::Low);
 
-        $this->title = "Head of International Organization";
+        $this->title = 'Head of International Organization';
 
         if ($this->order->amount >= 10_000) {
             $this->riskProfile = RiskProfile::High;

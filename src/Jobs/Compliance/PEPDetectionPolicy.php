@@ -22,7 +22,7 @@ class PEPDetectionPolicy implements ShouldQueue
     {
         $this->setPriority(RiskProfile::Low);
 
-        $this->title = "Politically Exposed Person";
+        $this->title = 'Politically Exposed Person';
 
         if ($this->order->amount >= 10_000) {
             $this->riskProfile = RiskProfile::High;
