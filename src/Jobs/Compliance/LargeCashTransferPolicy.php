@@ -21,8 +21,6 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
 
     private $moderateThreshold = 50;
 
-    private $lowThreshold = 20;
-
     /**
      * Execute the job.
      */
@@ -31,8 +29,9 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
         $this->setPriority(RiskProfile::High);
 
         $order_amount_sum = floatval(Transaction::order()->findWhere([
-            'created_at_start_date' => now()->format('Y-m-d'),
-            'created_at_end_date' => now()->subHours(24)->format('Y-m-d'),
+            'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
+            'created_at_end_date' => now()->format('Y-m-d'),
+            'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
             'currency' => $this->order->currency,
             'sum_amount' => true,
@@ -46,7 +45,7 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
             $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
         } else {
             $this->riskProfile = RiskProfile::Low;
-            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours is below the '.\currency($this->lowThreshold, $this->order->currency).' threshold limit.';
+            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours is below the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
         }
 
         $this->updateComplianceReport();
