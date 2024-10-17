@@ -234,7 +234,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         if (! empty($filters['creator_id'])) {
             $query->where(function ($query) use ($filters) {
                 return $query->where('orders.creator_id', $filters['creator_id'])
-                    ->orWwhere('orders.user_id', $filters['creator_id']);
+                    ->orWhere('orders.user_id', $filters['creator_id']);
             });
         }
 
