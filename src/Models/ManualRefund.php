@@ -2,8 +2,14 @@
 
 namespace Fintech\Transaction\Models;
 
-class ManualRefund extends Order
+use Fintech\Core\Traits\BlameableTrait;
+use OwenIt\Auditing\Contracts\Auditable;
+
+class ManualRefund extends Order implements Auditable
 {
+    use \OwenIt\Auditing\Auditable;
+    use BlameableTrait;
+
     /*
     |--------------------------------------------------------------------------
     | GLOBAL VARIABLES

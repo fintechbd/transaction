@@ -4,13 +4,16 @@ namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Traits\AuditableTrait;
+use Fintech\Core\Traits\BlameableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class UserAccount extends BaseModel
+class UserAccount extends BaseModel implements Auditable
 {
-    use AuditableTrait;
+    use \OwenIt\Auditing\Auditable;
+    use BlameableTrait;
     use AuthRelations;
     use MetaDataRelations;
     use SoftDeletes;
