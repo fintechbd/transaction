@@ -17,9 +17,9 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $highThreshold = 100;
+    private $highThreshold = 10_000;
 
-    private $moderateThreshold = 50;
+    private $moderateThreshold = 5_000;
 
     /**
      * Execute the job.
