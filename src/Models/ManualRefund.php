@@ -7,8 +7,8 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class ManualRefund extends Order implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
     use BlameableTrait;
+    use \OwenIt\Auditing\Auditable;
 
     /*
     |--------------------------------------------------------------------------

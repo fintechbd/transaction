@@ -3,13 +3,12 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Abstracts\BaseModel;
-use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RewardPoint extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use \OwenIt\Auditing\Auditable;
     use \Fintech\Core\Traits\BlameableTrait;
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     /*

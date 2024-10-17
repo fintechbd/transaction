@@ -3,7 +3,6 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Abstracts\BaseModel;
-use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Traits\BlameableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\MetaDataRelations;
@@ -12,10 +11,10 @@ use OwenIt\Auditing\Contracts\Auditable;
 
 class UserAccount extends BaseModel implements Auditable
 {
-    use \OwenIt\Auditing\Auditable;
-    use BlameableTrait;
     use AuthRelations;
+    use BlameableTrait;
     use MetaDataRelations;
+    use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 
     /*
