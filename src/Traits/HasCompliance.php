@@ -35,7 +35,10 @@ trait HasCompliance
 
     public function resolvePolicyName(): void
     {
-        $this->title = trim(preg_replace('([A-Z])', ' $0', class_basename($this)));
+        $this->title = preg_replace('/([A-Z])/', ' $0', class_basename($this));
+
+        $this->title = trim(preg_replace('/(.+)\sPolicy$/', '$1', $this->title));
+
     }
 
     private function updateComplianceReport(): void
@@ -56,8 +59,8 @@ trait HasCompliance
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title).' compliance policy verification completed with risk level ('.$this->riskProfile->value.').',
-            'flag' => 'info',
+            'message' => ucfirst($this->title)." compliance policy verification completed with risk level ({$this->riskProfile->value}).",
+            'flag' => ($this->riskProfile->value == 'green') ? 'info' : 'warn',
             'timestamp' => now(),
         ];
 
