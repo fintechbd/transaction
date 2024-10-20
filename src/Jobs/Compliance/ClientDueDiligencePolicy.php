@@ -3,8 +3,6 @@
 namespace Fintech\Transaction\Jobs\Compliance;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
-use Fintech\Ekyc\Models\KycStatus;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Traits\HasCompliance;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -39,13 +37,13 @@ class ClientDueDiligencePolicy implements ShouldQueue
         if ($kycStatus != 'accepted') {
             if ($this->order->amount >= $this->highThreshold) {
                 $this->riskProfile = RiskProfile::High;
-                $this->remarks = "{$amountFormatted} amount transferred without client due diligence has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.';
+                $this->remarks = "{$amountFormatted} amount transferred without client due diligence has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.';
             } elseif ($this->order->amount >= $this->moderateThreshold) {
                 $this->riskProfile = RiskProfile::Moderate;
-                $this->remarks = "{$amountFormatted} amount transferred without client due diligence has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.';
+                $this->remarks = "{$amountFormatted} amount transferred without client due diligence has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.';
             } else {
                 $this->riskProfile = RiskProfile::Low;
-                $this->remarks = "{$amountFormatted} amount transferred without client due diligence is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.';
+                $this->remarks = "{$amountFormatted} amount transferred without client due diligence is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.';
             }
         } else {
             $this->riskProfile = RiskProfile::Low;
