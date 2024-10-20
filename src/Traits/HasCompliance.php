@@ -20,6 +20,8 @@ trait HasCompliance
 
     protected ?RiskProfile $riskProfile;
 
+    protected $enabled = true;
+
     /**
      * Create a new job instance.
      */
@@ -79,6 +81,11 @@ trait HasCompliance
     public function setPriority(RiskProfile $priority): void
     {
         $this->priority = $priority;
+    }
+
+    public function makeDisable(): void
+    {
+        $this->enabled = false;
     }
 
     public function failed(?\Throwable $exception): void

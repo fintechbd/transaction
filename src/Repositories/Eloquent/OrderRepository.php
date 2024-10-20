@@ -153,6 +153,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.currency', '=', $filters['currency']);
         }
 
+        if (isset($filters['converted_currency_not_in']) && $filters['converted_currency_not_in']) {
+            $query->whereNotIn('orders.converted_currency', $filters['converted_currency_not_in']);
+        }
+
         if (isset($filters['order_start_date_time']) && $filters['order_start_date_time'] != '0000-00-00' && $filters['order_start_date_time'] != '' &&
             isset($filters['order_end_date_time']) && $filters['order_end_date_time'] != '0000-00-00' && $filters['order_end_date_time'] != ''
         ) {
