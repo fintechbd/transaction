@@ -53,8 +53,8 @@ trait HasCompliance
         $report = [
             'name' => $this->title,
             'score' => $this->getScore(),
-            'risk' => $this->riskProfile->value,
-            'priority' => $this->priority->value,
+            'risk' => $this->riskProfile?->value ?? 'red',
+            'priority' => $this->priority?->value ?? 'red',
             'remarks' => $this->remarks,
             'timestamp' => now(),
         ];
@@ -95,8 +95,8 @@ trait HasCompliance
         $report = [
             'name' => $this->title,
             'score' => $this->getScore(),
-            'risk' => $this->riskProfile->value,
-            'priority' => $this->priority->value,
+            'risk' => $this->riskProfile?->value ?? 'red',
+            'priority' => $this->priority?->value ?? 'red',
             'remarks' => 'Internal Server Error: '.$exception->getMessage(),
             'timestamp' => now(),
         ];
