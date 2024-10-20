@@ -43,6 +43,9 @@ trait HasCompliance
 
     private function updateComplianceReport(): void
     {
+
+        logger("Sum: ". $this->orderSumAmount ?? null);
+
         $order_data = $this->order->order_data;
 
         $timeline = $this->order->timeline;

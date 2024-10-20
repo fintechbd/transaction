@@ -21,6 +21,8 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
 
     private $moderateThreshold = 5_000;
 
+    private $orderSumAmount;
+
     /**
      * Execute the job.
      */
@@ -28,7 +30,7 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
     {
         $this->setPriority(RiskProfile::High);
 
-        $order_amount_sum = floatval(Transaction::order()->findWhere([
+        $this->orderSumAmount = floatval(Transaction::order()->findWhere([
             'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
             'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
@@ -37,15 +39,15 @@ class LargeCashTransferPolicy implements ShouldBeUnique, ShouldQueue
             'sum_amount' => true,
         ])?->total ?? '0');
 
-        if ($order_amount_sum >= $this->highThreshold) {
+        if ($this->orderSumAmount >= $this->highThreshold) {
             $this->riskProfile = RiskProfile::High;
-            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->highThreshold, $this->order->currency).' threshold limit.';
-        } elseif ($order_amount_sum >= $this->moderateThreshold) {
+            $this->remarks = \currency($this->orderSumAmount, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->highThreshold, $this->order->currency).' threshold limit.';
+        } elseif ($this->orderSumAmount >= $this->moderateThreshold) {
             $this->riskProfile = RiskProfile::Moderate;
-            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
+            $this->remarks = \currency($this->orderSumAmount, $this->order->currency).' amount transferred in last 24 hours has crossed the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
         } else {
             $this->riskProfile = RiskProfile::Low;
-            $this->remarks = \currency($order_amount_sum, $this->order->currency).' amount transferred in last 24 hours is below the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
+            $this->remarks = \currency($this->orderSumAmount, $this->order->currency).' amount transferred in last 24 hours is below the '.\currency($this->moderateThreshold, $this->order->currency).' threshold limit.';
         }
 
         $this->updateComplianceReport();
