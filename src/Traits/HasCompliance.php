@@ -63,7 +63,7 @@ trait HasCompliance
 
         $timeline[] = [
             'message' => ucfirst($this->title)." compliance policy verification completed with risk level ({$this->riskProfile->value}).",
-            'flag' => ($this->riskProfile->value == 'green') ? 'info' : 'warn',
+            'flag' => (($this->riskProfile?->value ?? 'red') == 'green') ? 'info' : 'warn',
             'timestamp' => now(),
         ];
 
