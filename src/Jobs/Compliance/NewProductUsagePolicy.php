@@ -33,7 +33,7 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
         $currency = $this->order->currency;
 
         $orderCount = floatval(Transaction::order()->findWhere([
-            'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
+            'created_at_start_date' => now()->subDays(7)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
             'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
@@ -45,11 +45,11 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
         $serviceName = $this->order?->service?->service_name ?? 'N/A';
 
         if ($orderCount >= $this->highThreshold) :
-            $this->high("{$orderCount} new orders on {$serviceName} in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+            $this->high("{$orderCount} new orders on {$serviceName} in last 7 days has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
         elseif ($orderCount >= $this->moderateThreshold) :
-            $this->moderate("{$orderCount} new orders on {$serviceName} in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            $this->moderate("{$orderCount} new orders on {$serviceName} in last 7 days has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
         else :
-            $this->low("{$orderCount} new orders on {$serviceName} in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            $this->low("{$orderCount} new orders on {$serviceName} in last 7 days is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
         endif;
     }
 }
