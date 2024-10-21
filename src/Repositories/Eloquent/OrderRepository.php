@@ -149,6 +149,14 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.amount', '=', $filters['amount']);
         }
 
+        if (isset($filters['above_amount']) && $filters['above_amount']) {
+            $query->where('orders.amount', '>=', $filters['above_amount']);
+        }
+
+        if (isset($filters['below_amount']) && $filters['below_amount']) {
+            $query->where('orders.amount', '<=', $filters['below_amount']);
+        }
+
         if (isset($filters['currency']) && $filters['currency']) {
             $query->where('orders.currency', '=', $filters['currency']);
         }
@@ -276,7 +284,11 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         } elseif (isset($filters['sum_amount']) && $filters['sum_amount'] === true) {
             $query->selectRaw('SUM(`orders`.`amount`) as `total`, `orders`.`currency` as `currency`')
                 ->groupBy('orders.currency');
-        } else {
+        }  elseif (isset($filters['count_order']) && $filters['count_order'] === true) {
+            $query->selectRaw('COUNT(`orders`.`*`) as `total`, `orders`.`currency` as `currency`')
+                ->groupBy('orders.currency');
+        }
+        else {
             $query->select('orders.*', DB::raw('transaction_forms.name AS transaction_form_name'));
         }
 

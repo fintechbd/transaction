@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Jobs\Compliance;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Transaction\Facades\Transaction;
+use Fintech\Transaction\Jobs\Compliance;
 use Fintech\Transaction\Traits\HasCompliance;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -12,45 +13,48 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class StructuringDetectionPolicy implements ShouldQueue
+class StructuringDetectionPolicy extends Compliance implements ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
 
-    private $highThreshold = 10_000;
+    protected $priority = RiskProfile::High;
 
-    private $moderateThreshold = 5_000;
+    protected $enabled = true;
+    private $threshold = 10_000;
+
+    private $radius = 75;
+
+    private $highThreshold = 5;
+
+    private $moderateThreshold = 2;
 
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function check(): void
     {
-        $this->setPriority(RiskProfile::High);
-
         $currency = $this->order->currency;
 
-        $orderSumAmount = floatval(Transaction::order()->findWhere([
+        $orderCount = floatval(Transaction::order()->findWhere([
             'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
             'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
             'currency' => $currency,
-            'sum_amount' => true,
+            'count_order' => true,
+            'above_amount' => calculate_flat_percent($this->threshold, $this->radius),
+            'below_amount' => $this->threshold
         ])?->total ?? '0');
 
-        $amountFormatted = \currency($orderSumAmount, $currency);
+        $thresholdFormatted = \currency($this->threshold, $currency);
 
-        if ($orderSumAmount >= $this->highThreshold) {
-            $this->riskProfile = RiskProfile::High;
-            $this->remarks = "{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.';
-        } elseif ($orderSumAmount >= $this->moderateThreshold) {
-            $this->riskProfile = RiskProfile::Moderate;
-            $this->remarks = "{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.';
+        if ($orderCount >= $this->highThreshold) {
+            $this->high("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+        } elseif ($orderCount >= $this->moderateThreshold) {
+            $this->moderate("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
         } else {
-            $this->riskProfile = RiskProfile::Low;
-            $this->remarks = "{$amountFormatted} amount transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.';
+            $this->low("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
         }
-
-        $this->updateComplianceReport();
     }
+
 }

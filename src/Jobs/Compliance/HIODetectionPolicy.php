@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Jobs\Compliance;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Transaction\Facades\Transaction;
+use Fintech\Transaction\Jobs\Compliance;
 use Fintech\Transaction\Traits\HasCompliance;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -12,9 +13,13 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class HIODetectionPolicy implements ShouldQueue
+class HIODetectionPolicy extends Compliance implements ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $priority = RiskProfile::High;
+
+    protected $enabled = false;
 
     private $highThreshold = 10_000;
 
@@ -23,10 +28,8 @@ class HIODetectionPolicy implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function check(): void
     {
-        $this->setPriority(RiskProfile::High);
-
         $currency = $this->order->currency;
 
         $orderSumAmount = floatval(Transaction::order()->findWhere([
@@ -41,16 +44,11 @@ class HIODetectionPolicy implements ShouldQueue
         $amountFormatted = \currency($orderSumAmount, $currency);
 
         if ($orderSumAmount >= $this->highThreshold) {
-            $this->riskProfile = RiskProfile::High;
-            $this->remarks = "{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.';
+            $this->high("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.');
         } elseif ($orderSumAmount >= $this->moderateThreshold) {
-            $this->riskProfile = RiskProfile::Moderate;
-            $this->remarks = "{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.';
+            $this->moderate("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
         } else {
-            $this->riskProfile = RiskProfile::Low;
-            $this->remarks = "{$amountFormatted} amount transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.';
+            $this->low("{$amountFormatted} amount transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
         }
-
-        $this->updateComplianceReport();
     }
 }

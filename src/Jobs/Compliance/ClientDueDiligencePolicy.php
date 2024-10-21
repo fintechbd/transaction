@@ -5,6 +5,7 @@ namespace Fintech\Transaction\Jobs\Compliance;
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Ekyc\Models\KycStatus;
 use Fintech\Transaction\Facades\Transaction;
+use Fintech\Transaction\Jobs\Compliance;
 use Fintech\Transaction\Traits\HasCompliance;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
@@ -13,9 +14,13 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 
-class ClientDueDiligencePolicy implements ShouldQueue
+class ClientDueDiligencePolicy extends Compliance implements ShouldQueue
 {
     use Batchable, Dispatchable, HasCompliance, InteractsWithQueue, Queueable, SerializesModels;
+
+    protected $priority = RiskProfile::Moderate;
+
+    protected $enabled = false;
 
     private $highThreshold = 1_000;
 
@@ -24,34 +29,26 @@ class ClientDueDiligencePolicy implements ShouldQueue
     /**
      * Execute the job.
      */
-    public function handle(): void
+    public function check(): void
     {
-        $this->setPriority(RiskProfile::Moderate);
 
-        $currency = $this->order->currency;
-
-        $amountFormatted = \currency($this->order->amount, $currency);
-
-        $ekyc = $this->order->user?->profile?->profile_data['ekyc'] ?? [];
+        $ekyc = $this->order->user?->profile?->user_profile_data['ekyc'] ?? ['status' => 'rejected'];
 
         $kycStatus = ($ekyc['status'] ?? 'rejected');
 
         if ($kycStatus != 'accepted') {
-            if ($this->order->amount >= $this->highThreshold) {
-                $this->riskProfile = RiskProfile::High;
-                $this->remarks = "{$amountFormatted} amount transferred without client due diligence has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.';
-            } elseif ($this->order->amount >= $this->moderateThreshold) {
-                $this->riskProfile = RiskProfile::Moderate;
-                $this->remarks = "{$amountFormatted} amount transferred without client due diligence has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.';
-            } else {
-                $this->riskProfile = RiskProfile::Low;
-                $this->remarks = "{$amountFormatted} amount transferred without client due diligence is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.';
-            }
-        } else {
-            $this->riskProfile = RiskProfile::Low;
-            $this->remarks = "{$amountFormatted} amount transferred with client due diligence is approved.";
-        }
 
-        $this->updateComplianceReport();
+            $currency = $this->order->currency;
+
+            $amountFormatted = \currency($this->order->amount, $currency);
+
+            if ($this->order->amount >= $this->highThreshold) {
+                $this->high("{$amountFormatted} amount transferred without client due diligence has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+            } elseif ($this->order->amount >= $this->moderateThreshold) {
+                $this->moderate("{$amountFormatted} amount transferred without client due diligence has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            } else {
+                $this->low("{$amountFormatted} amount transferred without client due diligence is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            }
+        }
     }
 }
