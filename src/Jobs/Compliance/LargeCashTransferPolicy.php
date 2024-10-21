@@ -8,7 +8,6 @@ use Fintech\Transaction\Jobs\Compliance;
 use Fintech\Transaction\Traits\HasCompliance;
 use Illuminate\Bus\Batchable;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -44,15 +43,15 @@ class LargeCashTransferPolicy extends Compliance implements ShouldQueue
 
         $amountFormatted = \currency($orderSumAmount, $currency);
 
-        if ($orderSumAmount >= $this->highThreshold) :
-            $this->high("{$amountFormatted} amount transferred in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+        if ($orderSumAmount >= $this->highThreshold) {
+            $this->high("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.');
 
-        elseif ($orderSumAmount >= $this->moderateThreshold) :
-            $this->moderate("{$amountFormatted} amount transferred in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+        } elseif ($orderSumAmount >= $this->moderateThreshold) {
+            $this->moderate("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
 
-        else :
-            $this->low("{$amountFormatted} amount transferred in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+        } else {
+            $this->low("{$amountFormatted} amount transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
 
-        endif;
+        }
     }
 }

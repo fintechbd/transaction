@@ -2,9 +2,7 @@
 
 namespace Fintech\Transaction\Traits;
 
-use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Transaction\Facades\Transaction;
-use Illuminate\Support\Str;
 
 trait HasCompliance
 {

@@ -20,6 +20,7 @@ class PEPDetectionPolicy extends Compliance implements ShouldQueue
     protected $priority = RiskProfile::High;
 
     protected $enabled = false;
+
     private $highThreshold = 10_000;
 
     private $moderateThreshold = 5_000;

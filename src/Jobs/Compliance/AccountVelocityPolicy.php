@@ -44,11 +44,11 @@ class AccountVelocityPolicy extends Compliance implements ShouldQueue
         $amountFormatted = \currency($orderSumAmount, $currency);
 
         if ($orderSumAmount >= $this->highThreshold) {
-            $this->high("{$amountFormatted} amount transferred in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+            $this->high("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.');
         } elseif ($orderSumAmount >= $this->moderateThreshold) {
-            $this->moderate("{$amountFormatted} amount transferred in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            $this->moderate("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
         } else {
-            $this->low("{$amountFormatted} amount transferred in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            $this->low("{$amountFormatted} amount transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
         }
     }
 }

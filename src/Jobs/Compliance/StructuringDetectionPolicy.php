@@ -20,6 +20,7 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
     protected $priority = RiskProfile::High;
 
     protected $enabled = true;
+
     private $threshold = 10_000;
 
     private $radius = 75;
@@ -47,13 +48,12 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
 
         $thresholdFormatted = \currency($this->threshold, $currency);
 
-        if ($orderCount >= $this->highThreshold) :
+        if ($orderCount >= $this->highThreshold) {
             $this->high("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the {$this->highThreshold} order threshold limit.");
-        elseif ($orderCount >= $this->moderateThreshold) :
+        } elseif ($orderCount >= $this->moderateThreshold) {
             $this->moderate("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the {$this->moderateThreshold} order threshold limit.");
-        else :
+        } else {
             $this->low("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours is below the {$this->moderateThreshold} order threshold limit.");
-        endif;
+        }
     }
-
 }

@@ -44,12 +44,12 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
 
         $serviceName = $this->order?->service?->service_name ?? 'N/A';
 
-        if ($orderCount >= $this->highThreshold) :
+        if ($orderCount >= $this->highThreshold) {
             $this->high("{$orderCount} new orders on {$serviceName} in last 7 days has crossed the {$this->highThreshold} order threshold limit.");
-        elseif ($orderCount >= $this->moderateThreshold) :
+        } elseif ($orderCount >= $this->moderateThreshold) {
             $this->moderate("{$orderCount} new orders on {$serviceName} in last 7 days has crossed the {$this->moderateThreshold} order threshold limit.");
-        else :
+        } else {
             $this->low("{$orderCount} new orders on {$serviceName} in last 7 days is below the {$this->moderateThreshold} order threshold limit.");
-        endif;
+        }
     }
 }

@@ -20,6 +20,7 @@ class ElectronicFundTransferPolicy extends Compliance implements ShouldQueue
     protected $priority = RiskProfile::High;
 
     protected $enabled = true;
+
     private $highThreshold = 10_000;
 
     private $moderateThreshold = 5_000;
@@ -46,11 +47,11 @@ class ElectronicFundTransferPolicy extends Compliance implements ShouldQueue
             $amountFormatted = \currency($orderSumAmount, $currency);
 
             if ($orderSumAmount >= $this->highThreshold) {
-                $this->high("{$amountFormatted} electronic fund transferred in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+                $this->high("{$amountFormatted} electronic fund transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.');
             } elseif ($orderSumAmount >= $this->moderateThreshold) {
-                $this->moderate("{$amountFormatted} electronic fund transferred in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+                $this->moderate("{$amountFormatted} electronic fund transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
             } else {
-                $this->low("{$amountFormatted} electronic fund transferred in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+                $this->low("{$amountFormatted} electronic fund transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
             }
         }
     }
