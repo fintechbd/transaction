@@ -51,7 +51,7 @@ abstract class Compliance
 
     }
 
-    private function updateComplianceReport(): void
+    protected function updateComplianceReport(): void
     {
         $order_data = $this->order->order_data;
 

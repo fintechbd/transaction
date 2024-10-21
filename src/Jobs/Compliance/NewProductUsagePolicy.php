@@ -19,11 +19,11 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
 
     protected $priority = RiskProfile::High;
 
-    protected $enabled = false;
+    protected $enabled = true;
 
-    private $highThreshold = 10_000;
+    private $highThreshold = 5;
 
-    private $moderateThreshold = 5_000;
+    private $moderateThreshold = 2;
 
     /**
      * Execute the job.
@@ -32,23 +32,24 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
     {
         $currency = $this->order->currency;
 
-        $orderSumAmount = floatval(Transaction::order()->findWhere([
+        $orderCount = floatval(Transaction::order()->findWhere([
             'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
             'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
+            'service_id' => $this->order->service_id,
             'currency' => $currency,
-            'sum_amount' => true,
+            'count_order' => true,
         ])?->total ?? '0');
 
-        $amountFormatted = \currency($orderSumAmount, $currency);
+        $serviceName = $this->order?->service?->service_name ?? 'N/A';
 
-        if ($orderSumAmount >= $this->highThreshold) {
-            $this->high("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->highThreshold, $currency).' threshold limit.');
-        } elseif ($orderSumAmount >= $this->moderateThreshold) {
-            $this->moderate("{$amountFormatted} amount transferred in last 24 hours has crossed the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
-        } else {
-            $this->low("{$amountFormatted} amount transferred in last 24 hours is below the ".\currency($this->moderateThreshold, $currency).' threshold limit.');
-        }
+        if ($orderCount >= $this->highThreshold) :
+            $this->high("{$orderCount} new orders on {$serviceName} in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+        elseif ($orderCount >= $this->moderateThreshold) :
+            $this->moderate("{$orderCount} new orders on {$serviceName} in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+        else :
+            $this->low("{$orderCount} new orders on {$serviceName} in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+        endif;
     }
 }

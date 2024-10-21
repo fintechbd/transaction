@@ -48,13 +48,13 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
 
         $thresholdFormatted = \currency($this->threshold, $currency);
 
-        if ($orderCount >= $this->highThreshold) {
+        if ($orderCount >= $this->highThreshold) :
             $this->high("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
-        } elseif ($orderCount >= $this->moderateThreshold) {
+        elseif ($orderCount >= $this->moderateThreshold) :
             $this->moderate("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
-        } else {
+        else :
             $this->low("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
-        }
+        endif;
     }
 
 }

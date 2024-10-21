@@ -285,7 +285,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->selectRaw('SUM(`orders`.`amount`) as `total`, `orders`.`currency` as `currency`')
                 ->groupBy('orders.currency');
         }  elseif (isset($filters['count_order']) && $filters['count_order'] === true) {
-            $query->selectRaw('COUNT(`orders`.`*`) as `total`, `orders`.`currency` as `currency`')
+            $query->selectRaw('COUNT(`orders`.*) as `total`, `orders`.`currency` as `currency`')
                 ->groupBy('orders.currency');
         }
         else {
