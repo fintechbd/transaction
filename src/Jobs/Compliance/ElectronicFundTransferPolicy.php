@@ -30,7 +30,8 @@ class ElectronicFundTransferPolicy extends Compliance implements ShouldQueue
      */
     public function check(): void
     {
-        if ($this->order->currency != $this->order->converted_currency) {
+        if (($this->order->currency != $this->order->converted_currency)
+            || ($this->order->source_country_id != $this->order->destination_country_id)) {
 
             $currency = $this->order->currency;
 

@@ -32,10 +32,9 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
     {
         $currency = $this->order->currency;
 
-        $orderCount = floatval(Transaction::order()->findWhere([
+        $orderCount = intval(Transaction::order()->findWhere([
             'created_at_start_date' => now()->subDays(7)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
-            'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
             'service_id' => $this->order->service_id,
             'currency' => $currency,
