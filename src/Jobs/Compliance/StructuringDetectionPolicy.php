@@ -43,17 +43,16 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
             'currency' => $currency,
             'count_order' => true,
             'above_amount' => calculate_flat_percent($this->threshold, $this->radius),
-            'below_amount' => $this->threshold
         ])?->total ?? '0');
 
         $thresholdFormatted = \currency($this->threshold, $currency);
 
         if ($orderCount >= $this->highThreshold) :
-            $this->high("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the " . \currency($this->highThreshold, $currency) . ' threshold limit.');
+            $this->high("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the {$this->highThreshold} order threshold limit.");
         elseif ($orderCount >= $this->moderateThreshold) :
-            $this->moderate("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            $this->moderate("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours has crossed the {$this->moderateThreshold} order threshold limit.");
         else :
-            $this->low("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours is below the " . \currency($this->moderateThreshold, $currency) . ' threshold limit.');
+            $this->low("{$orderCount} orders with amount near to {$thresholdFormatted} in last 24 hours is below the {$this->moderateThreshold} order threshold limit.");
         endif;
     }
 
