@@ -43,7 +43,7 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
             'user_id' => $this->order->user_id,
             'currency' => $currency,
             'count_order' => true,
-            'above_amount' => calculate_flat_percent($this->threshold, $this->radius),
+            'above_amount' => calculate_flat_percent($this->threshold, "{$this->radius}%"),
         ])?->total ?? '0');
 
         $thresholdFormatted = \currency($this->threshold, $currency);
