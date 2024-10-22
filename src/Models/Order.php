@@ -42,6 +42,7 @@ class Order extends BaseModel
         'order_data' => 'array',
         'timeline' => 'array',
         'restored_at' => 'datetime',
+        'ordered_at' => 'datetime',
         'enabled' => 'bool',
         'status' => OrderStatus::class,
         'risk_profile' => RiskProfile::class,
