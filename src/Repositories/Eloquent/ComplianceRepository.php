@@ -28,6 +28,9 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
         $query = $this->model->newQuery();
 
         $query->leftJoin('orders', 'compliances.order_id', '=', 'orders.id');
+        $query->leftJoin('users', 'compliances.user_id', '=', 'users.id');
+        $query->leftJoin('countries as source_country', 'orders.source_country_id', '=', 'source_country.id');
+        $query->leftJoin('countries as destination_country', 'orders.destination_country_id', '=', 'destination_country.id');
 
         //Searching
         if (! empty($filters['search'])) {
@@ -57,6 +60,18 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
 
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
+
+        $query->select([
+            'compliances.*',
+            'orders.description as description',
+            'users.name as user_name',
+            'users.mobile as user_mobile',
+            'orders.order_number',
+            'orders.order_data',
+            'source_country.name as source_country_name',
+            'destination_country.name as destination_country_name',
+            'orders.status as order_status'
+        ]);
 
         //Execute Output
         return $this->executeQuery($query, $filters);

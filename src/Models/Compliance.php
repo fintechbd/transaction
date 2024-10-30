@@ -3,12 +3,14 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Enums\Auth\RiskProfile;
+use Fintech\Core\Enums\Transaction\OrderStatus;
 use Fintech\Core\Traits\AuditableTrait;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Compliance extends BaseModel
 {
-    use AuditableTrait;
     use SoftDeletes;
 
     /*
@@ -21,7 +23,15 @@ class Compliance extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $casts = ['compliance_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
+    protected $casts = [
+        'compliance_data' => 'array',
+        'restored_at' => 'datetime',
+        'enabled' => 'bool',
+        'timestamp' => 'datetime',
+        'risk' => RiskProfile::class,
+        'priority' => RiskProfile::class,
+        'order_status' => OrderStatus::class
+    ];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
@@ -36,6 +46,15 @@ class Compliance extends BaseModel
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function order(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.transaction.order_model', Order::class));
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.auth.user_model', Order::class));
+    }
 
     /*
     |--------------------------------------------------------------------------
