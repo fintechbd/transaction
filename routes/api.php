@@ -83,6 +83,10 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->only(['index', 'store', 'show']);
             //         Route::post('redeem-points/{redeem_point}/restore', [RedeemPointController::class, 'restore'])->name('redeem-points.restore');
 
+            Route::apiResource('compliances', \Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class)
+                ->only(['index', 'show', 'destroy']);
+//    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
+
             //DO NOT REMOVE THIS LINE//
         });
         Route::prefix('dropdown')->name('transaction.')->group(function () {

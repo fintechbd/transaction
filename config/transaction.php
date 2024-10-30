@@ -155,6 +155,16 @@ return [
     */
     'redeem_point_model' => RedeemPoint::class,
 
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Compliance Model
+    |--------------------------------------------------------------------------
+    |
+    | This value will be used to across system where model is needed
+    */
+    'compliance_model' => \Fintech\Transaction\Models\Compliance::class,
+
     //** Model Config Point Do not Remove **//
 
     /*
@@ -187,6 +197,8 @@ return [
         \Fintech\Transaction\Interfaces\RewardPointRepository::class => RewardPointRepository::class,
 
         \Fintech\Transaction\Interfaces\RedeemPointRepository::class => RedeemPointRepository::class,
+
+        \Fintech\Transaction\Interfaces\ComplianceRepository::class => \Fintech\Transaction\Repositories\Eloquent\ComplianceRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

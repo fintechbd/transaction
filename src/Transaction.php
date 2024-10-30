@@ -71,6 +71,15 @@ class Transaction
         return \singleton(RedeemPointService::class, $filters);
     }
 
+    /**
+     * @return \Fintech\Transaction\Services\ComplianceService
+     */
+    public function compliance()
+    {
+        return app(\Fintech\Transaction\Services\ComplianceService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 }
