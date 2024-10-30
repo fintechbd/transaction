@@ -20,7 +20,7 @@ return new class extends Migration
             $table->smallInteger('score')->default(0);
             $table->string('risk')->default('green');
             $table->string('priority')->default('green');
-            $table->mediumText('remarks')->default('N/A');
+            $table->mediumText('remarks')->nullable();
             $table->mediumText('notes')->nullable();
             $table->dateTime('timestamp')->useCurrent();
             $table->json('compliances_data')->nullable();
