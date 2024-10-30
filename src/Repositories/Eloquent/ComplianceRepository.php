@@ -17,7 +17,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.transaction.compliance_model', \Fintech\Transaction\Models\Compliance::class));
+        parent::__construct(config('fintech.transaction.compliance_model', \Fintech\Transaction\Models\Compliance::class));
     }
 
     /**
@@ -30,14 +30,27 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
     {
         $query = $this->model->newQuery();
 
+        $query->leftJoin('orders', 'compliances.order_id', '=', 'orders.id');
+
         //Searching
-        if (! empty($filters['search'])) {
-            if (is_numeric($filters['search'])) {
-                $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
-            } else {
-                $query->where('name', 'like', "%{$filters['search']}%");
-                $query->orWhere('compliance_data', 'like', "%{$filters['search']}%");
-            }
+        if (!empty($filters['search'])) {
+            $query->where(function ($query) use ($filters) {
+                $query->where('name', 'like', "%{$filters['search']}%")
+                    ->orWhere('code', 'like', "%{$filters['search']}%")
+                    ->orWhere('remarks', 'like', "%{$filters['search']}%");
+            });
+        }
+
+        if (!empty($filters['code'])) {
+            $query->where('code', $filters['code']);
+        }
+
+        if (!empty($filters['order_number'])) {
+            $query->where('order_number', $filters['order_number']);
+        }
+
+        if (!empty($filters['user_id'])) {
+            $query->where('order_number', $filters['user_id']);
         }
 
         //Display Trashed

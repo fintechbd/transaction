@@ -6,6 +6,7 @@ use Fintech\RestApi\Http\Controllers\Transaction\Charts\OrderSummaryController;
 use Fintech\RestApi\Http\Controllers\Transaction\Charts\UserAccountSummaryController;
 use Fintech\RestApi\Http\Controllers\Transaction\Charts\UserAccountUsagePieChartController;
 use Fintech\RestApi\Http\Controllers\Transaction\ChartTypeController;
+use Fintech\RestApi\Http\Controllers\Transaction\ComplianceController;
 use Fintech\RestApi\Http\Controllers\Transaction\ManualRefundController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderDetailController;
@@ -83,7 +84,7 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->only(['index', 'store', 'show']);
             //         Route::post('redeem-points/{redeem_point}/restore', [RedeemPointController::class, 'restore'])->name('redeem-points.restore');
 
-            Route::apiResource('compliances', \Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class)
+            Route::apiResource('compliances', ComplianceController::class)
                 ->only(['index', 'show', 'destroy']);
 //    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
 
@@ -96,6 +97,8 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->name('order-statuses.dropdown');
             Route::get('request-platforms', RequestPlatformDropdownController::class)
                 ->name('request-platforms.dropdown');
+            Route::get('compliance-policies', [ComplianceController::class, 'dropdown'])
+                ->name('compliance-policies.dropdown');
 
         });
     });
