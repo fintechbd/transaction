@@ -83,7 +83,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
             'orders.order_data',
             'source_country.name as source_country_name',
             'destination_country.name as destination_country_name',
-            'orders.status as order_status'
+            'orders.status as order_status',
         ]);
 
         //Execute Output
