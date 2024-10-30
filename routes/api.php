@@ -86,7 +86,7 @@ if (Config::get('fintech.transaction.enabled')) {
 
             Route::apiResource('compliances', ComplianceController::class)
                 ->only(['index', 'show', 'destroy']);
-//    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
+            //    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
 
             //DO NOT REMOVE THIS LINE//
         });

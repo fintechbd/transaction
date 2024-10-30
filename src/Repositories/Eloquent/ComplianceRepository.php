@@ -6,12 +6,9 @@ use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\ComplianceRepository as InterfacesComplianceRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class ComplianceRepository
- * @package Fintech\Transaction\Repositories\Eloquent
  */
 class ComplianceRepository extends EloquentRepository implements InterfacesComplianceRepository
 {
@@ -33,7 +30,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
         $query->leftJoin('orders', 'compliances.order_id', '=', 'orders.id');
 
         //Searching
-        if (!empty($filters['search'])) {
+        if (! empty($filters['search'])) {
             $query->where(function ($query) use ($filters) {
                 $query->where('name', 'like', "%{$filters['search']}%")
                     ->orWhere('code', 'like', "%{$filters['search']}%")
@@ -41,15 +38,15 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
             });
         }
 
-        if (!empty($filters['code'])) {
+        if (! empty($filters['code'])) {
             $query->where('code', $filters['code']);
         }
 
-        if (!empty($filters['order_number'])) {
+        if (! empty($filters['order_number'])) {
             $query->where('order_number', $filters['order_number']);
         }
 
-        if (!empty($filters['user_id'])) {
+        if (! empty($filters['user_id'])) {
             $query->where('order_number', $filters['user_id']);
         }
 

@@ -6,18 +6,15 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\ComplianceRepository as InterfacesComplianceRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class ComplianceRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class ComplianceRepository extends MongodbRepository implements InterfacesComplianceRepository
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.transaction.compliance_model', \Fintech\Transaction\Models\Compliance::class));
+        parent::__construct(config('fintech.transaction.compliance_model', \Fintech\Transaction\Models\Compliance::class));
     }
 
     /**

@@ -2,14 +2,14 @@
 
 namespace Fintech\Transaction\Models;
 
-use Fintech\Core\Traits\AuditableTrait;
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Compliance extends BaseModel
 {
-   use AuditableTrait;
-   use SoftDeletes;
+    use AuditableTrait;
+    use SoftDeletes;
 
     /*
     |--------------------------------------------------------------------------
@@ -20,8 +20,6 @@ class Compliance extends BaseModel
     protected $primaryKey = 'id';
 
     protected $guarded = ['id'];
-
-
 
     protected $casts = ['compliance_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
 

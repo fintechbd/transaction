@@ -2,24 +2,19 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\ComplianceRepository;
 
 /**
  * Class ComplianceService
- * @package Fintech\Transaction\Services
- *
  */
 class ComplianceService
 {
     /**
      * ComplianceService constructor.
-     * @param ComplianceRepository $complianceRepository
      */
-    public function __construct(private readonly ComplianceRepository $complianceRepository) { }
+    public function __construct(private readonly ComplianceRepository $complianceRepository) {}
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

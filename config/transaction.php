@@ -155,7 +155,6 @@ return [
     */
     'redeem_point_model' => RedeemPoint::class,
 
-    
     /*
     |--------------------------------------------------------------------------
     | Compliance Model
