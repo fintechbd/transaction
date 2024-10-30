@@ -33,24 +33,37 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
         $query->leftJoin('countries as destination_country', 'orders.destination_country_id', '=', 'destination_country.id');
 
         //Searching
-        if (! empty($filters['search'])) {
+        if (!empty($filters['search'])) {
             $query->where(function ($query) use ($filters) {
-                $query->where('name', 'like', "%{$filters['search']}%")
+                return $query->where('name', 'like', "%{$filters['search']}%")
                     ->orWhere('code', 'like', "%{$filters['search']}%")
                     ->orWhere('remarks', 'like', "%{$filters['search']}%");
             });
         }
 
-        if (! empty($filters['code'])) {
+        if (!empty($filters['code'])) {
             $query->where('code', $filters['code']);
         }
 
-        if (! empty($filters['order_number'])) {
-            $query->where('order_number', $filters['order_number']);
+        if (!empty($filters['order_number'])) {
+            $query->where(function ($query) use ($filters) {
+                return $query->where('orders.order_number', $filters['order_number'])
+                    ->orWhere('orders.order_data->purchase_number', $filters['order_number'])
+                    ->orWhere('orders.order_data->accept_number', $filters['order_number'])
+                    ->orWhere('orders.order_data->reject_number', $filters['order_number']);
+            });
         }
 
-        if (! empty($filters['user_id'])) {
-            $query->where('order_number', $filters['user_id']);
+        if (!empty($filters['user_id'])) {
+            $query->where('user_id', $filters['user_id']);
+        }
+
+        if (!empty($filters['source_country_id'])) {
+            $query->where('orders.source_country_id', $filters['source_country_id']);
+        }
+
+        if (!empty($filters['destination_country_id'])) {
+            $query->where('orders.destination_country_id', $filters['destination_country_id']);
         }
 
         //Display Trashed
