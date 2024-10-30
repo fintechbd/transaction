@@ -24,6 +24,8 @@ class ClientDueDiligencePolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 700;
 
+    protected $code = 'CP005';
+
     /**
      * Execute the job.
      */

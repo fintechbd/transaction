@@ -25,6 +25,8 @@ class HighRiskCountryTransferPolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 5_000;
 
+    protected $code = 'CP007';
+
     /**
      * Execute the job.
      */

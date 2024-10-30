@@ -24,7 +24,7 @@ class HIODetectionPolicy extends Compliance implements ShouldQueue
     private $highThreshold = 10_000;
 
     private $moderateThreshold = 5_000;
-
+    protected $code = 'CP008';
     /**
      * Execute the job.
      */

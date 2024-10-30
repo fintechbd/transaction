@@ -25,6 +25,8 @@ class AccountVelocityPolicy extends Compliance implements ShouldQueue
 
     private int $moderateThreshold = 5_000;
 
+    protected $code = 'CP010';
+
     /**
      * Execute the job.
      */

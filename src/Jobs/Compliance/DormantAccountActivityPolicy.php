@@ -25,6 +25,8 @@ class DormantAccountActivityPolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 1;
 
+    protected $code = 'CP012';
+
     /**
      * Execute the job.
      */

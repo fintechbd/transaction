@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->nullable();
             $table->foreignId('order_id')->nullable();
+            $table->string('code');
             $table->string('name');
             $table->smallInteger('score')->default(0);
             $table->string('risk')->default('green');

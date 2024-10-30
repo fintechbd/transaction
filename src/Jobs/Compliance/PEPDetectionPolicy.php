@@ -25,6 +25,8 @@ class PEPDetectionPolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 5_000;
 
+    protected $code = 'CP009';
+
     /**
      * Execute the job.
      */

@@ -25,6 +25,8 @@ class NewProductUsagePolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 2;
 
+    protected $code = 'CP011';
+
     /**
      * Execute the job.
      */

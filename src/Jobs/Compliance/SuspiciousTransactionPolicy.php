@@ -25,6 +25,8 @@ class SuspiciousTransactionPolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 5_000;
 
+    protected $code = 'CP004';
+
     /**
      * Execute the job.
      */

@@ -36,6 +36,8 @@ abstract class Compliance
      */
     protected $riskProfile;
 
+    protected $code;
+
     /**
      * @var bool
      */
@@ -56,6 +58,7 @@ abstract class Compliance
         $timeline = $this->order->timeline;
 
         $report = [
+            'code' => $this->code ?? null,
             'name' => $this->title,
             'score' => $this->getScore(),
             'risk' => $this->riskProfile?->value ?? 'red',

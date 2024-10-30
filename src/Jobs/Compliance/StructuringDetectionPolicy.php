@@ -29,6 +29,8 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
 
     private $moderateThreshold = 2;
 
+    protected $code = 'CP006';
+
     /**
      * Execute the job.
      */
