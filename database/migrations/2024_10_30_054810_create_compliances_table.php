@@ -13,8 +13,15 @@ return new class extends Migration
     {
         Schema::create('compliances', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->nullable();
+            $table->foreignId('order_id')->nullable();
             $table->string('name');
-
+            $table->smallInteger('score')->default(0);
+            $table->string('risk')->default('green');
+            $table->string('priority')->default('green');
+            $table->mediumText('remarks')->default('N/A');
+            $table->mediumText('notes')->nullable();
+            $table->dateTime('timestamp')->useCurrent();
             $table->json('compliances_data')->nullable();
             $table->foreignId('creator_id')->nullable();
             $table->foreignId('editor_id')->nullable();

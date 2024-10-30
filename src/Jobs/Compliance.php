@@ -5,17 +5,10 @@ namespace Fintech\Transaction\Jobs;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Transaction\Facades\Transaction;
-use Illuminate\Bus\Batchable;
-use Illuminate\Bus\Queueable;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Str;
 
 abstract class Compliance
 {
-    use Batchable, Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
-
     public $tries = 1;
 
     /**
@@ -80,6 +73,11 @@ abstract class Compliance
         ];
 
         Transaction::order()->update($this->order->getKey(), ['order_data' => $order_data, 'timeline' => $timeline]);
+
+        $report['order_id'] = $this->order->getKey();
+        $report['user_id'] = $this->order->user_id;
+
+        Transaction::compliance()->create($report);
     }
 
     private function getScore(): int
