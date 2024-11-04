@@ -6,18 +6,15 @@ use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\PolicyRepository as InterfacesPolicyRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class PolicyRepository
- * @package Fintech\Transaction\Repositories\Eloquent
  */
 class PolicyRepository extends EloquentRepository implements InterfacesPolicyRepository
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.transaction.policy_model', \Fintech\Transaction\Models\Policy::class));
+        parent::__construct(config('fintech.transaction.policy_model', \Fintech\Transaction\Models\Policy::class));
     }
 
     /**

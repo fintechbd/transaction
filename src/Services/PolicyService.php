@@ -2,24 +2,19 @@
 
 namespace Fintech\Transaction\Services;
 
-
 use Fintech\Transaction\Interfaces\PolicyRepository;
 
 /**
  * Class PolicyService
- * @package Fintech\Transaction\Services
- *
  */
 class PolicyService
 {
     /**
      * PolicyService constructor.
-     * @param PolicyRepository $policyRepository
      */
-    public function __construct(private readonly PolicyRepository $policyRepository) { }
+    public function __construct(private readonly PolicyRepository $policyRepository) {}
 
     /**
-     * @param array $filters
      * @return mixed
      */
     public function list(array $filters = [])

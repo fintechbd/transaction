@@ -179,38 +179,27 @@ return [
 
         \Fintech\Transaction\Interfaces\OrderRepository::class => OrderRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderDetailRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository::class,
+        \Fintech\Transaction\Interfaces\OrderDetailRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartClassRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\ChartClassRepository::class,
+        \Fintech\Transaction\Interfaces\ChartClassRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartClassRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartTypeRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
+        \Fintech\Transaction\Interfaces\ChartTypeRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartEntryRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
+        \Fintech\Transaction\Interfaces\ChartEntryRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
 
-        \Fintech\Transaction\Interfaces\UserAccountRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
+        \Fintech\Transaction\Interfaces\UserAccountRepository::class => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderQueueRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
+        \Fintech\Transaction\Interfaces\OrderQueueRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
 
-        \Fintech\Transaction\Interfaces\ManualRefundRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository::class,
+        \Fintech\Transaction\Interfaces\ManualRefundRepository::class => \Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository::class,
 
-        \Fintech\Transaction\Interfaces\RewardPointRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\RewardPointRepository::class,
+        \Fintech\Transaction\Interfaces\RewardPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RewardPointRepository::class,
 
-        \Fintech\Transaction\Interfaces\RedeemPointRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository::class,
+        \Fintech\Transaction\Interfaces\RedeemPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository::class,
 
-        \Fintech\Transaction\Interfaces\ComplianceRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\ComplianceRepository::class,
+        \Fintech\Transaction\Interfaces\ComplianceRepository::class => \Fintech\Transaction\Repositories\Eloquent\ComplianceRepository::class,
 
-        \Fintech\Transaction\Interfaces\PolicyRepository::class
-        => \Fintech\Transaction\Repositories\Eloquent\PolicyRepository::class,
+        \Fintech\Transaction\Interfaces\PolicyRepository::class => \Fintech\Transaction\Repositories\Eloquent\PolicyRepository::class,
 
         //** Repository Binding Config Point Do not Remove **//
     ],

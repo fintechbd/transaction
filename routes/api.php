@@ -89,9 +89,9 @@ if (Config::get('fintech.transaction.enabled')) {
             //    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
 
             Route::apiResource('policies', \Fintech\RestApi\Http\Controllers\Transaction\PolicyController::class);
-    Route::post('policies/{policy}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\PolicyController::class, 'restore'])->name('policies.restore');
+            Route::post('policies/{policy}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\PolicyController::class, 'restore'])->name('policies.restore');
 
-    //DO NOT REMOVE THIS LINE//
+            //DO NOT REMOVE THIS LINE//
         });
         Route::prefix('dropdown')->name('transaction.')->group(function () {
             Route::get('transaction-forms', [TransactionFormController::class, 'dropdown'])

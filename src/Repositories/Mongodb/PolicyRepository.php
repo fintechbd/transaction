@@ -6,18 +6,15 @@ use Fintech\Core\Repositories\MongodbRepository;
 use Fintech\Transaction\Interfaces\PolicyRepository as InterfacesPolicyRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
-use MongoDB\Laravel\Eloquent\Model;
-use InvalidArgumentException;
 
 /**
  * Class PolicyRepository
- * @package Fintech\Transaction\Repositories\Mongodb
  */
 class PolicyRepository extends MongodbRepository implements InterfacesPolicyRepository
 {
     public function __construct()
     {
-       parent::__construct(config('fintech.transaction.policy_model', \Fintech\Transaction\Models\Policy::class));
+        parent::__construct(config('fintech.transaction.policy_model', \Fintech\Transaction\Models\Policy::class));
     }
 
     /**

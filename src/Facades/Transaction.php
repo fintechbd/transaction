@@ -28,8 +28,8 @@ use Illuminate\Support\Facades\Facade;
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|RewardPointService rewardPoint(array $filters = null)
  * @method static \Illuminate\Contracts\Pagination\Paginator|\Illuminate\Support\Collection|RedeemPointService redeemPoint(array $filters = null)
  * @method static \Fintech\Transaction\Services\ComplianceService compliance()
- *                                                                             @method static \Fintech\Transaction\Services\PolicyService policy()
- * // Crud Service Method Point Do not Remove //
+ * @method static \Fintech\Transaction\Services\PolicyService policy()
+ *                                                                     // Crud Service Method Point Do not Remove //
  *
  * @see \Fintech\Transaction\Transaction
  */
