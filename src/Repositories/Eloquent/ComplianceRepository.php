@@ -35,14 +35,26 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
         //Searching
         if (! empty($filters['search'])) {
             $query->where(function ($query) use ($filters) {
-                return $query->where('name', 'like', "%{$filters['search']}%")
-                    ->orWhere('code', 'like', "%{$filters['search']}%")
-                    ->orWhere('remarks', 'like', "%{$filters['search']}%");
+                return $query->where('compliances.name', 'like', "%{$filters['search']}%")
+                    ->orWhere('compliances.code', 'like', "%{$filters['search']}%")
+                    ->orWhere('compliances.remarks', 'like', "%{$filters['search']}%");
             });
         }
 
         if (! empty($filters['code'])) {
-            $query->where('code', $filters['code']);
+            $query->where('compliances.code', $filters['code']);
+        }
+
+        if (! empty($filters['priority'])) {
+            $query->where('compliances.priority', $filters['priority']);
+        }
+
+        if (! empty($filters['risk'])) {
+            $query->where('compliances.risk', $filters['risk']);
+        }
+
+        if (! empty($filters['order_status'])) {
+            $query->where('orders.status', $filters['order_status']);
         }
 
         if (! empty($filters['order_number'])) {
@@ -55,7 +67,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
         }
 
         if (! empty($filters['user_id'])) {
-            $query->where('user_id', $filters['user_id']);
+            $query->where('compliances.user_id', $filters['user_id']);
         }
 
         if (! empty($filters['source_country_id'])) {
