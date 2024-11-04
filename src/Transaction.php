@@ -79,6 +79,15 @@ class Transaction
         return app(\Fintech\Transaction\Services\ComplianceService::class);
     }
 
+    /**
+     * @return \Fintech\Transaction\Services\PolicyService
+     */
+    public function policy()
+    {
+        return app(\Fintech\Transaction\Services\PolicyService::class);
+    }
+
     //** Crud Service Method Point Do not Remove **//
+
 
 }
