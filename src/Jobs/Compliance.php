@@ -71,7 +71,7 @@ abstract class Compliance
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title) . " compliance policy verification completed with risk level ({$this->riskProfile->value}).",
+            'message' => ucfirst($this->title)." compliance policy verification completed with risk level ({$this->riskProfile->value}).",
             'flag' => (($this->riskProfile?->value ?? 'red') == 'green') ? 'info' : 'warn',
             'timestamp' => now(),
         ];
@@ -121,14 +121,14 @@ abstract class Compliance
             'score' => $this->getScore(),
             'risk' => $this->riskProfile?->value ?? 'red',
             'priority' => $this->priority?->value ?? 'red',
-            'remarks' => 'Internal Server Error: ' . $exception->getMessage(),
+            'remarks' => 'Internal Server Error: '.$exception->getMessage(),
             'timestamp' => now(),
         ];
 
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title) . ' verification reported a error: ' . $exception->getMessage(),
+            'message' => ucfirst($this->title).' verification reported a error: '.$exception->getMessage(),
             'flag' => 'error',
             'timestamp' => now(),
         ];
@@ -147,7 +147,7 @@ abstract class Compliance
 
     public function uniqueId(): string
     {
-        return Str::slug(get_class($this) . '-' . $this->order->getKey());
+        return Str::slug(get_class($this).'-'.$this->order->getKey());
     }
 
     private function setReport(RiskProfile $riskProfile, string $remarks): void
@@ -171,7 +171,5 @@ abstract class Compliance
         $this->setReport(RiskProfile::Moderate, $remarks);
     }
 
-    public function check()
-    {
-    }
+    public function check() {}
 }
