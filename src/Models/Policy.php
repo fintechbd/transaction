@@ -3,10 +3,12 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Core\Traits\AuditableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class Policy extends BaseModel
+class Policy extends BaseModel implements Auditable
 {
     use AuditableTrait;
     use SoftDeletes;
@@ -21,7 +23,7 @@ class Policy extends BaseModel
 
     protected $guarded = ['id'];
 
-    protected $casts = ['policy_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool'];
+    protected $casts = ['policy_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool', 'risk' => RiskProfile::class, 'priority' => RiskProfile::class];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
