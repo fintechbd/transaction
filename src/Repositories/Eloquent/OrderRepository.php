@@ -283,7 +283,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->onlyTrashed();
         }
 
-        if (!empty($filters['limit'])) {
+        if (! empty($filters['limit'])) {
             $query->limit($filters['limit']);
         }
 
