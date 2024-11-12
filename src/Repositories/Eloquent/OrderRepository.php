@@ -149,6 +149,14 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.amount', '=', $filters['amount']);
         }
 
+        if (isset($filters['queued'])) {
+            $query->where('orders.order_data->queued', $filters['queued']);
+        }
+
+        if (isset($filters['attempt_threshold'])) {
+            $query->where('orders.order_data->attempts', '<', $filters['attempt_threshold']);
+        }
+
         if (isset($filters['above_amount']) && $filters['above_amount']) {
             $query->where('orders.amount', '>=', $filters['above_amount']);
         }
@@ -273,6 +281,10 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         //Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
+        }
+
+        if (!empty($filters['limit'])) {
+            $query->limit($filters['limit']);
         }
 
         //Handle Sorting
