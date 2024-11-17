@@ -42,6 +42,18 @@ class PolicyRepository extends EloquentRepository implements InterfacesPolicyRep
             $query->onlyTrashed();
         }
 
+        if (isset($filters['enabled'])) {
+            $query->where('enabled', '=', $filters['enabled']);
+        }
+
+        if (isset($filters['risk'])) {
+            $query->where('risk', '=', $filters['risk']);
+        }
+
+        if (isset($filters['priority'])) {
+            $query->where('priority', '=', $filters['priority']);
+        }
+
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 

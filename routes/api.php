@@ -12,6 +12,7 @@ use Fintech\RestApi\Http\Controllers\Transaction\OrderController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderDetailController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderQueueController;
 use Fintech\RestApi\Http\Controllers\Transaction\OrderStatusDropdownController;
+use Fintech\RestApi\Http\Controllers\Transaction\PolicyController;
 use Fintech\RestApi\Http\Controllers\Transaction\RedeemPointController;
 use Fintech\RestApi\Http\Controllers\Transaction\RequestPlatformDropdownController;
 use Fintech\RestApi\Http\Controllers\Transaction\RewardPointController;
@@ -88,8 +89,8 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->only(['index', 'show', 'destroy']);
             //    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
 
-            Route::apiResource('policies', \Fintech\RestApi\Http\Controllers\Transaction\PolicyController::class);
-            Route::post('policies/{policy}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\PolicyController::class, 'restore'])->name('policies.restore');
+            Route::apiResource('policies', PolicyController::class);
+//            Route::post('policies/{policy}/restore', [PolicyController::class, 'restore'])->name('policies.restore');
 
             //DO NOT REMOVE THIS LINE//
         });
@@ -100,8 +101,8 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->name('order-statuses.dropdown');
             Route::get('request-platforms', RequestPlatformDropdownController::class)
                 ->name('request-platforms.dropdown');
-            Route::get('compliance-policies', [ComplianceController::class, 'dropdown'])
-                ->name('compliance-policies.dropdown');
+            Route::get('policies', [PolicyController::class, 'dropdown'])
+                ->name('policies.dropdown');
 
         });
     });
