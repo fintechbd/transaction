@@ -103,7 +103,6 @@ if (Config::get('fintech.transaction.enabled')) {
                 ->name('request-platforms.dropdown');
             Route::get('policies', [PolicyController::class, 'dropdown'])
                 ->name('policies.dropdown');
-
         });
     });
 }
