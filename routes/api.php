@@ -90,7 +90,7 @@ if (Config::get('fintech.transaction.enabled')) {
             //    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
 
             Route::apiResource('policies', PolicyController::class);
-//            Route::post('policies/{policy}/restore', [PolicyController::class, 'restore'])->name('policies.restore');
+            //            Route::post('policies/{policy}/restore', [PolicyController::class, 'restore'])->name('policies.restore');
 
             //DO NOT REMOVE THIS LINE//
         });
