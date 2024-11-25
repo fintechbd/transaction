@@ -2,7 +2,7 @@
 
 namespace Fintech\Transaction\Models;
 
-use Fintech\Core\Traits\BlameableTrait;
+use Fintech\Core\Traits\Audits\BlameableTrait;
 use OwenIt\Auditing\Contracts\Auditable;
 
 class ManualRefund extends Order implements Auditable

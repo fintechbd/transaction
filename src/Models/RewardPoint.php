@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class RewardPoint extends BaseModel implements \OwenIt\Auditing\Contracts\Auditable
 {
-    use \Fintech\Core\Traits\BlameableTrait;
+    use \Fintech\Core\Traits\Audits\BlameableTrait;
     use \OwenIt\Auditing\Auditable;
     use SoftDeletes;
 

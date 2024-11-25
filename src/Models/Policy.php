@@ -4,7 +4,7 @@ namespace Fintech\Transaction\Models;
 
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
-use Fintech\Core\Traits\AuditableTrait;
+use Fintech\Core\Traits\Audits\AuditableTrait;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Contracts\Auditable;
 
