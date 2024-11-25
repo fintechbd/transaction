@@ -1,23 +1,23 @@
 <?php
 
-use Fintech\RestApi\Http\Controllers\Transaction\ChartClassController;
-use Fintech\RestApi\Http\Controllers\Transaction\ChartEntryController;
-use Fintech\RestApi\Http\Controllers\Transaction\Charts\OrderSummaryController;
-use Fintech\RestApi\Http\Controllers\Transaction\Charts\UserAccountSummaryController;
-use Fintech\RestApi\Http\Controllers\Transaction\Charts\UserAccountUsagePieChartController;
-use Fintech\RestApi\Http\Controllers\Transaction\ChartTypeController;
-use Fintech\RestApi\Http\Controllers\Transaction\ComplianceController;
-use Fintech\RestApi\Http\Controllers\Transaction\ManualRefundController;
-use Fintech\RestApi\Http\Controllers\Transaction\OrderController;
-use Fintech\RestApi\Http\Controllers\Transaction\OrderDetailController;
-use Fintech\RestApi\Http\Controllers\Transaction\OrderQueueController;
-use Fintech\RestApi\Http\Controllers\Transaction\OrderStatusDropdownController;
-use Fintech\RestApi\Http\Controllers\Transaction\PolicyController;
-use Fintech\RestApi\Http\Controllers\Transaction\RedeemPointController;
-use Fintech\RestApi\Http\Controllers\Transaction\RequestPlatformDropdownController;
-use Fintech\RestApi\Http\Controllers\Transaction\RewardPointController;
-use Fintech\RestApi\Http\Controllers\Transaction\TransactionFormController;
-use Fintech\RestApi\Http\Controllers\Transaction\UserAccountController;
+use Fintech\Transaction\Http\Controllers\ChartClassController;
+use Fintech\Transaction\Http\Controllers\ChartEntryController;
+use Fintech\Transaction\Http\Controllers\Charts\OrderSummaryController;
+use Fintech\Transaction\Http\Controllers\Charts\UserAccountSummaryController;
+use Fintech\Transaction\Http\Controllers\Charts\UserAccountUsagePieChartController;
+use Fintech\Transaction\Http\Controllers\ChartTypeController;
+use Fintech\Transaction\Http\Controllers\ComplianceController;
+use Fintech\Transaction\Http\Controllers\ManualRefundController;
+use Fintech\Transaction\Http\Controllers\OrderController;
+use Fintech\Transaction\Http\Controllers\OrderDetailController;
+use Fintech\Transaction\Http\Controllers\OrderQueueController;
+use Fintech\Transaction\Http\Controllers\OrderStatusDropdownController;
+use Fintech\Transaction\Http\Controllers\PolicyController;
+use Fintech\Transaction\Http\Controllers\RedeemPointController;
+use Fintech\Transaction\Http\Controllers\RequestPlatformDropdownController;
+use Fintech\Transaction\Http\Controllers\RewardPointController;
+use Fintech\Transaction\Http\Controllers\TransactionFormController;
+use Fintech\Transaction\Http\Controllers\UserAccountController;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 
@@ -87,7 +87,7 @@ if (Config::get('fintech.transaction.enabled')) {
 
             Route::apiResource('compliances', ComplianceController::class)
                 ->only(['index', 'show', 'destroy']);
-            //    Route::post('compliances/{compliance}/restore', [\Fintech\RestApi\Http\Controllers\Transaction\ComplianceController::class, 'restore'])->name('compliances.restore');
+            //    Route::post('compliances/{compliance}/restore', [\Fintech\Transaction\Http\Controllers\ComplianceController::class, 'restore'])->name('compliances.restore');
 
             Route::apiResource('policies', PolicyController::class);
             //            Route::post('policies/{policy}/restore', [PolicyController::class, 'restore'])->name('policies.restore');
