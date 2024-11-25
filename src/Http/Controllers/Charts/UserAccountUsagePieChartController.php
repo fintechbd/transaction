@@ -3,9 +3,9 @@
 namespace Fintech\Transaction\Http\Controllers\Charts;
 
 use Exception;
+use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\Charts\UserAccountUsageRequest;
 use Fintech\Transaction\Http\Resources\Charts\UserAccountUsageResource;
-use Fintech\Transaction\Facades\Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Routing\Controller;
 
