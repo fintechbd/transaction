@@ -4,12 +4,13 @@ namespace Fintech\Transaction\Http\Requests;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Core\Enums\Transaction\OrderStatus;
+use Fintech\Core\Traits\RestApi\HasPaginateQuery;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 class IndexComplianceRequest extends FormRequest
 {
-    use \Fintech\RestApi\Traits\HasPaginateQuery;
+    use HasPaginateQuery;
 
     /**
      * Determine if the user is authorized to make this request.
