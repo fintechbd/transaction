@@ -84,7 +84,7 @@ class Transaction
         return \singleton(PolicyService::class, $filters);
     }
 
-    public function accounting(\Fintech\Core\Abstracts\BaseModel $order, string|int $user_id = null)
+    public function accounting(\Fintech\Core\Abstracts\BaseModel $order, string|int|null $user_id = null)
     {
         return \app(Accounting::class, [$order, $user_id]);
     }
