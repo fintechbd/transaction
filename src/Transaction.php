@@ -5,14 +5,17 @@ namespace Fintech\Transaction;
 use Fintech\Transaction\Services\ChartClassService;
 use Fintech\Transaction\Services\ChartEntryService;
 use Fintech\Transaction\Services\ChartTypeService;
+use Fintech\Transaction\Services\ComplianceService;
 use Fintech\Transaction\Services\ManualRefundService;
 use Fintech\Transaction\Services\OrderDetailService;
 use Fintech\Transaction\Services\OrderQueueService;
 use Fintech\Transaction\Services\OrderService;
+use Fintech\Transaction\Services\PolicyService;
 use Fintech\Transaction\Services\RedeemPointService;
 use Fintech\Transaction\Services\RewardPointService;
 use Fintech\Transaction\Services\TransactionFormService;
 use Fintech\Transaction\Services\UserAccountService;
+use Fintech\Transaction\Support\Accounting;
 
 class Transaction
 {
@@ -71,20 +74,19 @@ class Transaction
         return \singleton(RedeemPointService::class, $filters);
     }
 
-    /**
-     * @return \Fintech\Transaction\Services\ComplianceService
-     */
-    public function compliance()
+    public function compliance($filters = null)
     {
-        return app(\Fintech\Transaction\Services\ComplianceService::class);
+        return \singleton(ComplianceService::class, $filters);
     }
 
-    /**
-     * @return \Fintech\Transaction\Services\PolicyService
-     */
-    public function policy()
+    public function policy($filters = null)
     {
-        return app(\Fintech\Transaction\Services\PolicyService::class);
+        return \singleton(PolicyService::class, $filters);
+    }
+
+    public function accounting(\Fintech\Core\Abstracts\BaseModel $order, string|int $user_id = null)
+    {
+        return \app(Accounting::class, [$order, $user_id]);
     }
 
     //** Crud Service Method Point Do not Remove **//
