@@ -98,6 +98,10 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             return $query->sum('order_detail_amount');
         }
 
+        if (isset($filters['get_converted_amount_sum']) && $filters['get_converted_amount_sum'] === true) {
+            return $query->sum('converted_amount');
+        }
+
         //Execute Output
         return $this->executeQuery($query, $filters);
 

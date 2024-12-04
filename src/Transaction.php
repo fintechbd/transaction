@@ -86,7 +86,7 @@ class Transaction
 
     public function accounting(\Fintech\Core\Abstracts\BaseModel $order, string|int|null $user_id = null)
     {
-        return \app(Accounting::class, [$order, $user_id]);
+        return new Accounting($order,$user_id);
     }
 
     //** Crud Service Method Point Do not Remove **//
