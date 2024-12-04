@@ -3,7 +3,6 @@
 namespace Fintech\Transaction\Support;
 
 use Exception;
-use Fintech\Business\Facades\Business;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Exceptions\UpdateOperationException;
@@ -18,15 +17,21 @@ use Fintech\Transaction\Facades\Transaction;
 class Accounting
 {
     public array $timeline;
+
     public array $serviceStatData;
+
     public array $orderData;
+
     private int $stepIndex;
+
     private ?int $orderDetailParentId = null;
+
     private ?BaseModel $service;
+
     private OrderType $orderType;
 
     public function __construct(public $order,
-                                public $userId = null)
+        public $userId = null)
     {
         $this->__init();
     }
@@ -79,8 +84,8 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
-                throw (new UpdateOperationException())->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
+            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+                throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
             $this->order->refresh();
@@ -97,8 +102,6 @@ class Accounting
      * Calculating user current and after operation balance
      * Updating account balance and updating order status data
      *
-     * @param array $parameters
-     * @return BaseModel
      * @throws Exception
      */
     public function creditTransaction(array $parameters = []): BaseModel
@@ -118,8 +121,8 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => $this->timeline])) {
-                throw (new UpdateOperationException())->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
+            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => $this->timeline])) {
+                throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
             return $this->order;
@@ -135,13 +138,14 @@ class Accounting
     {
         $this->timeline[] = ['message' => "(System) Step {$this->stepIndex}: {$message}", 'flag' => $flag, 'timestamp' => now()];
     }
+
     private function updateUserAccountBalance(bool $isReceiver = false): BaseModel
     {
-//        $country_id = (!$isReceiver)
-//            ? $this->order->source_country_id
-//            : $this->order->destination_country_id;
-//
-//        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $country_id]);
+        //        $country_id = (!$isReceiver)
+        //            ? $this->order->source_country_id
+        //            : $this->order->destination_country_id;
+        //
+        //        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $country_id]);
 
     }
 
@@ -359,7 +363,7 @@ class Accounting
 
     private function previousBalance(): float
     {
-        return (float)Transaction::orderDetail([
+        return (float) Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -368,7 +372,7 @@ class Accounting
 
     private function currentBalance(): float
     {
-        return (float)Transaction::orderDetail([
+        return (float) Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -390,7 +394,7 @@ class Accounting
             $parameters['converted_currency'] = $this->order->converted_currency;
         }
 
-        return (float)Transaction::orderDetail($parameters);
+        return (float) Transaction::orderDetail($parameters);
     }
 
     private function orderDetailParentId($orderDetailParentId = null): ?int
