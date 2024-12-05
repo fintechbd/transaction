@@ -31,7 +31,7 @@ class Accounting
     private OrderType $orderType;
 
     public function __construct(public $order,
-        public $userId = null)
+                                public $userId = null)
     {
         $this->__init();
     }
@@ -84,7 +84,7 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -121,14 +121,44 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => $this->timeline])) {
+            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => $this->timeline])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
             return $this->order;
 
         } catch (Exception $exception) {
-            throw new \Exception($exception->getMessage(), $exception->getCode(), $exception);
+            throw new Exception($exception->getMessage(), $exception->getCode(), $exception);
+        }
+    }
+
+    /**
+     * @throws UpdateOperationException
+     */
+    public function creditBalanceToUserAccount(): void
+    {
+        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->destination_country_id]);
+        $userAccountData = $userAccount->user_account_data ?? [];
+        $userAccountData['deposit_amount'] += $this->orderData['transaction_amount'];
+        $userAccountData['available_amount'] = $this->orderData['current_amount'];
+
+        if (!Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+            throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
+        }
+    }
+
+    /**
+     * @throws UpdateOperationException
+     */
+    public function debitBalanceFromUserAccount(): void
+    {
+        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->source_country_id]);
+        $userAccountData = $userAccount->user_account_data ?? [];
+        $userAccountData['spent_amount'] -= $this->orderData['transaction_amount'];
+        $userAccountData['available_amount'] = $this->orderData['current_amount'];
+
+        if (!Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+            throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
 
@@ -136,17 +166,9 @@ class Accounting
 
     private function logTimeline(string $message, string $flag = 'info'): void
     {
+        $message = ucfirst($message);
+
         $this->timeline[] = ['message' => "(System) Step {$this->stepIndex}: {$message}", 'flag' => $flag, 'timestamp' => now()];
-    }
-
-    private function updateUserAccountBalance(bool $isReceiver = false): BaseModel
-    {
-        //        $country_id = (!$isReceiver)
-        //            ? $this->order->source_country_id
-        //            : $this->order->destination_country_id;
-        //
-        //        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $country_id]);
-
     }
 
     private function creditBalance(): void
@@ -157,7 +179,7 @@ class Accounting
         $userName = $this->orderData['user_name'] ?? null;
 
         //Receive balance from system
-        $this->logTimeline("{$balanceFormatted} debited for {$this->service->service_name} payment. Received by ({$masterUserName}) system account.");
+        $this->logTimeline("balance {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
         $balanceOrderDetail->amount = $this->order->amount;
         $balanceOrderDetail->converted_amount = $this->order->converted_amount;
@@ -172,7 +194,7 @@ class Accounting
         $balanceOrderDetailStore->save();
 
         //Send balance to system
-        $this->logTimeline("{$balanceFormatted} credited for {$this->service->service_name} payment. Sent By ({$userName}) user account.");
+        $this->logTimeline("balance -{$balanceFormatted} deducted for {$this->service->service_name} from ({$masterUserName}) system account.");
 
         $balanceOrderDetailStore->refresh();
         $balanceOrderDetailForMaster = $balanceOrderDetailStore->replicate();
@@ -194,7 +216,7 @@ class Accounting
         $userName = $this->orderData['user_name'] ?? null;
 
         //Receive balance from user
-        $this->logTimeline("{$balanceFormatted} debited for {$this->service->service_name} payment. Received by ({$masterUserName}) system account.");
+        $this->logTimeline("balance -{$balanceFormatted} deducted for {$this->service->service_name} form ({$userName}) user account.");
 
         $orderEntry->amount = -$this->order->amount;
         $orderEntry->converted_amount = -$this->order->converted_amount;
@@ -209,7 +231,7 @@ class Accounting
         $orderDetailStore->save();
 
         //Send balance to system
-        $this->logTimeline("{$balanceFormatted} credited for {$this->service->service_name} payment. Sent By ({$userName}) user account.");
+        $this->logTimeline("balance {$balanceFormatted} added for {$this->service->service_name} to ({$masterUserName}) system account.");
 
         $orderDetailStore->refresh();
         $orderDetailStoreForMaster = $orderDetailStore->replicate();
@@ -236,7 +258,7 @@ class Accounting
         if ($chargeAmount > 0) {
 
             //Receive charge for system
-            $this->logTimeline("{$balanceFormatted} charge debited for {$this->service->service_name}. Received by ({$masterUserName}) system account.");
+            $this->logTimeline("charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
 
             $chargeOrderDetail->amount = -$chargeAmount;
             $chargeOrderDetail->converted_amount = -$convertedChargeAmount;
@@ -250,7 +272,7 @@ class Accounting
             $chargeOrderDetailStore->save();
 
             //Send balance to system
-            $this->logTimeline("{$balanceFormatted} charge credited for {$this->service->service_name}. Sent By ({$userName}) user account.");
+            $this->logTimeline("charge {$balanceFormatted} added for {$this->service->service_name} to ({$masterUserName}) system account.");
 
             $chargeOrderDetailStore->refresh();
             $chargeOrderDetailForMaster = $chargeOrderDetailStore->replicate();
@@ -277,7 +299,7 @@ class Accounting
         if ($discountAmount > 0) {
 
             //Receive charge for system
-            $this->logTimeline("{$balanceFormatted} discount credited for {$this->service->service_name}. Received by ({$masterUserName}) system account.");
+            $this->logTimeline("discount {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
             $discountOrderDetail->amount = $discountAmount;
             $discountOrderDetail->converted_amount = $convertedDiscountAmount;
@@ -291,7 +313,7 @@ class Accounting
             $discountOrderDetailStore->save();
 
             //Send balance to system
-            $this->logTimeline("{$balanceFormatted} discount debited for {$this->service->service_name}. Sent By ({$userName}) user account.");
+            $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$masterUserName}) system account.");
 
             $discountOrderDetailStore->refresh();
             $discountOrderDetailForMaster = $discountOrderDetailStore->replicate();
@@ -318,7 +340,7 @@ class Accounting
         if ($commissionAmount > 0) {
 
             //Receive charge for system
-            $this->logTimeline("{$balanceFormatted} commission credited for {$this->service->service_name}. Received by ({$masterUserName}) system account.");
+            $this->logTimeline("commission {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
             $commissionOrderDetail->amount = $commissionAmount;
             $commissionOrderDetail->converted_amount = $convertedCommissionAmount;
@@ -332,7 +354,7 @@ class Accounting
             $discountOrderDetailStore->save();
 
             //Send balance to system
-            $this->logTimeline("{$balanceFormatted} commission debited for {$this->service->service_name}. Sent By ({$userName}) user account.");
+            $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$masterUserName}) system account.");
 
             $discountOrderDetailStore->refresh();
             $discountOrderDetailForMaster = $discountOrderDetailStore->replicate();
@@ -363,7 +385,7 @@ class Accounting
 
     private function previousBalance(): float
     {
-        return (float) Transaction::orderDetail([
+        return (float)Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -372,7 +394,7 @@ class Accounting
 
     private function currentBalance(): float
     {
-        return (float) Transaction::orderDetail([
+        return (float)Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -394,7 +416,7 @@ class Accounting
             $parameters['converted_currency'] = $this->order->converted_currency;
         }
 
-        return (float) Transaction::orderDetail($parameters);
+        return (float)Transaction::orderDetail($parameters);
     }
 
     private function orderDetailParentId($orderDetailParentId = null): ?int
