@@ -17,6 +17,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * @property \Fintech\Core\Enums\Reload\DepositStatus $status
+ * @property float $previous_balance
+ * @property float $current_balance
+ * @property float $transaction_amount
  */
 class Order extends BaseModel
 {
@@ -115,6 +118,21 @@ class Order extends BaseModel
         }
 
         return $links;
+    }
+
+    public function getPreviousBalanceAttribute()
+    {
+        return $this->order_data['previous_balance'] ?? 0;
+    }
+
+    public function getCurrentBalanceAttribute()
+    {
+        return $this->order_data['current_balance'] ?? 0;
+    }
+
+    public function getTransactionAmountAttribute()
+    {
+        return $this->order_data['transaction_amount'] ?? 0;
     }
 
     /*
