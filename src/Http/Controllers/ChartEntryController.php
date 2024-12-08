@@ -72,7 +72,7 @@ class ChartEntryController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Chart Entry']),
+                'message' => __('core::messages.resource.created', ['model' => 'Chart Entry']),
                 'id' => $chartEntry->id,
             ]);
 
@@ -138,7 +138,7 @@ class ChartEntryController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Chart Entry']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Chart Entry']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -176,7 +176,7 @@ class ChartEntryController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Chart Entry']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Chart Entry']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -212,7 +212,7 @@ class ChartEntryController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Chart Entry']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Chart Entry']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -238,7 +238,7 @@ class ChartEntryController extends Controller
 
             $chartEntryPaginate = Transaction::chartEntry()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Chart Entry']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Chart Entry']));
 
         } catch (Exception $exception) {
 

@@ -72,7 +72,7 @@ class OrderDetailController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Order Detail']),
+                'message' => __('core::messages.resource.created', ['model' => 'Order Detail']),
                 'id' => $orderDetail->id,
             ]);
 
@@ -138,7 +138,7 @@ class OrderDetailController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Order Detail']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Order Detail']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -176,7 +176,7 @@ class OrderDetailController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Order Detail']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Order Detail']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -212,7 +212,7 @@ class OrderDetailController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Order Detail']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Order Detail']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -238,7 +238,7 @@ class OrderDetailController extends Controller
 
             $orderDetailPaginate = Transaction::orderDetail()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Order Detail']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Order Detail']));
 
         } catch (Exception $exception) {
 

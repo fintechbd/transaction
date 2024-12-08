@@ -72,7 +72,7 @@ class ComplianceController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Compliance']),
+                'message' => __('core::messages.resource.created', ['model' => 'Compliance']),
                 'id' => $compliance->id,
             ]);
 
@@ -138,7 +138,7 @@ class ComplianceController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Compliance']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Compliance']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -176,7 +176,7 @@ class ComplianceController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Compliance']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Compliance']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -212,7 +212,7 @@ class ComplianceController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Compliance']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Compliance']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -238,7 +238,7 @@ class ComplianceController extends Controller
 
             $compliancePaginate = Transaction::compliance()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Compliance']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Compliance']));
 
         } catch (Exception $exception) {
 

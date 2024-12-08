@@ -74,7 +74,7 @@ class PolicyController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Policy']),
+                'message' => __('core::messages.resource.created', ['model' => 'Policy']),
                 'id' => $policy->id,
             ]);
 
@@ -140,7 +140,7 @@ class PolicyController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Policy']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Policy']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -178,7 +178,7 @@ class PolicyController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Policy']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Policy']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -214,7 +214,7 @@ class PolicyController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Policy']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Policy']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -240,7 +240,7 @@ class PolicyController extends Controller
 
             $policyPaginate = Transaction::policy()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Policy']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Policy']));
 
         } catch (Exception $exception) {
 

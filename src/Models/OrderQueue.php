@@ -58,9 +58,9 @@ class OrderQueue extends BaseModel
         $primaryKey = $this->getKey();
 
         return [
-            'show' => action_link(route('transaction.order-queues.show', $primaryKey), __('restapi::messages.action.show'), 'get'),
-            'update' => action_link(route('transaction.order-queues.update', $primaryKey), __('restapi::messages.action.update'), 'put'),
-            'destroy' => action_link(route('transaction.order-queues.destroy', $primaryKey), __('restapi::messages.action.destroy'), 'delete'),
+            'show' => action_link(route('transaction.order-queues.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('transaction.order-queues.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('transaction.order-queues.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
         ];
     }
 

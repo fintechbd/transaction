@@ -70,7 +70,7 @@ class UserAccountController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'User Account']),
+                'message' => __('core::messages.resource.created', ['model' => 'User Account']),
                 'id' => $userAccount->getKey(),
             ]);
 
@@ -136,7 +136,7 @@ class UserAccountController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'User Account']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'User Account']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -172,7 +172,7 @@ class UserAccountController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'User Account']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'User Account']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -198,7 +198,7 @@ class UserAccountController extends Controller
 
             $userAccountPaginate = Transaction::userAccount()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'User Account']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'User Account']));
 
         } catch (Exception $exception) {
 
@@ -294,7 +294,7 @@ class UserAccountController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'User Account']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'User Account']));
 
         } catch (ModelNotFoundException $exception) {
 

@@ -57,10 +57,10 @@ class RewardPoint extends BaseModel implements \OwenIt\Auditing\Contracts\Audita
         $primaryKey = $this->getKey();
 
         $links = [
-            'show' => action_link(route('transaction.reward-points.show', $primaryKey), __('restapi::messages.action.show'), 'get'),
-            'update' => action_link(route('transaction.reward-points.update', $primaryKey), __('restapi::messages.action.update'), 'put'),
-            'destroy' => action_link(route('transaction.reward-points.destroy', $primaryKey), __('restapi::messages.action.destroy'), 'delete'),
-            'restore' => action_link(route('transaction.reward-points.restore', $primaryKey), __('restapi::messages.action.restore'), 'post'),
+            'show' => action_link(route('transaction.reward-points.show', $primaryKey), __('core::messages.action.show'), 'get'),
+            'update' => action_link(route('transaction.reward-points.update', $primaryKey), __('core::messages.action.update'), 'put'),
+            'destroy' => action_link(route('transaction.reward-points.destroy', $primaryKey), __('core::messages.action.destroy'), 'delete'),
+            'restore' => action_link(route('transaction.reward-points.restore', $primaryKey), __('core::messages.action.restore'), 'post'),
         ];
 
         if ($this->getAttribute('deleted_at') == null) {

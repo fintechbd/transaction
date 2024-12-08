@@ -74,7 +74,7 @@ class TransactionFormController extends Controller
             }
 
             return response()->created([
-                'message' => __('restapi::messages.resource.created', ['model' => 'Transaction Form']),
+                'message' => __('core::messages.resource.created', ['model' => 'Transaction Form']),
                 'id' => $transactionForm->id,
             ]);
 
@@ -140,7 +140,7 @@ class TransactionFormController extends Controller
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            return response()->updated(__('restapi::messages.resource.updated', ['model' => 'Transaction Form']));
+            return response()->updated(__('core::messages.resource.updated', ['model' => 'Transaction Form']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -178,7 +178,7 @@ class TransactionFormController extends Controller
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            return response()->deleted(__('restapi::messages.resource.deleted', ['model' => 'Transaction Form']));
+            return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Transaction Form']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -214,7 +214,7 @@ class TransactionFormController extends Controller
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            return response()->restored(__('restapi::messages.resource.restored', ['model' => 'Transaction Form']));
+            return response()->restored(__('core::messages.resource.restored', ['model' => 'Transaction Form']));
 
         } catch (ModelNotFoundException $exception) {
 
@@ -240,7 +240,7 @@ class TransactionFormController extends Controller
 
             $transactionFormPaginate = Transaction::transactionForm()->export($inputs);
 
-            return response()->exported(__('restapi::messages.resource.exported', ['model' => 'Transaction Form']));
+            return response()->exported(__('core::messages.resource.exported', ['model' => 'Transaction Form']));
 
         } catch (Exception $exception) {
 
