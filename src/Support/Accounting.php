@@ -113,17 +113,18 @@ class Accounting
 
             $this->creditCommission();
 
-            $transactionAmount = $this->transactionAmount();
+            $this->orderData['current_amount'] = $this->currentBalance();
+            $this->orderData['transaction_amount'] = $this->transactionAmount(true);
 
-            $transactionAmountFormatted = \currency($transactionAmount, $this->order->currency);
+            $transactionAmountFormatted = \currency($this->orderData['transaction_amount'], $this->order->converted_currency);
 
-            $message = "(System) Step {$this->stepIndex}: Total {$transactionAmountFormatted} credited for {$this->service->service_name}.";
+            $this->logTimeline("(System) Step {$this->stepIndex}: Total {$transactionAmountFormatted} credited for {$this->service->service_name} deposit.");
 
-            $this->logTimeline($message);
-
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => $this->timeline])) {
+            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
+
+            $this->order->refresh();
 
             return $this->order;
 
@@ -174,7 +175,7 @@ class Accounting
     private function creditBalance(): void
     {
         $balanceOrderDetail = $this->order;
-        $balanceFormatted = \currency($balanceOrderDetail->amount, $balanceOrderDetail->currency);
+        $balanceFormatted = \currency($balanceOrderDetail->converted_amount, $balanceOrderDetail->converted_currency);
         $masterUserName = $this->orderData['master_user_name'] ?? null;
         $userName = $this->orderData['user_name'] ?? null;
 
