@@ -7,7 +7,6 @@ use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Transaction\Facades\Transaction;
-use Illuminate\Contracts\Container\BindingResolutionException;
 
 /**
  * Class ChartClassService
@@ -169,7 +168,7 @@ class Accounting
     {
         $message = ucfirst($message);
 
-        $this->timeline[] = entry_timeline("(System) Step {$this->stepIndex}: {$message}",  $flag);
+        $this->timeline[] = entry_timeline("(System) Step {$this->stepIndex}: {$message}", $flag);
     }
 
     private function creditBalance(): void
