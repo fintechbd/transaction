@@ -65,7 +65,7 @@ class IndexOrderRequest extends FormRequest
             'created_at_end_date_time' => ['string', 'nullable', 'date_format:Y-m-d H:i:s', 'date'],
             'created_at_start_date' => ['string', 'nullable', 'date_format:Y-m-d', 'date'],
             'created_at_end_date' => ['string', 'nullable', 'date_format:Y-m-d', 'date'],
-
+            'parent_id_is_null' => ['nullable','boolean'],
         ];
     }
 
