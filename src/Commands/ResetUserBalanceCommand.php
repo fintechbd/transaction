@@ -16,6 +16,7 @@ class ResetUserBalanceCommand extends Command
      * @var string
      */
     protected $signature = 'transaction:reset-user-balance';
+
     private string $module = 'Transaction';
 
     /**
@@ -44,7 +45,7 @@ class ResetUserBalanceCommand extends Command
             DB::table('user_accounts')->update([
                 'user_account_data->spent_amount' => 0,
                 'user_account_data->deposit_amount' => 0,
-                'user_account_data->available_amount' => 0
+                'user_account_data->available_amount' => 0,
             ]);
         });
     }

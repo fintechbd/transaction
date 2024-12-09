@@ -58,7 +58,7 @@ class TransactionServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
-                ResetUserBalanceCommand::class
+                ResetUserBalanceCommand::class,
             ]);
         }
     }
