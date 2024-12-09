@@ -4,6 +4,7 @@ namespace Fintech\Transaction;
 
 use Fintech\Core\Traits\Packages\RegisterPackageTrait;
 use Fintech\Transaction\Commands\InstallCommand;
+use Fintech\Transaction\Commands\ResetUserBalanceCommand;
 use Fintech\Transaction\Providers\RepositoryServiceProvider;
 use Illuminate\Support\ServiceProvider;
 
@@ -57,6 +58,7 @@ class TransactionServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 InstallCommand::class,
+                ResetUserBalanceCommand::class
             ]);
         }
     }
