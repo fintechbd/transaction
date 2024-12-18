@@ -67,6 +67,10 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             $query->onlyTrashed();
         }
 
+        if (isset($filters['enabled'])) {
+            $query->where('enabled', '=', $filters['enabled']);
+        }
+
         //Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
