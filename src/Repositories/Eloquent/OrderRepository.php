@@ -95,11 +95,9 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
 
         if (isset($filters['user_id_sender_receiver_id']) && $filters['user_id_sender_receiver_id']) {
             $query->where(function ($query) use ($filters) {
-                $query->where('orders.user_id', $filters['user_id_sender_receiver_id']);
-                $query->orWhere('orders.sender_receiver_id', $filters['user_id_sender_receiver_id']);
+                $query->where('orders.user_id', '=', $filters['user_id_sender_receiver_id']);
+                $query->orWhere('orders.sender_receiver_id', '=', $filters['user_id_sender_receiver_id']);
             });
-            /*$query->where($modelTable.'.user_id', '=', $filters['user_id_sender_receiver_id']);
-            $query->orWhere($modelTable.'.sender_receiver_id', '=', $filters['user_id_sender_receiver_id']);*/
         }
 
         if (isset($filters['service_type_slug']) && $filters['service_type_slug']) {
