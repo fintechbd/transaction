@@ -23,8 +23,8 @@ class StoreOrderRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'source_country_id' => ['required', 'integer', 'min:1'],
-            'destination_country_id' => ['required', 'integer', 'min:1'],
+            'source_country_id' => ['required', 'integer', 'min:1', 'master_currency'],
+            'destination_country_id' => ['required', 'integer', 'min:1', 'master_currency'],
             'parent_id' => ['nullable', 'integer', 'min:1'],
             'sender_receiver_id' => ['required', 'integer', 'min:1'],
             'user_id' => ['required', 'integer', 'min:1'],
