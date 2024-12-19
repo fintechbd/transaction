@@ -28,6 +28,7 @@ class ResetUserBalanceCommand extends Command
 
     /**
      * Execute the console command.
+     *
      * @throws \Throwable
      */
     public function handle()
