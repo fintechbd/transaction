@@ -122,7 +122,7 @@ class OrderCollection extends ResourceCollection
         'vendor_data',
         'system_notification_variable_failed',
         'system_notification_variable_success',
-        'request_from',
+//        'request_from',
         'wallet_id',
         'bank_id',
         'cash_pickup_id',

@@ -155,12 +155,14 @@ class Accounting
     /**
      * @throws UpdateOperationException
      */
-    public function creditBalanceToUserAccount(): void
+    public function creditBalanceToUserAccount(array $parameters = []): void
     {
         $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->destination_country_id]);
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['deposit_amount'] += $this->orderData['transaction_amount'];
-        $userAccountData['available_amount'] = $this->orderData['current_amount'];
+        if (empty($parameters['allow_insufficient_balance'])) {
+            $userAccountData['available_amount'] = $this->orderData['current_amount'];
+        }
 
         if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
@@ -170,13 +172,14 @@ class Accounting
     /**
      * @throws UpdateOperationException
      */
-    public function debitBalanceFromUserAccount(): void
+    public function debitBalanceFromUserAccount(array $parameters = []): void
     {
         $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->source_country_id]);
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['spent_amount'] -= $this->orderData['transaction_amount'];
-        $userAccountData['available_amount'] = $this->orderData['current_amount'];
-
+        if (empty($parameters['allow_insufficient_balance'])) {
+            $userAccountData['available_amount'] = $this->orderData['current_amount'];
+        }
         if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
