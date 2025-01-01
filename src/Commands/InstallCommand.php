@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Commands;
 
 use Fintech\Core\Traits\HasCoreSetting;
+use Fintech\Transaction\Seeders\PolicySeeder;
 use Fintech\Transaction\Seeders\TransactionFormSeeder;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -63,6 +64,7 @@ class InstallCommand extends Command
     {
         $seeders = [
             TransactionFormSeeder::class => 'transaction form',
+            PolicySeeder::class => 'compliance policy',
         ];
 
         foreach ($seeders as $class => $label) {

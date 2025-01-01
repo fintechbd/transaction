@@ -121,14 +121,14 @@ abstract class Compliance
             'score' => $this->getScore(),
             'risk' => $this->riskProfile?->value ?? 'red',
             'priority' => $this->priority?->value ?? 'red',
-            'remarks' => 'Internal Server Error: '.$exception->getMessage(),
+            'remarks' => 'Internal server error: '.$exception->getMessage(),
             'timestamp' => now(),
         ];
 
         $order_data['compliance_data'][] = $report;
 
         $timeline[] = [
-            'message' => ucfirst($this->title).' verification reported a error: '.$exception->getMessage(),
+            'message' => Str::ucfirst(Str::lower($this->title)).' verification reported a error: '.$exception->getMessage(),
             'flag' => 'error',
             'timestamp' => now(),
         ];
