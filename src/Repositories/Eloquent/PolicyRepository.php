@@ -27,7 +27,7 @@ class PolicyRepository extends EloquentRepository implements InterfacesPolicyRep
     {
         $query = $this->model->newQuery();
 
-        //Searching
+        // Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
@@ -37,7 +37,7 @@ class PolicyRepository extends EloquentRepository implements InterfacesPolicyRep
             }
         }
 
-        //Display Trashed
+        // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
@@ -54,10 +54,10 @@ class PolicyRepository extends EloquentRepository implements InterfacesPolicyRep
             $query->where('priority', '=', $filters['priority']);
         }
 
-        //Handle Sorting
+        // Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
-        //Execute Output
+        // Execute Output
         return $this->executeQuery($query, $filters);
 
     }

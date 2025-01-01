@@ -93,7 +93,7 @@ class UserAccountService
         $account_info = [];
 
         preg_match('/^(\d{3})(\d{8})$/', $lastEntry->account_no, $account_info);
-        //@TODO: worst case senior
+        // @TODO: worst case senior
         if (empty($account_info[2])) {
 
         }

@@ -32,7 +32,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
         $query->leftJoin('countries as source_country', 'orders.source_country_id', '=', 'source_country.id');
         $query->leftJoin('countries as destination_country', 'orders.destination_country_id', '=', 'destination_country.id');
 
-        //Searching
+        // Searching
         if (! empty($filters['search'])) {
             $query->where(function ($query) use ($filters) {
                 return $query->where('compliances.name', 'like', "%{$filters['search']}%")
@@ -82,12 +82,12 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
             $query->where('orders.destination_country_id', $filters['destination_country_id']);
         }
 
-        //Display Trashed
+        // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 
-        //Handle Sorting
+        // Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         $query->select([
@@ -102,7 +102,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
             'orders.status as order_status',
         ]);
 
-        //Execute Output
+        // Execute Output
         return $this->executeQuery($query, $filters);
 
     }

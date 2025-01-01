@@ -92,7 +92,7 @@ if (Config::get('fintech.transaction.enabled')) {
             Route::apiResource('policies', PolicyController::class);
             //            Route::post('policies/{policy}/restore', [PolicyController::class, 'restore'])->name('policies.restore');
 
-            //DO NOT REMOVE THIS LINE//
+            // DO NOT REMOVE THIS LINE//
         });
         Route::prefix('dropdown')->name('transaction.')->group(function () {
             Route::get('transaction-forms', [TransactionFormController::class, 'dropdown'])

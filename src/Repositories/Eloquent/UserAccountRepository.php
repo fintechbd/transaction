@@ -28,7 +28,7 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
     {
         $query = $this->model->newQuery();
 
-        //Searching
+        // Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%");
@@ -62,7 +62,7 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             $query->limit($filters['limit']);
         }
 
-        //Display Trashed
+        // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
@@ -71,10 +71,10 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             $query->where('enabled', '=', $filters['enabled']);
         }
 
-        //Handle Sorting
+        // Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
-        //Execute Output
+        // Execute Output
         return $this->executeQuery($query, $filters);
 
     }

@@ -31,7 +31,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Large Virtual Cash Transaction Policy',
@@ -39,7 +39,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Electronic Funds Transfer Policy',
@@ -47,7 +47,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Suspicious Transaction Policy',
@@ -55,7 +55,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Client Due Diligence Policy',
@@ -63,7 +63,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Structuring Detection Policy',
@@ -71,7 +71,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'High-Risk Countries Policy',
@@ -79,7 +79,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'HIO(Head of International Organization) Detection Policy',
@@ -87,7 +87,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'PEP(Politically Exposed Person) Detection Policy',
@@ -95,7 +95,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Account Velocity Policy',
@@ -103,7 +103,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'New Product Usage Policy',
@@ -111,7 +111,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Dormant Account Activity Policy',
@@ -119,7 +119,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Third-Party Transactions Policy',
@@ -127,7 +127,7 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
+                'policy_data' => [],
             ],
             [
                 'name' => 'Virtual Currency Travel Rule Policy',
@@ -135,8 +135,8 @@ class PolicySeeder extends Seeder
                 'enabled' => true,
                 'risk' => 'green',
                 'priority' => 'green',
-                'policy_data' => []
-            ]
+                'policy_data' => [],
+            ],
         ];
     }
 }

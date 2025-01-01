@@ -41,7 +41,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         $query->leftJoin('services', 'services.id', '=', 'orders.service_id');
         $query->leftJoin('service_types', 'service_types.id', '=', 'services.service_type_id');
 
-        //Searching
+        // Searching
         if (! empty($filters['search'])) {
             if (is_numeric($filters['search'])) {
                 $query->where(function ($query) use ($filters) {
@@ -217,7 +217,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->whereBetween(DB::raw('DATE('.'orders.created_at)'), [$filters['created_at_start_date'], $filters['created_at_end_date']]);
         }
 
-        //@TODO using between for better result
+        // @TODO using between for better result
         if ((isset($filters['created_at_start_date']) && $filters['created_at_start_date'] != '0000-00-00' && $filters['created_at_start_date'] != '')
             && empty($filters['created_at_end_date'])) {
             $query->whereBetween(DB::raw('DATE('.'orders.created_at)'), [$filters['created_at_start_date'], now()->format('Y-m-d')]);
@@ -280,7 +280,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->where('orders.order_number', '=', $filters['order_number']);
         }
 
-        //Display Trashed
+        // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
@@ -289,7 +289,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->limit($filters['limit']);
         }
 
-        //Handle Sorting
+        // Handle Sorting
         $query->orderBy($filters['sort'] ?? 'orders.'.$this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         if (isset($filters['sum_converted_amount']) && $filters['sum_converted_amount'] === true) {
@@ -305,7 +305,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
             $query->select('orders.*', DB::raw('transaction_forms.name AS transaction_form_name'));
         }
 
-        //Execute Output
+        // Execute Output
         return $this->executeQuery($query, $filters);
 
     }

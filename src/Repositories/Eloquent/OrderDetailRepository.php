@@ -28,7 +28,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
     {
         $query = $this->model->newQuery();
 
-        //Searching
+        // Searching
         if (! empty($filters['search'])) {
             $query->where(function ($query) use ($filters) {
                 $query->where($this->model->getKeyName(), 'like', "%{$filters['search']}%")
@@ -86,12 +86,12 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             $query->where('converted_currency', '=', $filters['converted_currency']);
         }
 
-        //Display Trashed
+        // Display Trashed
         if (isset($filters['trashed']) && $filters['trashed'] === true) {
             $query->onlyTrashed();
         }
 
-        //Handle Sorting
+        // Handle Sorting
         $query->orderBy($filters['sort'] ?? $this->model->getKeyName(), $filters['dir'] ?? 'asc');
 
         if (isset($filters['get_order_detail_amount_sum']) && $filters['get_order_detail_amount_sum'] === true) {
@@ -102,7 +102,7 @@ class OrderDetailRepository extends EloquentRepository implements InterfacesOrde
             return $query->sum('converted_amount');
         }
 
-        //Execute Output
+        // Execute Output
         return $this->executeQuery($query, $filters);
 
     }

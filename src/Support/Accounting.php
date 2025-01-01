@@ -234,7 +234,7 @@ class Accounting
         $balanceFormatted = \currency($balanceOrderDetail->converted_amount, $balanceOrderDetail->converted_currency);
         $userName = $this->orderData['user_name'] ?? null;
 
-        //Receive balance from system
+        // Receive balance from system
         $this->logTimeline("balance {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
         $balanceOrderDetail->amount = $this->order->amount;
@@ -249,7 +249,7 @@ class Accounting
         $this->orderDetailParentId($balanceOrderDetailStore->order_detail_parent_id);
         $balanceOrderDetailStore->save();
 
-        //Send balance to system
+        // Send balance to system
         $this->logTimeline("balance -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
 
         $balanceOrderDetailStore->refresh();
@@ -270,7 +270,7 @@ class Accounting
         $balanceFormatted = \currency($orderEntry->amount, $orderEntry->currency);
         $userName = $this->orderData['user_name'] ?? null;
 
-        //Deducting Balance From User
+        // Deducting Balance From User
         $this->logTimeline("balance -{$balanceFormatted} deducted for {$this->service->service_name} form ({$userName}) user account.");
 
         $orderEntry->amount = -$this->order->amount;
@@ -286,7 +286,7 @@ class Accounting
         $this->orderDetailParentId($orderDetailStore->order_detail_parent_id);
         $orderDetailStore->save();
 
-        //Adding Balance To System
+        // Adding Balance To System
         $this->logTimeline("balance {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
 
         $orderDetailStore->refresh();
@@ -312,7 +312,7 @@ class Accounting
 
         if ($chargeAmount > 0) {
 
-            //Receive charge for system
+            // Receive charge for system
             $this->logTimeline("charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
 
             $chargeOrderDetail->amount = -$chargeAmount;
@@ -326,7 +326,7 @@ class Accounting
             $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
             $chargeOrderDetailStore->save();
 
-            //Send balance to system
+            // Send balance to system
             $this->logTimeline("charge {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
 
             $chargeOrderDetailStore->refresh();
@@ -352,7 +352,7 @@ class Accounting
 
         if ($discountAmount > 0) {
 
-            //Receive charge for system
+            // Receive charge for system
             $this->logTimeline("discount {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
             $discountOrderDetail->amount = $discountAmount;
@@ -366,7 +366,7 @@ class Accounting
             $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($discountOrderDetail));
             $discountOrderDetailStore->save();
 
-            //Send balance to system
+            // Send balance to system
             $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
 
             $discountOrderDetailStore->refresh();
@@ -392,7 +392,7 @@ class Accounting
 
         if ($commissionAmount > 0) {
 
-            //Receive charge for system
+            // Receive charge for system
             $this->logTimeline("commission {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
             $commissionOrderDetail->amount = $commissionAmount;
@@ -406,7 +406,7 @@ class Accounting
             $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($commissionOrderDetail));
             $discountOrderDetailStore->save();
 
-            //Send balance to system
+            // Send balance to system
             $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
 
             $discountOrderDetailStore->refresh();

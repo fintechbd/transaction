@@ -164,7 +164,7 @@ return [
     */
     'policy_model' => \Fintech\Transaction\Models\Policy::class,
 
-    //** Model Config Point Do not Remove **//
+    // ** Model Config Point Do not Remove **//
 
     /*
     |--------------------------------------------------------------------------
@@ -201,7 +201,7 @@ return [
 
         \Fintech\Transaction\Interfaces\PolicyRepository::class => \Fintech\Transaction\Repositories\Eloquent\PolicyRepository::class,
 
-        //** Repository Binding Config Point Do not Remove **//
+        // ** Repository Binding Config Point Do not Remove **//
     ],
 
 ];
