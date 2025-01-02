@@ -63,8 +63,7 @@ class InstallCommand extends Command
     private function addUtilityOptions(): void
     {
         $seeders = [
-            TransactionFormSeeder::class => 'transaction form',
-            PolicySeeder::class => 'compliance policy',
+            TransactionFormSeeder::class => 'transaction form'
         ];
 
         foreach ($seeders as $class => $label) {
