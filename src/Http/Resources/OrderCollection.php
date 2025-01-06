@@ -59,6 +59,7 @@ class OrderCollection extends ResourceCollection
                 'commission_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['commission_amount'] ?? null, $order->currency ?? null),
                 'cost_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['cost_amount'] ?? null, $order->currency ?? null),
                 'total_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['total_amount'] ?? null, $order->currency ?? null),
+                'interac_charge_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['interac_charge_amount'] ?? null, $order->currency ?? null),
                 'order_number' => $order->order_number ?? null,
                 'risk_profile' => $order->risk_profile->value,
                 'notes' => $order->notes ?? null,

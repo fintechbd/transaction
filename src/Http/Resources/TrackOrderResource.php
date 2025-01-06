@@ -47,6 +47,7 @@ class TrackOrderResource extends JsonResource
             'commission_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['commission_amount'] ?? null, $this->currency),
             'cost_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['cost_amount'] ?? null, $this->currency),
             'total_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['total_amount'] ?? null, $this->currency),
+            'interac_charge_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['interac_charge_amount'] ?? null, $this->currency ?? null),
             'order_number' => $this->order_number ?? null,
             'risk_profile' => $this->risk_profile ?? null,
             'notes' => $this->notes,
