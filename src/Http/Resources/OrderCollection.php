@@ -48,18 +48,32 @@ class OrderCollection extends ResourceCollection
                 //                'transaction_form_id' => $order->transaction_form_id ?? null,
                 'transaction_form_name' => $order->transaction_form_name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
+                'currency' => $order->currency ?? null,
                 'amount' => (string) ($order->amount ?? null),
                 'amount_formatted' => (string) \currency($order->amount, $order->currency),
-                'currency' => $order->currency ?? null,
+
+                'converted_currency' => $order->converted_currency ?? null,
                 'converted_amount' => (string) ($order->converted_amount ?? null),
                 'converted_amount_formatted' => (string) \currency($order->converted_amount ?? null, $order->converted_currency ?? null),
-                'converted_currency' => $order->converted_currency ?? null,
+
+                'charge_amount' => $order->order_data['service_stat_data']['charge_amount'] ?? null,
                 'charge_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['charge_amount'] ?? null, $order->currency ?? null),
+
+                'discount_amount' => $order->order_data['service_stat_data']['discount_amount'] ?? null,
                 'discount_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['discount_amount'] ?? null, $order->currency ?? null),
+
+                'commission_amount' => $order->order_data['service_stat_data']['commission_amount'] ?? null,
                 'commission_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['commission_amount'] ?? null, $order->currency ?? null),
+
+                'cost_amount' => $order->order_data['service_stat_data']['cost_amount'] ?? null,
                 'cost_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['cost_amount'] ?? null, $order->currency ?? null),
+
+                'interac_charge' => $order->order_data['service_stat_data']['interac_charge_amount'] ?? null,
+                'interac_charge_formatted' => (string) \currency($order->order_data['service_stat_data']['interac_charge_amount'] ?? null, $order->currency ?? null),
+
+                'total_amount' => $order->order_data['service_stat_data']['total_amount'] ?? null,
                 'total_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['total_amount'] ?? null, $order->currency ?? null),
-                'interac_charge_amount_formatted' => (string) \currency($order->order_data['service_stat_data']['interac_charge_amount'] ?? null, $order->currency ?? null),
+
                 'order_number' => $order->order_number ?? null,
                 'risk_profile' => $order->risk_profile->value,
                 'notes' => $order->notes ?? null,

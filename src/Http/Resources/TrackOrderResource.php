@@ -42,12 +42,23 @@ class TrackOrderResource extends JsonResource
             'converted_amount' => $this->converted_amount ?? null,
             'converted_amount_formatted' => (string) \currency($this->converted_amount ?? null, $this->converted_currency),
             'converted_currency' => $this->converted_currency ?? null,
-            'charge_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['charge_amount'] ?? null, $this->currency),
-            'discount_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['discount_amount'] ?? null, $this->currency),
-            'commission_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['commission_amount'] ?? null, $this->currency),
-            'cost_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['cost_amount'] ?? null, $this->currency),
-            'total_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['total_amount'] ?? null, $this->currency),
-            'interac_charge_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['interac_charge_amount'] ?? null, $this->currency ?? null),
+            'charge_amount' => $this->order_data['service_stat_data']['charge_amount'] ?? null,
+            'charge_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['charge_amount'] ?? null, $this->currency ?? null),
+
+            'discount_amount' => $this->order_data['service_stat_data']['discount_amount'] ?? null,
+            'discount_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['discount_amount'] ?? null, $this->currency ?? null),
+
+            'commission_amount' => $this->order_data['service_stat_data']['commission_amount'] ?? null,
+            'commission_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['commission_amount'] ?? null, $this->currency ?? null),
+
+            'cost_amount' => $this->order_data['service_stat_data']['cost_amount'] ?? null,
+            'cost_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['cost_amount'] ?? null, $this->currency ?? null),
+
+            'interac_charge' => $this->order_data['service_stat_data']['interac_charge_amount'] ?? null,
+            'interac_charge_formatted' => (string) \currency($this->order_data['service_stat_data']['interac_charge_amount'] ?? null, $this->currency ?? null),
+
+            'total_amount' => $this->order_data['service_stat_data']['total_amount'] ?? null,
+            'total_amount_formatted' => (string) \currency($this->order_data['service_stat_data']['total_amount'] ?? null, $this->currency ?? null),
             'order_number' => $this->order_number ?? null,
             'risk_profile' => $this->risk_profile ?? null,
             'notes' => $this->notes,
