@@ -19,6 +19,10 @@ class OrderStatusDropdownController extends Controller
             $entries = collect();
 
             foreach (OrderStatus::cases() as $status) {
+                if ($status == OrderStatus::PaymentPending) {
+                    $entries->push(['label' => $status->label('Transaction Pending'), 'attribute' => $status->value]);
+                    continue;
+                }
                 $entries->push(['label' => $status->label(), 'attribute' => $status->value]);
             }
 
