@@ -384,7 +384,6 @@ class Accounting
         }
     }
 
-
     private function debitDiscount(): void
     {
         $discountOrderDetail = $this->order;
