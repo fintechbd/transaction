@@ -136,7 +136,7 @@ class Order extends BaseModel
         return $this->order_data['transaction_amount'] ?? 0;
     }
 
-    public function getOrderTypeAttribute() : ?OrderType
+    public function getOrderTypeAttribute(): ?OrderType
     {
         return OrderType::tryFrom($this->order_data['order_type'] ?? null);
     }
