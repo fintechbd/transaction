@@ -356,10 +356,11 @@ class Accounting
             $discountOrderDetail->amount = $discountAmount;
             $discountOrderDetail->converted_amount = $convertedDiscountAmount;
             $discountOrderDetail->order_detail_cause_name = 'discount';
+            $discountOrderDetail->sender_receiver_id = $this->systemUser->getKey();
             $discountOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
             $discountOrderDetail->order_detail_number = $this->orderDetailNumber();
             $discountOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
-            $discountOrderDetail->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
+            $discountOrderDetail->notes = ucfirst("{$this->service->service_name} discount sent to user: {$userName}");
             $discountOrderDetail->step = $this->stepIndex++;
             $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($discountOrderDetail));
             $discountOrderDetailStore->save();
@@ -373,7 +374,7 @@ class Accounting
             $discountOrderDetailForMaster->sender_receiver_id = $discountOrderDetail->user_id;
             $discountOrderDetailForMaster->order_detail_amount = -$discountAmount;
             $discountOrderDetailForMaster->converted_amount = -$convertedDiscountAmount;
-            $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} payment received from user: {$userName}");
+            $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} discount received from system user: {$this->systemUser->name}");
             $discountOrderDetailForMaster->step = $this->stepIndex++;
             $discountOrderDetailForMaster->save();
         }
@@ -395,11 +396,12 @@ class Accounting
 
             $commissionOrderDetail->amount = $commissionAmount;
             $commissionOrderDetail->converted_amount = $convertedCommissionAmount;
-            $commissionOrderDetail->order_detail_cause_name = 'discount';
+            $commissionOrderDetail->order_detail_cause_name = 'commission';
+            $commissionOrderDetail->sender_receiver_id = $this->systemUser->getKey();
             $commissionOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
             $commissionOrderDetail->order_detail_number = $this->orderDetailNumber();
             $commissionOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
-            $commissionOrderDetail->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
+            $commissionOrderDetail->notes = ucfirst("{$this->service->service_name} commission sent to  user: {$userName}");
             $commissionOrderDetail->step = $this->stepIndex++;
             $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($commissionOrderDetail));
             $discountOrderDetailStore->save();
@@ -413,7 +415,7 @@ class Accounting
             $discountOrderDetailForMaster->sender_receiver_id = $commissionOrderDetail->user_id;
             $discountOrderDetailForMaster->order_detail_amount = -$commissionAmount;
             $discountOrderDetailForMaster->converted_amount = -$convertedCommissionAmount;
-            $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} payment received from user: {$userName}");
+            $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} commission received from system user: {$this->systemUser->name}");
             $discountOrderDetailForMaster->step = $this->stepIndex++;
             $discountOrderDetailForMaster->save();
         }
