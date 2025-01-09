@@ -88,6 +88,10 @@ class Accounting
 
             $this->order->refresh();
 
+            $this->debitInteracCharge();
+
+            $this->order->refresh();
+
             $this->debitDiscount();
 
             $this->orderData['current_amount'] = $this->currentBalance();
@@ -338,6 +342,48 @@ class Accounting
             $chargeOrderDetailForMaster->save();
         }
     }
+
+    private function debitInteracCharge(): void
+    {
+        $chargeOrderDetail = $this->order;
+        $userName = $this->orderData['user_name'] ?? null;
+
+        $chargeAmount = calculate_flat_percent($chargeOrderDetail->amount, $this->serviceStatData['interac_charge']);
+        $convertedChargeAmount = calculate_flat_percent($chargeOrderDetail->converted_amount, $this->serviceStatData['interac_charge']);
+        $balanceFormatted = \currency($chargeAmount, $chargeOrderDetail->currency);
+
+        if ($chargeAmount > 0) {
+
+            // Receive charge for system
+            $this->logTimeline("Interac-e-transfer charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
+
+            $chargeOrderDetail->amount = -$chargeAmount;
+            $chargeOrderDetail->converted_amount = -$convertedChargeAmount;
+            $chargeOrderDetail->order_detail_cause_name = 'interac_charge';
+            $chargeOrderDetail->sender_receiver_id = $this->systemUser->getKey();
+            $chargeOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
+            $chargeOrderDetail->order_detail_number = $this->orderDetailNumber();
+            $chargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
+            $chargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
+            $chargeOrderDetail->step = $this->stepIndex++;
+            $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
+            $chargeOrderDetailStore->save();
+
+            // Send balance to system
+            $this->logTimeline("Interac-e-transfer charge {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
+
+            $chargeOrderDetailStore->refresh();
+            $chargeOrderDetailForMaster = $chargeOrderDetailStore->replicate();
+            $chargeOrderDetailForMaster->user_id = $chargeOrderDetail->sender_receiver_id;
+            $chargeOrderDetailForMaster->sender_receiver_id = $chargeOrderDetail->user_id;
+            $chargeOrderDetailForMaster->order_detail_amount = $chargeAmount;
+            $chargeOrderDetailForMaster->converted_amount = $convertedChargeAmount;
+            $chargeOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
+            $chargeOrderDetailForMaster->step = $this->stepIndex++;
+            $chargeOrderDetailForMaster->save();
+        }
+    }
+
 
     private function debitDiscount(): void
     {
