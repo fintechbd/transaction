@@ -7,6 +7,7 @@ use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Core\Enums\Transaction\OrderStatus;
+use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Traits\Audits\BlameableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\BusinessRelations;
@@ -135,6 +136,10 @@ class Order extends BaseModel
         return $this->order_data['transaction_amount'] ?? 0;
     }
 
+    public function getOrderTypeAttribute() : ?OrderType
+    {
+        return OrderType::tryFrom($this->order_data['order_type'] ?? null);
+    }
     /*
     |--------------------------------------------------------------------------
     | MUTATORS
