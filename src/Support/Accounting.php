@@ -45,7 +45,7 @@ class Accounting
     private $systemUser;
 
     public function __construct(public $order,
-                                public $userId = null)
+        public $userId = null)
     {
         $this->__init();
     }
@@ -101,7 +101,7 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -139,7 +139,7 @@ class Accounting
 
             $this->logTimeline("Total {$transactionAmountFormatted} credited for {$this->service->service_name} deposit.");
 
-            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -162,7 +162,7 @@ class Accounting
         $userAccountData['deposit_amount'] += $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
 
-        if (!Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -176,7 +176,7 @@ class Accounting
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['spent_amount'] -= $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
-        if (!Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -210,7 +210,7 @@ class Accounting
 
         $this->systemUser = Auth::user()->findWhere($filters);
 
-        if (!$this->systemUser) {
+        if (! $this->systemUser) {
             throw new MasterCurrencyUnavailableException($filters['country_id']);
         }
 
@@ -436,7 +436,7 @@ class Accounting
 
     private function previousBalance(): float
     {
-        return (float)Transaction::orderDetail([
+        return (float) Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -445,7 +445,7 @@ class Accounting
 
     private function currentBalance(): float
     {
-        return (float)Transaction::orderDetail([
+        return (float) Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -467,7 +467,7 @@ class Accounting
             $parameters['converted_currency'] = $this->order->converted_currency;
         }
 
-        return (float)Transaction::orderDetail($parameters);
+        return (float) Transaction::orderDetail($parameters);
     }
 
     private function orderDetailParentId($orderDetailParentId = null): ?int
