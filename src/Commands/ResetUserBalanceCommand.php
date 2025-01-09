@@ -50,5 +50,7 @@ class ResetUserBalanceCommand extends Command
                 'user_account_data->available_amount' => 0,
             ]);
         });
+
+        return self::SUCCESS;
     }
 }
