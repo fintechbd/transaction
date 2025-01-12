@@ -45,7 +45,7 @@ class Accounting
     private $systemUser;
 
     public function __construct(public $order,
-        public $userId = null)
+                                public $userId = null)
     {
         $this->__init();
     }
@@ -105,7 +105,7 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -114,7 +114,11 @@ class Accounting
             return $this->order;
 
         } catch (Exception $exception) {
-            throw new ErrorException($exception->getMessage(), $exception->getCode(), $exception);
+            throw new ErrorException(
+                message: $exception->getMessage(),
+                code: $exception->getCode(),
+                previous: $exception
+            );
         }
     }
 
@@ -143,7 +147,7 @@ class Accounting
 
             $this->logTimeline("Total {$transactionAmountFormatted} credited for {$this->service->service_name} deposit.");
 
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (!Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -166,7 +170,7 @@ class Accounting
         $userAccountData['deposit_amount'] += $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
 
-        if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (!Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -180,7 +184,7 @@ class Accounting
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['spent_amount'] -= $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
-        if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (!Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -214,7 +218,7 @@ class Accounting
 
         $this->systemUser = Auth::user()->findWhere($filters);
 
-        if (! $this->systemUser) {
+        if (!$this->systemUser) {
             throw new MasterCurrencyUnavailableException($filters['country_id']);
         }
 
@@ -304,165 +308,174 @@ class Accounting
 
     private function debitCharge(): void
     {
-        $chargeOrderDetail = $this->order;
-        $userName = $this->orderData['user_name'] ?? null;
+        if (!empty($this->serviceStatData['charge'])) {
+            $chargeOrderDetail = $this->order;
+            $userName = $this->orderData['user_name'] ?? null;
 
-        $chargeAmount = calculate_flat_percent($chargeOrderDetail->amount, $this->serviceStatData['charge']);
-        $convertedChargeAmount = calculate_flat_percent($chargeOrderDetail->converted_amount, $this->serviceStatData['charge']);
-        $balanceFormatted = \currency($chargeAmount, $chargeOrderDetail->currency);
+            $chargeAmount = calculate_flat_percent($chargeOrderDetail->amount, $this->serviceStatData['charge']);
+            $convertedChargeAmount = calculate_flat_percent($chargeOrderDetail->converted_amount, $this->serviceStatData['charge']);
+            $balanceFormatted = \currency($chargeAmount, $chargeOrderDetail->currency);
 
-        if ($chargeAmount > 0) {
+            if ($chargeAmount > 0) {
 
-            // Receive charge for system
-            $this->logTimeline("charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
+                // Receive charge for system
+                $this->logTimeline("charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
 
-            $chargeOrderDetail->amount = -$chargeAmount;
-            $chargeOrderDetail->converted_amount = -$convertedChargeAmount;
-            $chargeOrderDetail->order_detail_cause_name = 'charge';
-            $chargeOrderDetail->sender_receiver_id = $this->systemUser->getKey();
-            $chargeOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
-            $chargeOrderDetail->order_detail_number = $this->orderDetailNumber();
-            $chargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
-            $chargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
-            $chargeOrderDetail->step = $this->stepIndex++;
-            $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
-            $chargeOrderDetailStore->save();
+                $chargeOrderDetail->amount = -$chargeAmount;
+                $chargeOrderDetail->converted_amount = -$convertedChargeAmount;
+                $chargeOrderDetail->order_detail_cause_name = 'charge';
+                $chargeOrderDetail->sender_receiver_id = $this->systemUser->getKey();
+                $chargeOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
+                $chargeOrderDetail->order_detail_number = $this->orderDetailNumber();
+                $chargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
+                $chargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
+                $chargeOrderDetail->step = $this->stepIndex++;
+                $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
+                $chargeOrderDetailStore->save();
 
-            // Send balance to system
-            $this->logTimeline("charge {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
+                // Send balance to system
+                $this->logTimeline("charge {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
 
-            $chargeOrderDetailStore->refresh();
-            $chargeOrderDetailForMaster = $chargeOrderDetailStore->replicate();
-            $chargeOrderDetailForMaster->user_id = $chargeOrderDetail->sender_receiver_id;
-            $chargeOrderDetailForMaster->sender_receiver_id = $chargeOrderDetail->user_id;
-            $chargeOrderDetailForMaster->order_detail_amount = $chargeAmount;
-            $chargeOrderDetailForMaster->converted_amount = $convertedChargeAmount;
-            $chargeOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
-            $chargeOrderDetailForMaster->step = $this->stepIndex++;
-            $chargeOrderDetailForMaster->save();
+                $chargeOrderDetailStore->refresh();
+                $chargeOrderDetailForMaster = $chargeOrderDetailStore->replicate();
+                $chargeOrderDetailForMaster->user_id = $chargeOrderDetail->sender_receiver_id;
+                $chargeOrderDetailForMaster->sender_receiver_id = $chargeOrderDetail->user_id;
+                $chargeOrderDetailForMaster->order_detail_amount = $chargeAmount;
+                $chargeOrderDetailForMaster->converted_amount = $convertedChargeAmount;
+                $chargeOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
+                $chargeOrderDetailForMaster->step = $this->stepIndex++;
+                $chargeOrderDetailForMaster->save();
+            }
         }
     }
 
     private function debitInteracCharge(): void
     {
-        $chargeOrderDetail = $this->order;
-        $userName = $this->orderData['user_name'] ?? null;
+        if (!empty($this->serviceStatData['interac_charge'])) {
 
-        $chargeAmount = calculate_flat_percent($chargeOrderDetail->amount, $this->serviceStatData['interac_charge']);
-        $convertedChargeAmount = calculate_flat_percent($chargeOrderDetail->converted_amount, $this->serviceStatData['interac_charge']);
-        $balanceFormatted = \currency($chargeAmount, $chargeOrderDetail->currency);
+            $interacChargeOrderDetail = $this->order;
+            $userName = $this->orderData['user_name'] ?? null;
 
-        if ($chargeAmount > 0) {
+            $interacChargeAmount = calculate_flat_percent($interacChargeOrderDetail->amount, $this->serviceStatData['interac_charge']);
+            $convertedChargeAmount = calculate_flat_percent($interacChargeOrderDetail->converted_amount, $this->serviceStatData['interac_charge']);
+            $balanceFormatted = \currency($interacChargeAmount, $interacChargeOrderDetail->currency);
 
-            // Receive charge for system
-            $this->logTimeline("Interac-e-transfer charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
+            if ($interacChargeAmount > 0) {
 
-            $chargeOrderDetail->amount = -$chargeAmount;
-            $chargeOrderDetail->converted_amount = -$convertedChargeAmount;
-            $chargeOrderDetail->order_detail_cause_name = 'interac_charge';
-            $chargeOrderDetail->sender_receiver_id = $this->systemUser->getKey();
-            $chargeOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
-            $chargeOrderDetail->order_detail_number = $this->orderDetailNumber();
-            $chargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
-            $chargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
-            $chargeOrderDetail->step = $this->stepIndex++;
-            $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
-            $chargeOrderDetailStore->save();
+                // Receive charge for system
+                $this->logTimeline("Interac-e-transfer charge -{$balanceFormatted} deducted for {$this->service->service_name} from ({$userName}) user account.");
 
-            // Send balance to system
-            $this->logTimeline("Interac-e-transfer charge {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
+                $interacChargeOrderDetail->amount = -$interacChargeAmount;
+                $interacChargeOrderDetail->converted_amount = -$convertedChargeAmount;
+                $interacChargeOrderDetail->order_detail_cause_name = 'interac_charge';
+                $interacChargeOrderDetail->sender_receiver_id = $this->systemUser->getKey();
+                $interacChargeOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
+                $interacChargeOrderDetail->order_detail_number = $this->orderDetailNumber();
+                $interacChargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
+                $interacChargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
+                $interacChargeOrderDetail->step = $this->stepIndex++;
+                $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($interacChargeOrderDetail));
+                $chargeOrderDetailStore->save();
 
-            $chargeOrderDetailStore->refresh();
-            $chargeOrderDetailForMaster = $chargeOrderDetailStore->replicate();
-            $chargeOrderDetailForMaster->user_id = $chargeOrderDetail->sender_receiver_id;
-            $chargeOrderDetailForMaster->sender_receiver_id = $chargeOrderDetail->user_id;
-            $chargeOrderDetailForMaster->order_detail_amount = $chargeAmount;
-            $chargeOrderDetailForMaster->converted_amount = $convertedChargeAmount;
-            $chargeOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
-            $chargeOrderDetailForMaster->step = $this->stepIndex++;
-            $chargeOrderDetailForMaster->save();
+                // Send balance to system
+                $this->logTimeline("Interac-e-transfer charge {$balanceFormatted} added for {$this->service->service_name} to ({$this->systemUser->name}) system account.");
+
+                $chargeOrderDetailStore->refresh();
+                $chargeOrderDetailForMaster = $chargeOrderDetailStore->replicate();
+                $chargeOrderDetailForMaster->user_id = $interacChargeOrderDetail->sender_receiver_id;
+                $chargeOrderDetailForMaster->sender_receiver_id = $interacChargeOrderDetail->user_id;
+                $chargeOrderDetailForMaster->order_detail_amount = $interacChargeAmount;
+                $chargeOrderDetailForMaster->converted_amount = $convertedChargeAmount;
+                $chargeOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} charge sent to system user: {$this->systemUser->name}");
+                $chargeOrderDetailForMaster->step = $this->stepIndex++;
+                $chargeOrderDetailForMaster->save();
+            }
         }
     }
 
     private function debitDiscount(): void
     {
-        $discountOrderDetail = $this->order;
-        $userName = $this->orderData['user_name'] ?? null;
+        if (!empty($this->serviceStatData['discount'])) {
+            $discountOrderDetail = $this->order;
+            $userName = $this->orderData['user_name'] ?? null;
 
-        $discountAmount = calculate_flat_percent($discountOrderDetail->amount, $this->serviceStatData['discount']);
-        $convertedDiscountAmount = calculate_flat_percent($discountOrderDetail->converted_amount, $this->serviceStatData['discount']);
-        $balanceFormatted = \currency($discountAmount, $discountOrderDetail->currency);
+            $discountAmount = calculate_flat_percent($discountOrderDetail->amount, $this->serviceStatData['discount']);
+            $convertedDiscountAmount = calculate_flat_percent($discountOrderDetail->converted_amount, $this->serviceStatData['discount']);
+            $balanceFormatted = \currency($discountAmount, $discountOrderDetail->currency);
 
-        if ($discountAmount > 0) {
+            if ($discountAmount > 0) {
 
-            // Receive charge for system
-            $this->logTimeline("discount {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
+                // Receive charge for system
+                $this->logTimeline("discount {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
-            $discountOrderDetail->amount = $discountAmount;
-            $discountOrderDetail->converted_amount = $convertedDiscountAmount;
-            $discountOrderDetail->order_detail_cause_name = 'discount';
-            $discountOrderDetail->sender_receiver_id = $this->systemUser->getKey();
-            $discountOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
-            $discountOrderDetail->order_detail_number = $this->orderDetailNumber();
-            $discountOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
-            $discountOrderDetail->notes = ucfirst("{$this->service->service_name} discount sent to user: {$userName}");
-            $discountOrderDetail->step = $this->stepIndex++;
-            $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($discountOrderDetail));
-            $discountOrderDetailStore->save();
+                $discountOrderDetail->amount = $discountAmount;
+                $discountOrderDetail->converted_amount = $convertedDiscountAmount;
+                $discountOrderDetail->order_detail_cause_name = 'discount';
+                $discountOrderDetail->sender_receiver_id = $this->systemUser->getKey();
+                $discountOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
+                $discountOrderDetail->order_detail_number = $this->orderDetailNumber();
+                $discountOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
+                $discountOrderDetail->notes = ucfirst("{$this->service->service_name} discount sent to user: {$userName}");
+                $discountOrderDetail->step = $this->stepIndex++;
+                $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($discountOrderDetail));
+                $discountOrderDetailStore->save();
 
-            // Send balance to system
-            $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
+                // Send balance to system
+                $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
 
-            $discountOrderDetailStore->refresh();
-            $discountOrderDetailForMaster = $discountOrderDetailStore->replicate();
-            $discountOrderDetailForMaster->user_id = $discountOrderDetail->sender_receiver_id;
-            $discountOrderDetailForMaster->sender_receiver_id = $discountOrderDetail->user_id;
-            $discountOrderDetailForMaster->order_detail_amount = -$discountAmount;
-            $discountOrderDetailForMaster->converted_amount = -$convertedDiscountAmount;
-            $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} discount received from system user: {$this->systemUser->name}");
-            $discountOrderDetailForMaster->step = $this->stepIndex++;
-            $discountOrderDetailForMaster->save();
+                $discountOrderDetailStore->refresh();
+                $discountOrderDetailForMaster = $discountOrderDetailStore->replicate();
+                $discountOrderDetailForMaster->user_id = $discountOrderDetail->sender_receiver_id;
+                $discountOrderDetailForMaster->sender_receiver_id = $discountOrderDetail->user_id;
+                $discountOrderDetailForMaster->order_detail_amount = -$discountAmount;
+                $discountOrderDetailForMaster->converted_amount = -$convertedDiscountAmount;
+                $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} discount received from system user: {$this->systemUser->name}");
+                $discountOrderDetailForMaster->step = $this->stepIndex++;
+                $discountOrderDetailForMaster->save();
+            }
         }
     }
 
     private function creditCommission(): void
     {
-        $commissionOrderDetail = $this->order;
-        $userName = $this->orderData['user_name'] ?? null;
+        if (!empty($this->serviceStatData['commission'])) {
+            $commissionOrderDetail = $this->order;
+            $userName = $this->orderData['user_name'] ?? null;
 
-        $commissionAmount = calculate_flat_percent($commissionOrderDetail->amount, $this->serviceStatData['discount']);
-        $convertedCommissionAmount = calculate_flat_percent($commissionOrderDetail->converted_amount, $this->serviceStatData['discount']);
-        $balanceFormatted = \currency($commissionAmount, $commissionOrderDetail->currency);
+            $commissionAmount = calculate_flat_percent($commissionOrderDetail->amount, $this->serviceStatData['commission']);
+            $convertedCommissionAmount = calculate_flat_percent($commissionOrderDetail->converted_amount, $this->serviceStatData['commission']);
+            $balanceFormatted = \currency($commissionAmount, $commissionOrderDetail->currency);
 
-        if ($commissionAmount > 0) {
+            if ($commissionAmount > 0) {
 
-            // Receive charge for system
-            $this->logTimeline("commission {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
+                // Receive charge for system
+                $this->logTimeline("commission {$balanceFormatted} added for {$this->service->service_name} to ({$userName}) user account.");
 
-            $commissionOrderDetail->amount = $commissionAmount;
-            $commissionOrderDetail->converted_amount = $convertedCommissionAmount;
-            $commissionOrderDetail->order_detail_cause_name = 'commission';
-            $commissionOrderDetail->sender_receiver_id = $this->systemUser->getKey();
-            $commissionOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
-            $commissionOrderDetail->order_detail_number = $this->orderDetailNumber();
-            $commissionOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
-            $commissionOrderDetail->notes = ucfirst("{$this->service->service_name} commission sent to  user: {$userName}");
-            $commissionOrderDetail->step = $this->stepIndex++;
-            $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($commissionOrderDetail));
-            $discountOrderDetailStore->save();
+                $commissionOrderDetail->amount = $commissionAmount;
+                $commissionOrderDetail->converted_amount = $convertedCommissionAmount;
+                $commissionOrderDetail->order_detail_cause_name = 'commission';
+                $commissionOrderDetail->sender_receiver_id = $this->systemUser->getKey();
+                $commissionOrderDetail->order_detail_parent_id = $this->orderDetailParentId();
+                $commissionOrderDetail->order_detail_number = $this->orderDetailNumber();
+                $commissionOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
+                $commissionOrderDetail->notes = ucfirst("{$this->service->service_name} commission sent to  user: {$userName}");
+                $commissionOrderDetail->step = $this->stepIndex++;
+                $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($commissionOrderDetail));
+                $discountOrderDetailStore->save();
 
-            // Send balance to system
-            $this->logTimeline("discount -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
+                // Send balance to system
+                $this->logTimeline("commission -{$balanceFormatted} deducted for {$this->service->service_name} from ({$this->systemUser->name}) system account.");
 
-            $discountOrderDetailStore->refresh();
-            $discountOrderDetailForMaster = $discountOrderDetailStore->replicate();
-            $discountOrderDetailForMaster->user_id = $commissionOrderDetail->sender_receiver_id;
-            $discountOrderDetailForMaster->sender_receiver_id = $commissionOrderDetail->user_id;
-            $discountOrderDetailForMaster->order_detail_amount = -$commissionAmount;
-            $discountOrderDetailForMaster->converted_amount = -$convertedCommissionAmount;
-            $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} commission received from system user: {$this->systemUser->name}");
-            $discountOrderDetailForMaster->step = $this->stepIndex++;
-            $discountOrderDetailForMaster->save();
+                $discountOrderDetailStore->refresh();
+                $discountOrderDetailForMaster = $discountOrderDetailStore->replicate();
+                $discountOrderDetailForMaster->user_id = $commissionOrderDetail->sender_receiver_id;
+                $discountOrderDetailForMaster->sender_receiver_id = $commissionOrderDetail->user_id;
+                $discountOrderDetailForMaster->order_detail_amount = -$commissionAmount;
+                $discountOrderDetailForMaster->converted_amount = -$convertedCommissionAmount;
+                $discountOrderDetailForMaster->notes = ucfirst("{$this->service->service_name} commission received from system user: {$this->systemUser->name}");
+                $discountOrderDetailForMaster->step = $this->stepIndex++;
+                $discountOrderDetailForMaster->save();
+            }
         }
     }
 
@@ -483,7 +496,7 @@ class Accounting
 
     private function previousBalance(): float
     {
-        return (float) Transaction::orderDetail([
+        return (float)Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -492,7 +505,7 @@ class Accounting
 
     private function currentBalance(): float
     {
-        return (float) Transaction::orderDetail([
+        return (float)Transaction::orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -514,7 +527,7 @@ class Accounting
             $parameters['converted_currency'] = $this->order->converted_currency;
         }
 
-        return (float) Transaction::orderDetail($parameters);
+        return (float)Transaction::orderDetail($parameters);
     }
 
     private function orderDetailParentId($orderDetailParentId = null): ?int
