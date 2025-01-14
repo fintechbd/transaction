@@ -28,9 +28,9 @@ class Order extends BaseModel
     use AuthRelations;
     use BlameableTrait;
     use BusinessRelations;
+    use HasOrderAttributes;
     use MetaDataRelations;
     use SoftDeletes;
-    use HasOrderAttributes;
 
     /*
     |--------------------------------------------------------------------------
