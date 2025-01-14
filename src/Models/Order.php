@@ -11,6 +11,7 @@ use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Traits\Audits\BlameableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\BusinessRelations;
+use Fintech\Transaction\Traits\HasOrderAttributes;
 use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -29,6 +30,7 @@ class Order extends BaseModel
     use BusinessRelations;
     use MetaDataRelations;
     use SoftDeletes;
+    use HasOrderAttributes;
 
     /*
     |--------------------------------------------------------------------------
