@@ -42,126 +42,126 @@ trait HasOrderAttributes
     public function amountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->amount, $this->currency)
+            get: fn () => (string) \currency($this->amount, $this->currency)
         );
     }
 
     public function convertedAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->converted_amount, $this->converted_currency)
+            get: fn () => (string) \currency($this->converted_amount, $this->converted_currency)
         );
     }
 
     public function chargeAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['service_stat_data']['charge_amount'] ?? null
+            get: fn () => $this->order_data['service_stat_data']['charge_amount'] ?? null
         );
     }
 
     public function chargeAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->charge_amount, $this->currency)
+            get: fn () => (string) \currency($this->charge_amount, $this->currency)
         );
     }
 
     public function discountAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['service_stat_data']['discount_amount'] ?? null
+            get: fn () => $this->order_data['service_stat_data']['discount_amount'] ?? null
         );
     }
 
     public function discountAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->discount_amount, $this->currency)
+            get: fn () => (string) \currency($this->discount_amount, $this->currency)
         );
     }
 
     public function commissionAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['service_stat_data']['commission_amount'] ?? null
+            get: fn () => $this->order_data['service_stat_data']['commission_amount'] ?? null
         );
     }
 
     public function commissionAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->commission_amount, $this->currency)
+            get: fn () => (string) \currency($this->commission_amount, $this->currency)
         );
     }
 
     public function costAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['service_stat_data']['cost_amount'] ?? null
+            get: fn () => $this->order_data['service_stat_data']['cost_amount'] ?? null
         );
     }
 
     public function costAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->cost_amount, $this->currency)
+            get: fn () => (string) \currency($this->cost_amount, $this->currency)
         );
     }
 
     public function totalAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['service_stat_data']['total_amount'] ?? null
+            get: fn () => $this->order_data['service_stat_data']['total_amount'] ?? null
         );
     }
 
     public function totalAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->total_amount, $this->currency)
+            get: fn () => (string) \currency($this->total_amount, $this->currency)
         );
     }
 
     public function interacCharge(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['service_stat_data']['interac_charge_amount'] ?? null
+            get: fn () => $this->order_data['service_stat_data']['interac_charge_amount'] ?? null
         );
     }
 
     public function interacChargeFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->interac_charge, $this->currency)
+            get: fn () => (string) \currency($this->interac_charge, $this->currency)
         );
     }
 
     public function previousAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['previous_amount'] ?? null
+            get: fn () => $this->order_data['previous_amount'] ?? null
         );
     }
 
     public function previousAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->previous_amount, $this->currency)
+            get: fn () => (string) \currency($this->previous_amount, $this->currency)
         );
     }
 
     public function currentAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['current_amount'] ?? null
+            get: fn () => $this->order_data['current_amount'] ?? null
         );
     }
 
     public function currentAmountFormatted(): Attribute
     {
         return Attribute::make(
-            get: fn() => (string)\currency($this->current_amount, $this->currency)
+            get: fn () => (string) \currency($this->current_amount, $this->currency)
         );
     }
 
@@ -170,10 +170,10 @@ trait HasOrderAttributes
         $data = [
             'id' => $this->getKey(),
             'currency' => $this->currency,
-            'amount' => (string)$this->amount,
+            'amount' => (string) $this->amount,
             'amount_formatted' => $this->amount_formatted,
             'converted_currency' => $this->converted_currency,
-            'converted_amount' => (string)$this->converted_amount,
+            'converted_amount' => (string) $this->converted_amount,
             'converted_amount_formatted' => $this->converted_amount_formatted,
             'charge_amount' => $this->charge_amount,
             'charge_amount_formatted' => $this->charge_amount_formatted,
