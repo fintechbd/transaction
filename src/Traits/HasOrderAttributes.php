@@ -215,9 +215,11 @@ trait HasOrderAttributes
         if (Core::packageExists('Business')) {
             $data['service_name'] = $this->service?->service_name ?? null;
             $data['service_type'] = $this->service->serviceType?->all_parent_list ?? null;
+            $data['service_vendor_name'] = $item->serviceVendor?->service_vendor_name ?? null;
         } else {
             $data['service_name'] = null;
             $data['service_type'] = null;
+            $data['service_vendor_name'] = $item->serviceVendor?->service_vendor_name ?? null;
         }
 
         foreach ($ignore as $key) {
