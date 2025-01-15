@@ -209,7 +209,7 @@ trait HasOrderAttributes
         if (Core::packageExists('Auth')) {
             $data['sender_receiver_name'] = $this->senderReceiver?->name ?? null;
             $data['user_name'] = $this->user?->name ?? null;
-            $data['user_risk_profile'] = $this->user?->risk_profile ?? new \stdClass();
+            $data['user_risk_profile'] = $this->user?->risk_profile ?? new \stdClass;
         } else {
             $data['sender_receiver_name'] = null;
             $data['user_name'] = null;
