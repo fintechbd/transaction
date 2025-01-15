@@ -196,7 +196,7 @@ trait HasOrderAttributes
             'notes' => $this->notes,
             'status' => $this->status,
             'transaction_form_name' => $this->transaction_form_name ?? null,
-            'timeline' => $this->timeline ?? []
+            'timeline' => $this->timeline ?? [],
         ];
 
         if (Core::packageExists('MetaData')) {
