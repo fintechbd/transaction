@@ -197,6 +197,7 @@ trait HasOrderAttributes
             'status' => $this->status,
             'transaction_form_name' => $this->transaction_form_name ?? null,
             'timeline' => $this->timeline ?? [],
+            'risk_profile' => $this->risk_profile ?? null,
         ];
 
         if (Core::packageExists('MetaData')) {
