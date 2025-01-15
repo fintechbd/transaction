@@ -196,6 +196,7 @@ trait HasOrderAttributes
             'notes' => $this->notes,
             'status' => $this->status,
             'transaction_form_name' => $this->transaction_form_name ?? null,
+            'timeline' => $this->timeline ?? []
         ];
 
         if (Core::packageExists('MetaData')) {
@@ -219,7 +220,7 @@ trait HasOrderAttributes
         } else {
             $data['service_name'] = null;
             $data['service_type'] = null;
-            $data['service_vendor_name'] = $item->serviceVendor?->service_vendor_name ?? null;
+            $data['service_vendor_name'] = null;
         }
 
         foreach ($ignore as $key) {
