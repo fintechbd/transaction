@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Traits;
 
 use Fintech\Core\Enums\Reload\DepositStatus;
+use Fintech\Core\Enums\RequestPlatform;
 use Fintech\Core\Enums\Transaction\OrderStatus;
 use Fintech\Core\Facades\Core;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -10,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 /**
  * @property int $id
  * @property OrderStatus|DepositStatus|null $status
+ * @property OrderStatus|DepositStatus|null $platform
  * @property string|null $order_number
  * @property string|null $notes
  * @property string|null transaction_form_name,
@@ -165,6 +167,13 @@ trait HasOrderAttributes
         );
     }
 
+    public function platform(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => RequestPlatform::tryFrom($this->order_data['request_from'] ?? '')
+        );
+    }
+
     public function commonAttributes(...$ignore): array
     {
         $data = [
@@ -198,6 +207,7 @@ trait HasOrderAttributes
             'transaction_form_name' => $this->transaction_form_name ?? null,
             'timeline' => $this->timeline ?? [],
             'risk_profile' => $this->risk_profile ?? null,
+            'platform' => $this->platform ?? [],
         ];
 
         if (Core::packageExists('MetaData')) {
