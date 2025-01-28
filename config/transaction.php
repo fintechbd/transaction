@@ -23,7 +23,7 @@ return [
     |--------------------------------------------------------------------------
     | this setting enable the api will be available or not
     */
-    'enabled' => env('PACKAGE_TRANSACTION_ENABLED', true),
+    'enabled' => env('TRANSACTION_ENABLED', true),
 
     /*
     |--------------------------------------------------------------------------
