@@ -37,7 +37,7 @@ class TransactionServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../config/transaction.php' => config_path('fintech/transaction.php'),
-        ]);
+        ], 'fintech-transaction-config');
 
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
@@ -45,7 +45,7 @@ class TransactionServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../lang' => $this->app->langPath('vendor/transaction'),
-        ]);
+        ], 'fintech-transaction-lang');
 
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'transaction');
 
@@ -53,7 +53,7 @@ class TransactionServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../resources/views' => resource_path('views/vendor/transaction'),
-        ]);
+        ], 'fintech-transaction-views');
 
         if ($this->app->runningInConsole()) {
             $this->commands([
