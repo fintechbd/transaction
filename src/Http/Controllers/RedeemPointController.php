@@ -102,11 +102,7 @@ class RedeemPointController extends Controller
 
             return new RedeemPointResource($redeemPoint);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -140,11 +136,7 @@ class RedeemPointController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Redeem Point']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -178,11 +170,7 @@ class RedeemPointController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Redeem Point']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -214,11 +202,7 @@ class RedeemPointController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Redeem Point']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

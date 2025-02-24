@@ -100,11 +100,7 @@ class UserAccountController extends Controller
 
             return new UserAccountResource($userAccount);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -138,11 +134,7 @@ class UserAccountController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'User Account']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -174,11 +166,7 @@ class UserAccountController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'User Account']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -258,11 +246,7 @@ class UserAccountController extends Controller
 
             return response()->updated(__('metadata::messages.user_account.status_changed', ['status' => ($userAccount->enabled) ? 'Inactive' : 'Active']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -296,11 +280,7 @@ class UserAccountController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'User Account']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

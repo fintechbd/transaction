@@ -101,11 +101,7 @@ class ManualRefundController extends Controller
 
             return new ManualRefundResource($manualRefund);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -139,11 +135,7 @@ class ManualRefundController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Manual Refund']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -177,11 +169,7 @@ class ManualRefundController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Manual Refund']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

@@ -104,11 +104,7 @@ class PolicyController extends Controller
 
             return new PolicyResource($policy);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -142,11 +138,7 @@ class PolicyController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Policy']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -180,11 +172,7 @@ class PolicyController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Policy']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -216,11 +204,7 @@ class PolicyController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Policy']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

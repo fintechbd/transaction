@@ -66,11 +66,7 @@ class OrderQueueController extends Controller
 
             return new OrderQueueResource($orderQueue);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -108,7 +104,7 @@ class OrderQueueController extends Controller
     //
     //        } catch (ModelNotFoundException $exception) {
     //
-    //            return response()->notfound($exception->getMessage());
+    //            return response()->notfound($exception);
     //
     //        } catch (Exception $exception) {
     //
@@ -144,11 +140,7 @@ class OrderQueueController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Order Queue']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }

@@ -105,11 +105,7 @@ class OrderController extends Controller
 
             return new OrderResource($order);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -143,11 +139,7 @@ class OrderController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Order']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -181,11 +173,7 @@ class OrderController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Order']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -217,11 +205,7 @@ class OrderController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Order']));
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -299,11 +283,7 @@ class OrderController extends Controller
 
             return new TrackOrderResource($order);
 
-        } catch (ModelNotFoundException $exception) {
-
-            return response()->notfound($exception->getMessage());
-
-        } catch (Exception $exception) {
+        }  catch (Exception $exception) {
 
             return response()->failed($exception);
         }
