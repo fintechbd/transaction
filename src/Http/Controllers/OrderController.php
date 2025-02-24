@@ -287,7 +287,7 @@ class OrderController extends Controller
 
             $options['transaction_id'] = $transactionId;
 
-            if (!in_array($request->platform()->value,[RequestPlatform::WebAdmin->value, RequestPlatform::WebAgent->value])) {
+            if (! in_array($request->platform()->value, [RequestPlatform::WebAdmin->value, RequestPlatform::WebAgent->value])) {
                 $options['user_id'] = $request->user()->getKey();
             }
 
