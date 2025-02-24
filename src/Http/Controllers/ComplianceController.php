@@ -102,7 +102,7 @@ class ComplianceController extends Controller
 
             return new ComplianceResource($compliance);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -136,7 +136,7 @@ class ComplianceController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Compliance']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -170,7 +170,7 @@ class ComplianceController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Compliance']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -202,7 +202,7 @@ class ComplianceController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Compliance']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

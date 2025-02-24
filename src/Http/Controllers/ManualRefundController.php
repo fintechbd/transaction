@@ -101,7 +101,7 @@ class ManualRefundController extends Controller
 
             return new ManualRefundResource($manualRefund);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -135,7 +135,7 @@ class ManualRefundController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Manual Refund']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -169,7 +169,7 @@ class ManualRefundController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Manual Refund']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

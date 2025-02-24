@@ -102,7 +102,7 @@ class RewardPointController extends Controller
 
             return new RewardPointResource($rewardPoint);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -136,7 +136,7 @@ class RewardPointController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Reward Point']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -170,7 +170,7 @@ class RewardPointController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Reward Point']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -202,7 +202,7 @@ class RewardPointController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Reward Point']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

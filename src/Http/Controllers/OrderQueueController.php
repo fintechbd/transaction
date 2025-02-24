@@ -66,7 +66,7 @@ class OrderQueueController extends Controller
 
             return new OrderQueueResource($orderQueue);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -140,7 +140,7 @@ class OrderQueueController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Order Queue']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }

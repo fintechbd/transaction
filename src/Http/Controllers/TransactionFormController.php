@@ -104,7 +104,7 @@ class TransactionFormController extends Controller
 
             return new TransactionFormResource($transactionForm);
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -138,7 +138,7 @@ class TransactionFormController extends Controller
 
             return response()->updated(__('core::messages.resource.updated', ['model' => 'Transaction Form']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -172,7 +172,7 @@ class TransactionFormController extends Controller
 
             return response()->deleted(__('core::messages.resource.deleted', ['model' => 'Transaction Form']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
@@ -204,7 +204,7 @@ class TransactionFormController extends Controller
 
             return response()->restored(__('core::messages.resource.restored', ['model' => 'Transaction Form']));
 
-        }  catch (Exception $exception) {
+        } catch (Exception $exception) {
 
             return response()->failed($exception);
         }
