@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Http\Controllers;
 
 use Exception;
+use Fintech\Core\Enums\RequestPlatform;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
@@ -17,6 +18,7 @@ use Fintech\Transaction\Http\Resources\OrderResource;
 use Fintech\Transaction\Http\Resources\TrackOrderResource;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 
 /**
@@ -279,11 +281,17 @@ class OrderController extends Controller
      *
      * @throws ModelNotFoundException
      */
-    public function track(string|int $transactionId): TrackOrderResource|JsonResponse
+    public function track(string|int $transactionId, Request $request): TrackOrderResource|JsonResponse
     {
         try {
 
-            $order = Transaction::order()->findWhere(['transaction_id' => $transactionId]);
+            $options['transaction_id'] = $transactionId;
+
+            if (!in_array($request->platform()->value,[RequestPlatform::WebAdmin->value, RequestPlatform::WebAgent->value])) {
+                $options['user_id'] = $request->user()->getKey();
+            }
+
+            $order = Transaction::order()->findWhere($options);
 
             if (! $order) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_model'), $transactionId);
