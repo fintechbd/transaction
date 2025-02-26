@@ -68,6 +68,11 @@ class Order extends BaseModel
     |--------------------------------------------------------------------------
     */
 
+    public function parentOrder(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.transaction.order_model', Order::class), 'parent_id');
+    }
+
     public function transactionForm(): BelongsTo
     {
         return $this->belongsTo(config('fintech.transaction.transaction_form_model', TransactionForm::class));
