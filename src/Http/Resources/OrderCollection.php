@@ -15,7 +15,7 @@ class OrderCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
@@ -26,9 +26,9 @@ class OrderCollection extends ResourceCollection
 
             Arr::forget($order_data, $this->hidden);
 
-            $order_data['current_amount'] = (string)\currency($order_data['current_amount'] ?? null, $order->currency);
-            $order_data['sending_amount'] = (string)\currency($order_data['sending_amount'] ?? null, $order->currency);
-            $order_data['previous_amount'] = (string)\currency($order_data['previous_amount'] ?? null, $order->currency);
+            $order_data['current_amount'] = (string) \currency($order_data['current_amount'] ?? null, $order->currency);
+            $order_data['sending_amount'] = (string) \currency($order_data['sending_amount'] ?? null, $order->currency);
+            $order_data['previous_amount'] = (string) \currency($order_data['previous_amount'] ?? null, $order->currency);
 
             $data = [
                 'id' => $order->getKey(),
@@ -42,11 +42,11 @@ class OrderCollection extends ResourceCollection
                 'transaction_form_name' => $order->transaction_form_name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
                 'currency' => $order->currency ?? null,
-                'amount' => (string)($order->amount ?? null),
+                'amount' => (string) ($order->amount ?? null),
                 'amount_formatted' => $order->amount_formatted,
 
                 'converted_currency' => $order->converted_currency ?? null,
-                'converted_amount' => (string)($order->converted_amount ?? null),
+                'converted_amount' => (string) ($order->converted_amount ?? null),
                 'converted_amount_formatted' => $order->converted_amount_formatted ?? null,
 
                 'charge_amount' => $order->order_data['service_stat_data']['charge_amount'] ?? null,
@@ -77,7 +77,6 @@ class OrderCollection extends ResourceCollection
                 'created_at' => $order->created_at ?? null,
                 'updated_at' => $order->updated_at ?? null,
             ];
-
 
             if (Core::packageExists('Business')) {
                 $data['service_name'] = $order->service?->service_name ?? null;
