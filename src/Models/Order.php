@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Models;
 
 use Fintech\Auth\Models\User;
+use Fintech\Business\Models\Service;
 use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
@@ -10,7 +11,6 @@ use Fintech\Core\Enums\Transaction\OrderStatus;
 use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Traits\Audits\BlameableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
-use Fintech\Transaction\Traits\BusinessRelations;
 use Fintech\Transaction\Traits\HasOrderAttributes;
 use Fintech\Transaction\Traits\MetaDataRelations;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,7 +27,6 @@ class Order extends BaseModel
 {
     use AuthRelations;
     use BlameableTrait;
-    use BusinessRelations;
     use HasOrderAttributes;
     use MetaDataRelations;
     use SoftDeletes;
@@ -81,6 +80,11 @@ class Order extends BaseModel
     public function assignedUser(): BelongsTo
     {
         return $this->belongsTo(config('fintech.auth.user_model', User::class));
+    }
+
+    public function service(): BelongsTo
+    {
+        return $this->belongsTo(config('fintech.business.service_model', Service::class));
     }
 
     public function serviceVendor(): BelongsTo
