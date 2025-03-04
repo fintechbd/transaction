@@ -3,7 +3,6 @@
 namespace Fintech\Transaction\Http\Resources;
 
 use Fintech\Core\Enums\RequestPlatform;
-use Fintech\Core\Facades\Core;
 use Fintech\Transaction\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
