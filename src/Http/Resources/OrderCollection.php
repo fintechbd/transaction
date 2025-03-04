@@ -6,6 +6,7 @@ use Fintech\Core\Enums\RequestPlatform;
 use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Constant;
+use Fintech\Transaction\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use Illuminate\Support\Arr;
@@ -15,57 +16,61 @@ class OrderCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
     {
         return $this->collection->map(function ($order) {
 
+            /**
+             * @var Order $order
+             */
+
             $order_data = $order->order_data ?? [];
 
             Arr::forget($order_data, $this->hidden);
 
-            $order_data['current_amount'] = (string) \currency($order_data['current_amount'] ?? null, $order->currency);
-            $order_data['sending_amount'] = (string) \currency($order_data['sending_amount'] ?? null, $order->currency);
-            $order_data['previous_amount'] = (string) \currency($order_data['previous_amount'] ?? null, $order->currency);
+            $order_data['current_amount'] = $order->current_amount_formatted;
+            $order_data['sending_amount'] = (string)\currency($order_data['sending_amount'] ?? null, $order->currency);
+            $order_data['previous_amount'] = $order->previous_amount_formatted;
 
-            $data = [
+            return [
                 'id' => $order->getKey(),
                 'description' => $order->description ?? null,
                 'source_country_name' => $order->sourceCountry?->name ?? null,
                 'destination_country_name' => $order->destinationCountry?->name ?? null,
                 'sender_receiver_name' => $order->senderReceiver?->name ?? null,
                 'user_name' => $order->user?->name ?? null,
-                'service_name' => null,
-                'service_type' => null,
+                'service_name' => $order->service?->service_name ?? null,
+                'service_type' => $order->service->serviceType?->all_parent_list ?? null,
                 'transaction_form_name' => $order->transaction_form_name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
                 'currency' => $order->currency ?? null,
-                'amount' => (string) ($order->amount ?? null),
+                'amount' => (string)($order->amount ?? null),
                 'amount_formatted' => $order->amount_formatted,
 
                 'converted_currency' => $order->converted_currency ?? null,
-                'converted_amount' => (string) ($order->converted_amount ?? null),
+                'converted_amount' => (string)($order->converted_amount ?? null),
                 'converted_amount_formatted' => $order->converted_amount_formatted ?? null,
 
-                'charge_amount' => $order->order_data['service_stat_data']['charge_amount'] ?? null,
-                'charge_amount_formatted' => $order->order_data['service_stat_data']['charge_amount'] ?? null,
+                'charge_amount' => $order->charge_amount ?? null,
+                'charge_amount_formatted' => $order->charge_amount_formatted ?? null,
 
-                'discount_amount' => $order->order_data['service_stat_data']['discount_amount'] ?? null,
-                'discount_amount_formatted' => $order->order_data['service_stat_data']['discount_amount'] ?? null,
+                'discount_amount' => $order->discount_amount ?? null,
+                'discount_amount_formatted' => $order->discount_amount_formatted ?? null,
 
-                'commission_amount' => $order->order_data['service_stat_data']['commission_amount'] ?? null,
-                'commission_amount_formatted' => $order->order_data['service_stat_data']['commission_amount'] ?? null,
+                'commission_amount' => $order->commission_amount ?? null,
+                'commission_amount_formatted' => $order->commission_amount_formatted ?? null,
 
-                'cost_amount' => $order->order_data['service_stat_data']['cost_amount'] ?? null,
-                'cost_amount_formatted' => $order->order_data['service_stat_data']['cost_amount'] ?? null,
+                'cost_amount' => $order->cost_amount ?? null,
+                'cost_amount_formatted' => $order->cost_amount_formatted ?? null,
 
-                'interac_charge' => $order->order_data['service_stat_data']['interac_charge_amount'] ?? null,
-                'interac_charge_formatted' => $order->order_data['service_stat_data']['interac_charge_amount'] ?? null,
+                'interac_charge' => $order->interac_charge_amount ?? null,
+                'interac_charge_formatted' => $order->interac_charge_amount_formatted ?? null,
 
-                'total_amount' => $order->order_data['service_stat_data']['total_amount'] ?? null,
-                'total_amount_formatted' => $order->order_data['service_stat_data']['total_amount'] ?? null,
+                'total_amount' => $order->total_amount ?? null,
+                'total_amount_formatted' => $order->total_amount_formatted ?? null,
 
                 'order_number' => $order->order_number ?? null,
                 'risk_profile' => $order->risk_profile->value,
@@ -76,16 +81,9 @@ class OrderCollection extends ResourceCollection
                 'request_platform' => RequestPlatform::tryFrom($order->order_data['request_from']),
                 'created_at' => $order->created_at ?? null,
                 'updated_at' => $order->updated_at ?? null,
+                'service_logo_png' => $order->service?->getFirstMediaUrl('logo_png') ?? null,
+                'service_logo_svg' => $order->service?->getFirstMediaUrl('logo_svg') ?? null,
             ];
-
-            if (Core::packageExists('Business')) {
-                $data['service_name'] = $order->service?->service_name ?? null;
-                $data['service_logo_png'] = $order->service?->getFirstMediaUrl('logo_png') ?? null;
-                $data['service_logo_svg'] = $order->service?->getFirstMediaUrl('logo_svg') ?? null;
-                $data['service_type'] = $order->service->serviceType?->all_parent_list ?? null;
-            }
-
-            return $data;
         })->toArray();
     }
 
