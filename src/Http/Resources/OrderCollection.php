@@ -78,6 +78,7 @@ class OrderCollection extends ResourceCollection
                 'order_data' => $order_data,
                 'order_type' => $order->order_data['order_type'] ?? 'transaction',
                 'status' => $order->status ?? null,
+                'status_label' => $order->status ? $order->status->label() : null,
                 'request_platform' => RequestPlatform::tryFrom($order->order_data['request_from']),
                 'created_at' => $order->created_at ?? null,
                 'updated_at' => $order->updated_at ?? null,
