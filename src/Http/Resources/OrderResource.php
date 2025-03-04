@@ -17,19 +17,17 @@ class OrderResource extends JsonResource
      * @param Request
      * @return array
      */
-
     public function toArray($request)
     {
         /**
          * @var Order $this
          */
-
         $order_data = $this->order_data ?? [];
 
         Arr::forget($order_data, $this->hidden);
 
         $order_data['current_amount'] = $this->current_amount_formatted;
-        $order_data['sending_amount'] = (string)\currency($order_data['sending_amount'] ?? null, $this->currency);
+        $order_data['sending_amount'] = (string) \currency($order_data['sending_amount'] ?? null, $this->currency);
         $order_data['previous_amount'] = $this->previous_amount_formatted;
 
         return [
@@ -44,11 +42,11 @@ class OrderResource extends JsonResource
             'transaction_form_name' => $this->transaction_form_name ?? null,
             'ordered_at' => $this->ordered_at ?? null,
             'currency' => $this->currency ?? null,
-            'amount' => (string)($this->amount ?? null),
+            'amount' => (string) ($this->amount ?? null),
             'amount_formatted' => $this->amount_formatted,
 
             'converted_currency' => $this->converted_currency ?? null,
-            'converted_amount' => (string)($this->converted_amount ?? null),
+            'converted_amount' => (string) ($this->converted_amount ?? null),
             'converted_amount_formatted' => $this->converted_amount_formatted ?? null,
 
             'charge_amount' => $this->charge_amount ?? null,
