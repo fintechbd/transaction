@@ -4,7 +4,6 @@ namespace Fintech\Transaction\Http\Resources;
 
 use Fintech\Core\Enums\RequestPlatform;
 use Fintech\Core\Enums\Transaction\OrderType;
-use Fintech\Core\Facades\Core;
 use Fintech\Core\Supports\Constant;
 use Fintech\Transaction\Models\Order;
 use Illuminate\Http\Request;
@@ -16,7 +15,7 @@ class OrderCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
@@ -26,13 +25,12 @@ class OrderCollection extends ResourceCollection
             /**
              * @var Order $order
              */
-
             $order_data = $order->order_data ?? [];
 
             Arr::forget($order_data, $this->hidden);
 
             $order_data['current_amount'] = $order->current_amount_formatted;
-            $order_data['sending_amount'] = (string)\currency($order_data['sending_amount'] ?? null, $order->currency);
+            $order_data['sending_amount'] = (string) \currency($order_data['sending_amount'] ?? null, $order->currency);
             $order_data['previous_amount'] = $order->previous_amount_formatted;
 
             return [
@@ -47,11 +45,11 @@ class OrderCollection extends ResourceCollection
                 'transaction_form_name' => $order->transaction_form_name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
                 'currency' => $order->currency ?? null,
-                'amount' => (string)($order->amount ?? null),
+                'amount' => (string) ($order->amount ?? null),
                 'amount_formatted' => $order->amount_formatted,
 
                 'converted_currency' => $order->converted_currency ?? null,
-                'converted_amount' => (string)($order->converted_amount ?? null),
+                'converted_amount' => (string) ($order->converted_amount ?? null),
                 'converted_amount_formatted' => $order->converted_amount_formatted ?? null,
 
                 'charge_amount' => $order->charge_amount ?? null,
