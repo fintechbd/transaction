@@ -40,7 +40,7 @@ class OrderResource extends JsonResource
             'service_type' => $this->service->serviceType?->all_parent_list ?? null,
             'transaction_form_name' => $this->transaction_form_name ?? null,
             'ordered_at' => $this->ordered_at ?? null,
-            'ordered_at_formatted' => $this->ordered_at?->format("jS F, Y h:ia") ?? null,
+            'ordered_at_formatted' => $this->ordered_at?->format('jS F, Y h:ia') ?? null,
             'currency' => $this->currency ?? null,
             'amount' => (string) ($this->amount ?? null),
             'amount_formatted' => $this->amount_formatted,

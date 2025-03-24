@@ -44,7 +44,7 @@ class OrderCollection extends ResourceCollection
                 'service_type' => $order->service->serviceType?->all_parent_list ?? null,
                 'transaction_form_name' => $order->transaction_form_name ?? null,
                 'ordered_at' => $order->ordered_at ?? null,
-                'ordered_at_formatted' => $order->ordered_at?->format("jS F, Y h:ia") ?? null,
+                'ordered_at_formatted' => $order->ordered_at?->format('jS F, Y h:ia') ?? null,
                 'currency' => $order->currency ?? null,
                 'amount' => (string) ($order->amount ?? null),
                 'amount_formatted' => $order->amount_formatted,
