@@ -240,7 +240,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         }
 
         if (isset($filters['status_not_equal']) && $filters['status_not_equal']) {
-            $query->whereNotIn('orders.status', (array)$filters['status_not_equal']);
+            $query->whereNotIn('orders.status', (array) $filters['status_not_equal']);
         }
 
         if (isset($filters['source_country_id']) && $filters['source_country_id']) {
