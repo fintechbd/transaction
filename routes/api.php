@@ -5,6 +5,7 @@ use Fintech\Transaction\Http\Controllers\ChartEntryController;
 use Fintech\Transaction\Http\Controllers\Charts\OrderSummaryController;
 use Fintech\Transaction\Http\Controllers\Charts\UserAccountSummaryController;
 use Fintech\Transaction\Http\Controllers\Charts\UserAccountUsagePieChartController;
+use Fintech\Transaction\Http\Controllers\Charts\UserOrderSummaryController;
 use Fintech\Transaction\Http\Controllers\ChartTypeController;
 use Fintech\Transaction\Http\Controllers\ComplianceController;
 use Fintech\Transaction\Http\Controllers\ManualRefundController;
@@ -59,21 +60,6 @@ if (Config::get('fintech.transaction.enabled')) {
 
             Route::apiResource('order-queues', OrderQueueController::class)->only(['index', 'show', 'destroy']);
 
-            Route::prefix('charts')->name('charts.')->group(function () {
-                Route::get('user-account-usages-pie-chart',
-                    UserAccountUsagePieChartController::class)
-                    ->name('user-account-usages');
-
-                Route::get('order-summary',
-                    OrderSummaryController::class)
-                    ->name('order-summary');
-
-                Route::get('user-account-summary',
-                    UserAccountSummaryController::class)
-                    ->name('user-account-summary');
-
-            });
-
             Route::apiResource('manual-refunds', ManualRefundController::class)
                 ->only(['index', 'store', 'show']);
 
@@ -91,6 +77,25 @@ if (Config::get('fintech.transaction.enabled')) {
 
             Route::apiResource('policies', PolicyController::class);
             //            Route::post('policies/{policy}/restore', [PolicyController::class, 'restore'])->name('policies.restore');
+
+            Route::prefix('charts')->name('charts.')->group(function () {
+                Route::get('user-account-usages-pie-chart',
+                    UserAccountUsagePieChartController::class)
+                    ->name('user-account-usages');
+
+                Route::get('order-summary',
+                    OrderSummaryController::class)
+                    ->name('order-summary');
+
+                Route::get('user-order-summary',
+                    UserOrderSummaryController::class)
+                    ->name('user-order-summary');
+
+                Route::get('user-account-summary',
+                    UserAccountSummaryController::class)
+                    ->name('user-account-summary');
+
+            });
 
             // DO NOT REMOVE THIS LINE//
         });
