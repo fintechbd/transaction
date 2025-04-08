@@ -53,14 +53,14 @@ class UserOrderSummaryController extends Controller
                         return $item;
                     });
 
-//            $orderSummary = Transaction::order()->list([
-//                'parent_id_is_null' => true,
-//                'user_id' => $userId,
-//                'sort' => 'currency',
-//                'dir' => 'asc',
-//                'paginate' => false,
-//                'sum_amount_count_order_group_by_service_type' => true,
-//            ]);
+                //            $orderSummary = Transaction::order()->list([
+                //                'parent_id_is_null' => true,
+                //                'user_id' => $userId,
+                //                'sort' => 'currency',
+                //                'dir' => 'asc',
+                //                'paginate' => false,
+                //                'sum_amount_count_order_group_by_service_type' => true,
+                //            ]);
             }
 
             return new UserOrderSummaryCollection($orders);
