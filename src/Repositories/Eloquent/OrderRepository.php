@@ -306,9 +306,7 @@ class OrderRepository extends EloquentRepository implements InterfacesOrderRepos
         } elseif (isset($filters['sum_amount_count_order_group_by_service_type']) && $filters['sum_amount_count_order_group_by_service_type'] === true) {
             $query->selectRaw('service_types.id as service_type_id, SUM(`orders`.`amount`) as `total_amount`, COUNT(`orders`.`id`) as `total_order`, `orders`.`currency` as `currency`')
                 ->groupBy('service_types.id', 'orders.currency');
-        }
-
-        else {
+        } else {
             $query->select('orders.*', DB::raw('transaction_forms.name AS transaction_form_name'));
         }
 

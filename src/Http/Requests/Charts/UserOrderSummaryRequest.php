@@ -31,7 +31,7 @@ class UserOrderSummaryRequest extends FormRequest
             'service_type_parent_slug' => ['string', 'nullable', 'exists:service_types,service_type_slug'],
             'service_type_parent_id' => ['integer', 'nullable'],
             'source_country_id' => ['integer', 'nullable', 'master_currency'],
-            'destination_country_id' => ['integer', 'nullable', 'master_currency']
+            'destination_country_id' => ['integer', 'nullable', 'master_currency'],
         ];
     }
 
