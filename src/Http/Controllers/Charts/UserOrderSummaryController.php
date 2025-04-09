@@ -46,8 +46,8 @@ class UserOrderSummaryController extends Controller
                         $item->order_count = mt_rand(10, 50);
                         $item->orders = [
                             ['currency' => 'CAD', 'total_order' => mt_rand(10, 30), 'total_amount' => 500, 'total_amount_formated' => (string) \currency(500, 'CAD')],
-//                            ['currency' => 'AED', 'total_order' => mt_rand(10, 30), 'total_amount' => 1500, 'total_amount_formated' => (string) \currency(1500, 'AED')],
-//                            ['currency' => 'BDT', 'total_order' => mt_rand(10, 30), 'total_amount' => 5000, 'total_amount_formated' => (string) \currency(5000, 'BDT')],
+                            //                            ['currency' => 'AED', 'total_order' => mt_rand(10, 30), 'total_amount' => 1500, 'total_amount_formated' => (string) \currency(1500, 'AED')],
+                            //                            ['currency' => 'BDT', 'total_order' => mt_rand(10, 30), 'total_amount' => 5000, 'total_amount_formated' => (string) \currency(5000, 'BDT')],
                         ];
 
                         return $item;
