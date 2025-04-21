@@ -65,8 +65,8 @@ class OrderCollection extends ResourceCollection
                 'cost_amount' => $order->cost_amount ?? null,
                 'cost_amount_formatted' => $order->cost_amount_formatted ?? null,
 
-                'interac_charge' => $order->interac_charge_amount ?? null,
-                'interac_charge_formatted' => $order->interac_charge_amount_formatted ?? null,
+                'interac_charge' => $order->interac_charge ?? null,
+                'interac_charge_formatted' => $order->interac_charge_formatted ?? null,
 
                 'total_amount' => $order->total_amount ?? null,
                 'total_amount_formatted' => $order->total_amount_formatted ?? null,
