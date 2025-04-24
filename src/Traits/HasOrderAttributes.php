@@ -127,8 +127,6 @@ trait HasOrderAttributes
 
     public function interacCharge(): Attribute
     {
-        logger('Test', $this->order_data['service_stat_data'] ?? []);
-
         return Attribute::make(
             get: fn () => $this->order_data['service_stat_data']['interac_charge_amount'] ?? null
         );
