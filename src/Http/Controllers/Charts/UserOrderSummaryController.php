@@ -5,7 +5,6 @@ namespace Fintech\Transaction\Http\Controllers\Charts;
 use Exception;
 use Fintech\Business\Facades\Business;
 use Fintech\Core\Facades\Core;
-use Fintech\Core\Supports\Currency;
 use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\Charts\UserOrderSummaryRequest;
 use Fintech\Transaction\Http\Resources\Charts\UserOrderSummaryCollection;
@@ -61,13 +60,15 @@ class UserOrderSummaryController extends Controller
                         foreach (\Fintech\Business\Facades\Business::serviceType(['paginate' => false]) as $serviceType) {
                             $serviceTypes[$serviceType->getKey()] = $serviceType->service_type_parent_id;
                         }
+
                         return $serviceTypes;
                     });
 
                     $orders = $orders->map(function ($order) use (&$serviceTypeCacheData) {
                         $order->service_type_parents = array_filter(
                             $this->getServiceTypeParentList($order->service_type_id, $serviceTypeCacheData),
-                            fn($item) => $item != null);
+                            fn ($item) => $item != null);
+
                         return $order;
                     });
 
@@ -81,6 +82,7 @@ class UserOrderSummaryController extends Controller
                                 }
                             }
                             $item->orders = $groupedOrders;
+
                             return $item;
                         });
                 }

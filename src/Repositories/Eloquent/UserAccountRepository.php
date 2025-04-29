@@ -71,8 +71,8 @@ class UserAccountRepository extends EloquentRepository implements InterfacesUser
             $query->where('enabled', '=', $filters['enabled']);
         }
 
-        if (!empty($filters['get'])) {
-            $query->select((array)$filters['get']);
+        if (! empty($filters['get'])) {
+            $query->select((array) $filters['get']);
         }
 
         // Handle Sorting
