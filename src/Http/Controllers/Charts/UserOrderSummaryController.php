@@ -78,7 +78,7 @@ class UserOrderSummaryController extends Controller
                             $groupedOrders = [];
                             foreach ($orders as $order) {
                                 if (in_array($item->id, $order->service_type_parents)) {
-                                    $groupedOrders[$order->currency] = $order->toArray();
+                                    $groupedOrders[$order->currency] = $order;
                                 }
                             }
                             $item->orders = $groupedOrders;

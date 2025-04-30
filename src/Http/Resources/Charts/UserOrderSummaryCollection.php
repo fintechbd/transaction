@@ -13,7 +13,7 @@ class UserOrderSummaryCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array
      */
     public function toArray($request)
@@ -29,7 +29,7 @@ class UserOrderSummaryCollection extends ResourceCollection
                 'service_type_logo_svg' => $item->logo_svg ?? null,
                 'service_type_logo_png' => $item->logo_png ?? null,
                 'service_type_name' => $item->service_type_name,
-                'order_count' => collect($item->orders)->sum('total_order') ?? 0,
+                'order_count' => 0,
                 'orders' => [],
             ];
 
@@ -41,12 +41,18 @@ class UserOrderSummaryCollection extends ResourceCollection
                     'currency_symbol' => $currency['symbol'],
                     'total_order' => 0,
                     'total_amount' => 0,
-                    'total_amount_formatted' => (string) \currency(0, $currency['code']),
+                    'total_amount_formatted' => (string)\currency(0, $currency['code']),
                 ];
             }
 
-            $data['orders'] = array_values($data['orders']);
+            foreach ($item->orders as $order) {
+                $data['order_count'] += ($order->count_order ?? 0);
+                $data['orders'][$order->currency]['total_order'] += ($order->count_order ?? 0);
+                $data['orders'][$order->currency]['total_amount'] += ($order->sum_amount ?? 0);
+                $data['orders'][$order->currency]['total_amount_formatted'] = (string)\currency($data['orders'][$order->currency]['total_amount'], $order->currency);
+            }
 
+            $data['orders'] = array_values($data['orders']);
             return $data;
         })->toArray();
     }
