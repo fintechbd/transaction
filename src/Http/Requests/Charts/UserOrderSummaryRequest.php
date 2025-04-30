@@ -28,6 +28,10 @@ class UserOrderSummaryRequest extends FormRequest
         return [
             'user_id' => ['integer', 'nullable'],
             'role_id' => ['integer', 'nullable'],
+            'status' => ['nullable'],
+            'status_not_equal' => ['nullable'],
+            'created_at_start_date' => ['date', 'nullable'],
+            'created_at_end_date' => ['date', 'nullable'],
             'service_type_parent_slug' => ['string', 'nullable', 'exists:service_types,service_type_slug'],
             'service_type_parent_id' => ['integer', 'nullable'],
             'source_country_id' => ['integer', 'nullable', 'master_currency'],

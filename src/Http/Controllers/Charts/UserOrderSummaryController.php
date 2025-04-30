@@ -19,7 +19,6 @@ class UserOrderSummaryController extends Controller
     public function __invoke(UserOrderSummaryRequest $request): UserOrderSummaryCollection
     {
         try {
-            $orders = collect();
             $userId = $request->input('user_id', auth()->id());
             $input = $request->validated();
 
@@ -44,14 +43,16 @@ class UserOrderSummaryController extends Controller
                 } else {
                     $input['service_type_parent_id_is_null'] = true;
                 }
-                $orders = Transaction::order()->list([
-                    'parent_id_is_null' => true,
-                    'user_id' => $userId,
-                    'sort' => 'currency',
-                    'dir' => 'asc',
-                    'paginate' => false,
-                    'sum_amount_count_order_group_by_service_type' => true,
-                ]);
+                $orderFilters = [
+                        'parent_id_is_null' => true,
+                        'user_id' => $userId,
+                        'sort' => 'currency',
+                        'dir' => 'asc',
+                        'paginate' => false,
+                        'sum_amount_count_order_group_by_service_type' => true,
+                    ] + $request->only(['status', 'status_not_equal', 'created_at_start_date', 'created_at_end_date']);
+
+                $orders = Transaction::order()->list($orderFilters);
 
                 if ($orders->isNotEmpty()) {
 
@@ -67,7 +68,7 @@ class UserOrderSummaryController extends Controller
                     $orders = $orders->map(function ($order) use (&$serviceTypeCacheData) {
                         $order->service_type_parents = array_filter(
                             $this->getServiceTypeParentList($order->service_type_id, $serviceTypeCacheData),
-                            fn ($item) => $item != null);
+                            fn($item) => $item != null);
 
                         return $order;
                     });
