@@ -13,7 +13,7 @@ class UserOrderSummaryCollection extends ResourceCollection
     /**
      * Transform the resource collection into an array.
      *
-     * @param Request $request
+     * @param  Request  $request
      * @return array
      */
     public function toArray($request)
@@ -41,7 +41,7 @@ class UserOrderSummaryCollection extends ResourceCollection
                     'currency_symbol' => $currency['symbol'],
                     'total_order' => 0,
                     'total_amount' => 0,
-                    'total_amount_formatted' => (string)\currency(0, $currency['code']),
+                    'total_amount_formatted' => (string) \currency(0, $currency['code']),
                 ];
             }
 
@@ -49,10 +49,11 @@ class UserOrderSummaryCollection extends ResourceCollection
                 $data['order_count'] += ($order->count_order ?? 0);
                 $data['orders'][$order->currency]['total_order'] += ($order->count_order ?? 0);
                 $data['orders'][$order->currency]['total_amount'] += ($order->sum_amount ?? 0);
-                $data['orders'][$order->currency]['total_amount_formatted'] = (string)\currency($data['orders'][$order->currency]['total_amount'], $order->currency);
+                $data['orders'][$order->currency]['total_amount_formatted'] = (string) \currency($data['orders'][$order->currency]['total_amount'], $order->currency);
             }
 
             $data['orders'] = array_values($data['orders']);
+
             return $data;
         })->toArray();
     }
