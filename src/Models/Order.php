@@ -138,14 +138,14 @@ class Order extends BaseModel
     public function orderType(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['order_type'] ? OrderType::tryFrom($this->order_data['order_type']) : null,
+            get: fn () => $this->order_data['order_type'] ? OrderType::tryFrom($this->order_data['order_type']) : null,
         );
     }
 
     public function ref_number(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->order_data['beneficiary_data']['reference_no'] ?? $this->order_data['purchase_number'],
+            get: fn () => $this->order_data['beneficiary_data']['reference_no'] ?? $this->order_data['purchase_number'],
         );
     }
     /*
