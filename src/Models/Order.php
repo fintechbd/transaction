@@ -13,6 +13,7 @@ use Fintech\Core\Traits\Audits\BlameableTrait;
 use Fintech\Transaction\Traits\AuthRelations;
 use Fintech\Transaction\Traits\HasOrderAttributes;
 use Fintech\Transaction\Traits\MetaDataRelations;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,7 +49,6 @@ class Order extends BaseModel
         'timeline' => 'array',
         'restored_at' => 'datetime',
         'ordered_at' => 'datetime',
-        'enabled' => 'bool',
         'status' => OrderStatus::class,
         'risk_profile' => RiskProfile::class,
     ];
@@ -132,11 +132,6 @@ class Order extends BaseModel
         return $links;
     }
 
-    public function getPreviousBalanceAttribute()
-    {
-        return $this->order_data['previous_balance'] ?? 0;
-    }
-
     public function getCurrentBalanceAttribute()
     {
         return $this->order_data['current_balance'] ?? 0;
@@ -147,9 +142,12 @@ class Order extends BaseModel
         return $this->order_data['transaction_amount'] ?? 0;
     }
 
-    public function getOrderTypeAttribute(): ?OrderType
+
+    public function orderType(): Attribute
     {
-        return OrderType::tryFrom($this->order_data['order_type'] ?? null);
+        return Attribute::make(
+            get: fn() => $this->order_data['order_type'] ? OrderType::tryFrom($this->order_data['order_type']) : null,
+        );
     }
     /*
     |--------------------------------------------------------------------------

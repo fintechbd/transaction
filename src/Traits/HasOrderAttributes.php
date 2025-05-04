@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 /**
  * @property int $id
  * @property OrderStatus|DepositStatus|null $status
- * @property OrderStatus|DepositStatus|null $platform
+ * @property RequestPlatform|null $platform
  * @property string|null $order_number
  * @property string|null $notes
  * @property string|null transaction_form_name,
