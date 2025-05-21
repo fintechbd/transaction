@@ -22,21 +22,21 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
  * @property string $converted_currency
  * @property float $converted_amount
  * @property-read string $converted_amount_formatted
- * @property-read string $charge_amount
+ * @property-read float $charge_amount
  * @property-read string $charge_amount_formatted
- * @property-read string $discount_amount
+ * @property-read float $discount_amount
  * @property-read string $discount_amount_formatted
- * @property-read string $commission_amount
+ * @property-read float $commission_amount
  * @property-read string $commission_amount_formatted
- * @property-read string $cost_amount
+ * @property-read float $cost_amount
  * @property-read string $cost_amount_formatted
- * @property-read string $total_amount
+ * @property-read float $total_amount
  * @property-read string $total_amount_formatted
- * @property-read string $previous_amount
+ * @property-read float $previous_amount
  * @property-read string $previous_amount_formatted
- * @property-read string $current_amount
+ * @property-read float $current_amount
  * @property-read string $current_amount_formatted
- * @property-read string $interac_charge
+ * @property-read float $interac_charge
  * @property-read string $interac_charge_formatted
  */
 trait HasOrderAttributes
