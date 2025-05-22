@@ -255,7 +255,7 @@ trait HasOrderAttributes
                 'source_amount' => $this->amount_formatted,
                 'destination_amount' => $this->converted_amount_formatted,
                 'total_amount' => $this->total_amount_formatted,
-                ...$extra
+                ...$extra,
             ],
             'ref_number' => $this->order_data['beneficiary_data']['reference_no'] ?? $this->order_number,
             'charge' => $this->charge_amount,
