@@ -128,7 +128,7 @@ class ChartTypeController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->chartType()->update($id, $inputs)) {
+            if (! transaction()->chartType()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -162,7 +162,7 @@ class ChartTypeController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
-            if (!transaction()->chartType()->destroy($id)) {
+            if (! transaction()->chartType()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -194,7 +194,7 @@ class ChartTypeController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
-            if (!transaction()->chartType()->restore($id)) {
+            if (! transaction()->chartType()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }

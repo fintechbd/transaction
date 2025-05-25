@@ -105,7 +105,7 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (!transaction()->order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (! transaction()->order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -147,7 +147,7 @@ class Accounting
 
             $this->logTimeline("Total {$transactionAmountFormatted} credited for {$this->service->service_name} deposit.");
 
-            if (!transaction()->order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (! transaction()->order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -170,7 +170,7 @@ class Accounting
         $userAccountData['deposit_amount'] += $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
 
-        if (!transaction()->userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (! transaction()->userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -184,7 +184,7 @@ class Accounting
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['spent_amount'] -= $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
-        if (!transaction()->userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (! transaction()->userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -496,7 +496,7 @@ class Accounting
 
     private function previousBalance(): float
     {
-        return (float)transaction()->orderDetail([
+        return (float) transaction()->orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -505,7 +505,7 @@ class Accounting
 
     private function currentBalance(): float
     {
-        return (float)transaction()->orderDetail([
+        return (float) transaction()->orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -527,7 +527,7 @@ class Accounting
             $parameters['converted_currency'] = $this->order->converted_currency;
         }
 
-        return (float)transaction()->orderDetail($parameters);
+        return (float) transaction()->orderDetail($parameters);
     }
 
     private function orderDetailParentId($orderDetailParentId = null): ?int

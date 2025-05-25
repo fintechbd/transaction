@@ -128,7 +128,7 @@ class ChartEntryController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->chartEntry()->update($id, $inputs)) {
+            if (! transaction()->chartEntry()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
@@ -162,7 +162,7 @@ class ChartEntryController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            if (!transaction()->chartEntry()->destroy($id)) {
+            if (! transaction()->chartEntry()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
@@ -194,7 +194,7 @@ class ChartEntryController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            if (!transaction()->chartEntry()->restore($id)) {
+            if (! transaction()->chartEntry()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }

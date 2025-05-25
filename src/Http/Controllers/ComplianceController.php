@@ -128,7 +128,7 @@ class ComplianceController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->compliance()->update($id, $inputs)) {
+            if (! transaction()->compliance()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
@@ -162,7 +162,7 @@ class ComplianceController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            if (!transaction()->compliance()->destroy($id)) {
+            if (! transaction()->compliance()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
@@ -194,7 +194,7 @@ class ComplianceController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            if (!transaction()->compliance()->restore($id)) {
+            if (! transaction()->compliance()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }

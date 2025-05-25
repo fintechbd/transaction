@@ -130,7 +130,7 @@ class PolicyController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->policy()->update($id, $inputs)) {
+            if (! transaction()->policy()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
@@ -164,7 +164,7 @@ class PolicyController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
 
-            if (!transaction()->policy()->destroy($id)) {
+            if (! transaction()->policy()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
@@ -196,7 +196,7 @@ class PolicyController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.policy_model'), $id);
             }
 
-            if (!transaction()->policy()->restore($id)) {
+            if (! transaction()->policy()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.policy_model'), $id);
             }

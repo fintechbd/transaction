@@ -130,7 +130,7 @@ class TransactionFormController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->transactionForm()->update($id, $inputs)) {
+            if (! transaction()->transactionForm()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
@@ -164,7 +164,7 @@ class TransactionFormController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            if (!transaction()->transactionForm()->destroy($id)) {
+            if (! transaction()->transactionForm()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
@@ -196,7 +196,7 @@ class TransactionFormController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            if (!transaction()->transactionForm()->restore($id)) {
+            if (! transaction()->transactionForm()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }

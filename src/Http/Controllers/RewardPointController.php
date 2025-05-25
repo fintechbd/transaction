@@ -128,7 +128,7 @@ class RewardPointController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->rewardPoint()->update($id, $inputs)) {
+            if (! transaction()->rewardPoint()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -162,7 +162,7 @@ class RewardPointController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
-            if (!transaction()->rewardPoint()->destroy($id)) {
+            if (! transaction()->rewardPoint()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -194,7 +194,7 @@ class RewardPointController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
-            if (!transaction()->rewardPoint()->restore($id)) {
+            if (! transaction()->rewardPoint()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }

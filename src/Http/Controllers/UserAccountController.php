@@ -126,7 +126,7 @@ class UserAccountController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (!transaction()->userAccount()->destroy($id)) {
+            if (! transaction()->userAccount()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -158,7 +158,7 @@ class UserAccountController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (!transaction()->userAccount()->restore($id)) {
+            if (! transaction()->userAccount()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
@@ -239,7 +239,7 @@ class UserAccountController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
-            if (!transaction()->userAccount()->update($id, ['enabled' => !$userAccount->enabled])) {
+            if (! transaction()->userAccount()->update($id, ['enabled' => ! $userAccount->enabled])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }
 
@@ -272,7 +272,7 @@ class UserAccountController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->userAccount()->update($id, $inputs)) {
+            if (! transaction()->userAccount()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $id);
             }

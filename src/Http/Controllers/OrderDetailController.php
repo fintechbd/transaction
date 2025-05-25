@@ -128,7 +128,7 @@ class OrderDetailController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->orderDetail()->update($id, $inputs)) {
+            if (! transaction()->orderDetail()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -162,7 +162,7 @@ class OrderDetailController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            if (!transaction()->orderDetail()->destroy($id)) {
+            if (! transaction()->orderDetail()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -194,7 +194,7 @@ class OrderDetailController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            if (!transaction()->orderDetail()->restore($id)) {
+            if (! transaction()->orderDetail()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }

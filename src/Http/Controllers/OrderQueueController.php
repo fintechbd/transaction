@@ -132,7 +132,7 @@ class OrderQueueController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
             }
 
-            if (!transaction()->orderQueue()->destroy($id)) {
+            if (! transaction()->orderQueue()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.order_queue_model'), $id);
             }

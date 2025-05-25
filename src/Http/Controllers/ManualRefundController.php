@@ -127,7 +127,7 @@ class ManualRefundController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->manualRefund()->update($id, $inputs)) {
+            if (! transaction()->manualRefund()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
             }
@@ -161,7 +161,7 @@ class ManualRefundController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
             }
 
-            if (!transaction()->manualRefund()->destroy($id)) {
+            if (! transaction()->manualRefund()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
             }

@@ -128,7 +128,7 @@ class RedeemPointController extends Controller
 
             $inputs = $request->validated();
 
-            if (!transaction()->redeemPoint()->update($id, $inputs)) {
+            if (! transaction()->redeemPoint()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
@@ -162,7 +162,7 @@ class RedeemPointController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
 
-            if (!transaction()->redeemPoint()->destroy($id)) {
+            if (! transaction()->redeemPoint()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
@@ -194,7 +194,7 @@ class RedeemPointController extends Controller
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
 
-            if (!transaction()->redeemPoint()->restore($id)) {
+            if (! transaction()->redeemPoint()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
