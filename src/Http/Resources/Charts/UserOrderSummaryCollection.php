@@ -4,7 +4,6 @@ namespace Fintech\Transaction\Http\Resources\Charts;
 
 use Fintech\Core\Supports\Constant;
 use Fintech\Core\Supports\Currency;
-use Fintech\Transaction\Facades\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
@@ -18,7 +17,7 @@ class UserOrderSummaryCollection extends ResourceCollection
      */
     public function toArray($request)
     {
-        $userAccounts = Transaction::userAccount([
+        $userAccounts = transaction()->userAccount([
             'user_id' => $request->input('user_id', auth()->id()),
             'paginate' => false,
             'get' => ['user_account_data'],

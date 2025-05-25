@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportChartTypeRequest;
 use Fintech\Transaction\Http\Requests\IndexChartTypeRequest;
 use Fintech\Transaction\Http\Requests\StoreChartTypeRequest;
@@ -42,7 +41,7 @@ class ChartTypeController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartTypePaginate = Transaction::chartType()->list($inputs);
+            $chartTypePaginate = transaction()->chartType()->list($inputs);
 
             return new ChartTypeCollection($chartTypePaginate);
 
@@ -65,7 +64,7 @@ class ChartTypeController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartType = Transaction::chartType()->create($inputs);
+            $chartType = transaction()->chartType()->create($inputs);
 
             if (! $chartType) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.chart_type_model'));
@@ -94,7 +93,7 @@ class ChartTypeController extends Controller
     {
         try {
 
-            $chartType = Transaction::chartType()->find($id);
+            $chartType = transaction()->chartType()->find($id);
 
             if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
@@ -121,7 +120,7 @@ class ChartTypeController extends Controller
     {
         try {
 
-            $chartType = Transaction::chartType()->find($id);
+            $chartType = transaction()->chartType()->find($id);
 
             if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
@@ -129,7 +128,7 @@ class ChartTypeController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::chartType()->update($id, $inputs)) {
+            if (!transaction()->chartType()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -157,13 +156,13 @@ class ChartTypeController extends Controller
     {
         try {
 
-            $chartType = Transaction::chartType()->find($id);
+            $chartType = transaction()->chartType()->find($id);
 
             if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
-            if (! Transaction::chartType()->destroy($id)) {
+            if (!transaction()->chartType()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -189,13 +188,13 @@ class ChartTypeController extends Controller
     {
         try {
 
-            $chartType = Transaction::chartType()->find($id, true);
+            $chartType = transaction()->chartType()->find($id, true);
 
             if (! $chartType) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
 
-            if (! Transaction::chartType()->restore($id)) {
+            if (!transaction()->chartType()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.chart_type_model'), $id);
             }
@@ -220,7 +219,7 @@ class ChartTypeController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartTypePaginate = Transaction::chartType()->export($inputs);
+            $chartTypePaginate = transaction()->chartType()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Chart Type']));
 
@@ -244,7 +243,7 @@ class ChartTypeController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartTypePaginate = Transaction::chartType()->list($inputs);
+            $chartTypePaginate = transaction()->chartType()->list($inputs);
 
             return new ChartTypeCollection($chartTypePaginate);
 

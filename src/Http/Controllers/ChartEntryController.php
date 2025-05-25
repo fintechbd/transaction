@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportChartEntryRequest;
 use Fintech\Transaction\Http\Requests\IndexChartEntryRequest;
 use Fintech\Transaction\Http\Requests\StoreChartEntryRequest;
@@ -42,7 +41,7 @@ class ChartEntryController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartEntryPaginate = Transaction::chartEntry()->list($inputs);
+            $chartEntryPaginate = transaction()->chartEntry()->list($inputs);
 
             return new ChartEntryCollection($chartEntryPaginate);
 
@@ -65,7 +64,7 @@ class ChartEntryController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartEntry = Transaction::chartEntry()->create($inputs);
+            $chartEntry = transaction()->chartEntry()->create($inputs);
 
             if (! $chartEntry) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.chart_entry_model'));
@@ -94,7 +93,7 @@ class ChartEntryController extends Controller
     {
         try {
 
-            $chartEntry = Transaction::chartEntry()->find($id);
+            $chartEntry = transaction()->chartEntry()->find($id);
 
             if (! $chartEntry) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
@@ -121,7 +120,7 @@ class ChartEntryController extends Controller
     {
         try {
 
-            $chartEntry = Transaction::chartEntry()->find($id);
+            $chartEntry = transaction()->chartEntry()->find($id);
 
             if (! $chartEntry) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
@@ -129,7 +128,7 @@ class ChartEntryController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::chartEntry()->update($id, $inputs)) {
+            if (!transaction()->chartEntry()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
@@ -157,13 +156,13 @@ class ChartEntryController extends Controller
     {
         try {
 
-            $chartEntry = Transaction::chartEntry()->find($id);
+            $chartEntry = transaction()->chartEntry()->find($id);
 
             if (! $chartEntry) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            if (! Transaction::chartEntry()->destroy($id)) {
+            if (!transaction()->chartEntry()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
@@ -189,13 +188,13 @@ class ChartEntryController extends Controller
     {
         try {
 
-            $chartEntry = Transaction::chartEntry()->find($id, true);
+            $chartEntry = transaction()->chartEntry()->find($id, true);
 
             if (! $chartEntry) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
 
-            if (! Transaction::chartEntry()->restore($id)) {
+            if (!transaction()->chartEntry()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.chart_entry_model'), $id);
             }
@@ -220,7 +219,7 @@ class ChartEntryController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartEntryPaginate = Transaction::chartEntry()->export($inputs);
+            $chartEntryPaginate = transaction()->chartEntry()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Chart Entry']));
 
@@ -244,7 +243,7 @@ class ChartEntryController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartEntryPaginate = Transaction::chartEntry()->list($inputs);
+            $chartEntryPaginate = transaction()->chartEntry()->list($inputs);
 
             return new ChartEntryCollection($chartEntryPaginate);
 

@@ -8,7 +8,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportOrderRequest;
 use Fintech\Transaction\Http\Requests\IndexOrderRequest;
 use Fintech\Transaction\Http\Requests\StoreOrderRequest;
@@ -45,7 +44,7 @@ class OrderController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderPaginate = Transaction::order()->list($inputs);
+            $orderPaginate = transaction()->order()->list($inputs);
 
             return new OrderCollection($orderPaginate);
 
@@ -68,7 +67,7 @@ class OrderController extends Controller
         try {
             $inputs = $request->validated();
 
-            $order = Transaction::order()->create($inputs);
+            $order = transaction()->order()->create($inputs);
 
             if (! $order) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.order_model'));
@@ -97,7 +96,7 @@ class OrderController extends Controller
     {
         try {
 
-            $order = Transaction::order()->find($id);
+            $order = transaction()->order()->find($id);
 
             if (! $order) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_model'), $id);
@@ -124,7 +123,7 @@ class OrderController extends Controller
     {
         try {
 
-            $order = Transaction::order()->find($id);
+            $order = transaction()->order()->find($id);
 
             if (! $order) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_model'), $id);
@@ -132,7 +131,7 @@ class OrderController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::order()->update($id, $inputs)) {
+            if (!transaction()->order()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $id);
             }
@@ -160,13 +159,13 @@ class OrderController extends Controller
     {
         try {
 
-            $order = Transaction::order()->find($id);
+            $order = transaction()->order()->find($id);
 
             if (! $order) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_model'), $id);
             }
 
-            if (! Transaction::order()->destroy($id)) {
+            if (!transaction()->order()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.order_model'), $id);
             }
@@ -192,13 +191,13 @@ class OrderController extends Controller
     {
         try {
 
-            $order = Transaction::order()->find($id, true);
+            $order = transaction()->order()->find($id, true);
 
             if (! $order) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_model'), $id);
             }
 
-            if (! Transaction::order()->restore($id)) {
+            if (!transaction()->order()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.order_model'), $id);
             }
@@ -223,7 +222,7 @@ class OrderController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderPaginate = Transaction::order()->export($inputs);
+            $orderPaginate = transaction()->order()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Order']));
 
@@ -247,7 +246,7 @@ class OrderController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderPaginate = Transaction::order()->list($inputs);
+            $orderPaginate = transaction()->order()->list($inputs);
 
             return new OrderCollection($orderPaginate);
 
@@ -275,7 +274,7 @@ class OrderController extends Controller
                 $options['user_id'] = $request->user('sanctum')->getKey();
             }
 
-            $order = Transaction::order()->findWhere($options);
+            $order = transaction()->order()->findWhere($options);
 
             if (! $order) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_model'), $transactionId);

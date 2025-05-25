@@ -3,9 +3,7 @@
 namespace Fintech\Transaction\Http\Controllers\Charts;
 
 use Exception;
-use Fintech\Business\Facades\Business;
 use Fintech\Core\Facades\Core;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\Charts\UserOrderSummaryRequest;
 use Fintech\Transaction\Http\Resources\Charts\UserOrderSummaryCollection;
 use Illuminate\Routing\Controller;
@@ -36,7 +34,7 @@ class UserOrderSummaryController extends Controller
             if (Core::packageExists('Business', true)) {
 
                 if ($request->filled('service_type_parent_slug')) {
-                    $serviceType = Business::serviceType()->findWhere(['service_type_slug' => $input['service_type_parent_slug'], 'get' => ['service_types.id']]);
+                    $serviceType = business()->serviceType()->findWhere(['service_type_slug' => $input['service_type_parent_slug'], 'get' => ['service_types.id']]);
                     $input['service_type_parent_id'] = $serviceType->id;
                 } elseif ($request->filled('service_type_parent_id')) {
                     $input['service_type_parent_id'] = $request->input('service_type_parent_id');
@@ -52,13 +50,13 @@ class UserOrderSummaryController extends Controller
                     'sum_amount_count_order_group_by_service_type' => true,
                 ] + $request->only(['status', 'status_not_equal', 'created_at_start_date', 'created_at_end_date']);
 
-                $orders = Transaction::order()->list($orderFilters);
+                $orders = transaction()->order()->list($orderFilters);
 
                 if ($orders->isNotEmpty()) {
 
                     $serviceTypeCacheData = Cache::remember('serviceTypeCacheData', DAY, function () {
                         $serviceTypes = [];
-                        foreach (\Fintech\Business\Facades\Business::serviceType(['paginate' => false]) as $serviceType) {
+                        foreach (\Fintech\Business\Facades\business()->serviceType(['paginate' => false]) as $serviceType) {
                             $serviceTypes[$serviceType->getKey()] = $serviceType->service_type_parent_id;
                         }
 
@@ -73,7 +71,7 @@ class UserOrderSummaryController extends Controller
                         return $order;
                     });
 
-                    $serviceTypes = \Fintech\Business\Facades\Business::serviceType()
+                    $serviceTypes = \Fintech\Business\Facades\business()->serviceType()
                         ->available($input)
                         ->each(function ($item) use ($orders) {
                             $groupedOrders = [];

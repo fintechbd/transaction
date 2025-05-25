@@ -4,7 +4,6 @@ namespace Fintech\Transaction\Jobs;
 
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Core\Enums\Transaction\OrderStatus;
-use Fintech\Transaction\Facades\Transaction;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -25,7 +24,7 @@ class OrderRiskProfileUpdateJob implements ShouldQueue
      */
     public function __construct($transactionId)
     {
-        $this->transaction = Transaction::order()->find($transactionId);
+        $this->transaction = transaction()->order()->find($transactionId);
     }
 
     /**
@@ -63,7 +62,7 @@ class OrderRiskProfileUpdateJob implements ShouldQueue
                 $riskProfile = RiskProfile::Moderate;
             }
 
-            Transaction::order()->update($this->transaction->getKey(), [
+            transaction()->order()->update($this->transaction->getKey(), [
                 'status' => OrderStatus::Processing,
                 'risk_profile' => $riskProfile,
                 'order_data' => $order_data,

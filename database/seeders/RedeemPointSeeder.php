@@ -2,7 +2,6 @@
 
 namespace Fintech\Transaction\Seeders;
 
-use Fintech\Transaction\Facades\Transaction;
 use Illuminate\Database\Seeder;
 
 class RedeemPointSeeder extends Seeder
@@ -17,7 +16,7 @@ class RedeemPointSeeder extends Seeder
         foreach (array_chunk($data, 200) as $block) {
             set_time_limit(2100);
             foreach ($block as $entry) {
-                Transaction::redeemPoint()->create($entry);
+                transaction()->redeemPoint()->create($entry);
             }
         }
     }

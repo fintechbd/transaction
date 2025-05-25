@@ -4,7 +4,6 @@ namespace Fintech\Transaction\Http\Controllers;
 
 use Exception;
 use Fintech\Core\Exceptions\DeleteOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\IndexOrderQueueRequest;
 use Fintech\Transaction\Http\Resources\OrderQueueCollection;
 use Fintech\Transaction\Http\Resources\OrderQueueResource;
@@ -36,7 +35,7 @@ class OrderQueueController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderQueuePaginate = Transaction::orderQueue()->list($inputs);
+            $orderQueuePaginate = transaction()->orderQueue()->list($inputs);
 
             return new OrderQueueCollection($orderQueuePaginate);
 
@@ -58,7 +57,7 @@ class OrderQueueController extends Controller
     {
         try {
 
-            $orderQueue = Transaction::orderQueue()->find($id);
+            $orderQueue = transaction()->orderQueue()->find($id);
 
             if (! $orderQueue) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
@@ -87,7 +86,7 @@ class OrderQueueController extends Controller
     //    {
     //        try {
     //
-    //            $orderQueue = Transaction::orderQueue()->find($id);
+    //            $orderQueue =transaction()->orderQueue()->find($id);
     //
     //            if (!$orderQueue) {
     //                throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
@@ -127,13 +126,13 @@ class OrderQueueController extends Controller
     {
         try {
 
-            $orderQueue = Transaction::orderQueue()->find($id);
+            $orderQueue = transaction()->orderQueue()->find($id);
 
             if (! $orderQueue) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_queue_model'), $id);
             }
 
-            if (! Transaction::orderQueue()->destroy($id)) {
+            if (!transaction()->orderQueue()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.order_queue_model'), $id);
             }

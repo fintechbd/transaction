@@ -3,9 +3,7 @@
 namespace Fintech\Transaction\Services;
 
 use Carbon\Carbon;
-use Fintech\Business\Facades\Business;
 use Fintech\MetaData\Facades\MetaData;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Interfaces\OrderRepository;
 
 /**
@@ -79,7 +77,7 @@ class OrderService
             $input['created_at_end_date_time'] = Carbon::now()->format('Y-m-d H:i:s');
             $input['service_delay'] = 'yes';
 
-            $service_type_parent = Business::service()->findWhere(['service_id' => $input['service_id'], 'service_delay' => $input['service_delay']]);
+            $service_type_parent = business()->service()->findWhere(['service_id' => $input['service_id'], 'service_delay' => $input['service_delay']]);
             if ($service_type_parent) {
                 if (isset($data['order_data']['account_number']) && $data['order_data']['account_number'] != null) {
                     if ((isset($service_type_parent->serviceType->service_type_slug) ? $service_type_parent->serviceType->service_type_slug : null) == 'wallet_transfer') {
@@ -100,7 +98,7 @@ class OrderService
                 $input['sort'] = 'orders.id';
                 $input['dir'] = 'asc';
 
-                $orderCheck = Transaction::order()->list($input);
+                $orderCheck = transaction()->order()->list($input);
                 if ($orderCheck->first()) {
                     $returnValue['countValue'] = $orderCheck->count();
                     $remainingTime = strtotime($created_at) - strtotime($orderCheck->first()->order_at);

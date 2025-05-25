@@ -6,7 +6,6 @@ use Exception;
 use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportManualRefundRequest;
 use Fintech\Transaction\Http\Requests\IndexManualRefundRequest;
 use Fintech\Transaction\Http\Requests\StoreManualRefundRequest;
@@ -41,7 +40,7 @@ class ManualRefundController extends Controller
         try {
             $inputs = $request->validated();
 
-            $manualRefundPaginate = Transaction::manualRefund()->list($inputs);
+            $manualRefundPaginate = transaction()->manualRefund()->list($inputs);
 
             return new ManualRefundCollection($manualRefundPaginate);
 
@@ -64,7 +63,7 @@ class ManualRefundController extends Controller
         try {
             $inputs = $request->validated();
 
-            $manualRefund = Transaction::manualRefund()->create($inputs);
+            $manualRefund = transaction()->manualRefund()->create($inputs);
 
             if (! $manualRefund) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.manual_refund_model'));
@@ -93,7 +92,7 @@ class ManualRefundController extends Controller
     {
         try {
 
-            $manualRefund = Transaction::manualRefund()->find($id);
+            $manualRefund = transaction()->manualRefund()->find($id);
 
             if (! $manualRefund) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
@@ -120,7 +119,7 @@ class ManualRefundController extends Controller
     {
         try {
 
-            $manualRefund = Transaction::manualRefund()->find($id);
+            $manualRefund = transaction()->manualRefund()->find($id);
 
             if (! $manualRefund) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
@@ -128,7 +127,7 @@ class ManualRefundController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::manualRefund()->update($id, $inputs)) {
+            if (!transaction()->manualRefund()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
             }
@@ -156,13 +155,13 @@ class ManualRefundController extends Controller
     {
         try {
 
-            $manualRefund = Transaction::manualRefund()->find($id);
+            $manualRefund = transaction()->manualRefund()->find($id);
 
             if (! $manualRefund) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
             }
 
-            if (! Transaction::manualRefund()->destroy($id)) {
+            if (!transaction()->manualRefund()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.manual_refund_model'), $id);
             }
@@ -187,7 +186,7 @@ class ManualRefundController extends Controller
         try {
             $inputs = $request->validated();
 
-            $manualRefundPaginate = Transaction::manualRefund()->export($inputs);
+            $manualRefundPaginate = transaction()->manualRefund()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Manual Refund']));
 
@@ -211,7 +210,7 @@ class ManualRefundController extends Controller
         try {
             $inputs = $request->validated();
 
-            $manualRefundPaginate = Transaction::manualRefund()->list($inputs);
+            $manualRefundPaginate = transaction()->manualRefund()->list($inputs);
 
             return new ManualRefundCollection($manualRefundPaginate);
 

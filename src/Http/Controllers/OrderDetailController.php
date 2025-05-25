@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportOrderDetailRequest;
 use Fintech\Transaction\Http\Requests\IndexOrderDetailRequest;
 use Fintech\Transaction\Http\Requests\StoreOrderDetailRequest;
@@ -42,7 +41,7 @@ class OrderDetailController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderDetailPaginate = Transaction::orderDetail()->list($inputs);
+            $orderDetailPaginate = transaction()->orderDetail()->list($inputs);
 
             return new OrderDetailCollection($orderDetailPaginate);
 
@@ -65,7 +64,7 @@ class OrderDetailController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderDetail = Transaction::orderDetail()->create($inputs);
+            $orderDetail = transaction()->orderDetail()->create($inputs);
 
             if (! $orderDetail) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.order_detail_model'));
@@ -94,7 +93,7 @@ class OrderDetailController extends Controller
     {
         try {
 
-            $orderDetail = Transaction::orderDetail()->find($id);
+            $orderDetail = transaction()->orderDetail()->find($id);
 
             if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
@@ -121,7 +120,7 @@ class OrderDetailController extends Controller
     {
         try {
 
-            $orderDetail = Transaction::orderDetail()->find($id);
+            $orderDetail = transaction()->orderDetail()->find($id);
 
             if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
@@ -129,7 +128,7 @@ class OrderDetailController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::orderDetail()->update($id, $inputs)) {
+            if (!transaction()->orderDetail()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -157,13 +156,13 @@ class OrderDetailController extends Controller
     {
         try {
 
-            $orderDetail = Transaction::orderDetail()->find($id);
+            $orderDetail = transaction()->orderDetail()->find($id);
 
             if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            if (! Transaction::orderDetail()->destroy($id)) {
+            if (!transaction()->orderDetail()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -189,13 +188,13 @@ class OrderDetailController extends Controller
     {
         try {
 
-            $orderDetail = Transaction::orderDetail()->find($id, true);
+            $orderDetail = transaction()->orderDetail()->find($id, true);
 
             if (! $orderDetail) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
 
-            if (! Transaction::orderDetail()->restore($id)) {
+            if (!transaction()->orderDetail()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.order_detail_model'), $id);
             }
@@ -220,7 +219,7 @@ class OrderDetailController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderDetailPaginate = Transaction::orderDetail()->export($inputs);
+            $orderDetailPaginate = transaction()->orderDetail()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Order Detail']));
 
@@ -244,7 +243,7 @@ class OrderDetailController extends Controller
         try {
             $inputs = $request->validated();
 
-            $orderDetailPaginate = Transaction::orderDetail()->list($inputs);
+            $orderDetailPaginate = transaction()->orderDetail()->list($inputs);
 
             return new OrderDetailCollection($orderDetailPaginate);
 

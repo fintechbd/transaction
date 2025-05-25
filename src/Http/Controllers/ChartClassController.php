@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportChartClassRequest;
 use Fintech\Transaction\Http\Requests\IndexChartClassRequest;
 use Fintech\Transaction\Http\Requests\StoreChartClassRequest;
@@ -42,7 +41,7 @@ class ChartClassController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartClassPaginate = Transaction::chartClass()->list($inputs);
+            $chartClassPaginate = transaction()->chartClass()->list($inputs);
 
             return new ChartClassCollection($chartClassPaginate);
 
@@ -65,7 +64,7 @@ class ChartClassController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartClass = Transaction::chartClass()->create($inputs);
+            $chartClass = transaction()->chartClass()->create($inputs);
 
             if (! $chartClass) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.chart_class_model'));
@@ -94,7 +93,7 @@ class ChartClassController extends Controller
     {
         try {
 
-            $chartClass = Transaction::chartClass()->find($id);
+            $chartClass = transaction()->chartClass()->find($id);
 
             if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
@@ -121,7 +120,7 @@ class ChartClassController extends Controller
     {
         try {
 
-            $chartClass = Transaction::chartClass()->find($id);
+            $chartClass = transaction()->chartClass()->find($id);
 
             if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
@@ -129,7 +128,7 @@ class ChartClassController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::chartClass()->update($id, $inputs)) {
+            if (!transaction()->chartClass()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
@@ -157,13 +156,13 @@ class ChartClassController extends Controller
     {
         try {
 
-            $chartClass = Transaction::chartClass()->find($id);
+            $chartClass = transaction()->chartClass()->find($id);
 
             if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
 
-            if (! Transaction::chartClass()->destroy($id)) {
+            if (!transaction()->chartClass()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
@@ -189,13 +188,13 @@ class ChartClassController extends Controller
     {
         try {
 
-            $chartClass = Transaction::chartClass()->find($id, true);
+            $chartClass = transaction()->chartClass()->find($id, true);
 
             if (! $chartClass) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
 
-            if (! Transaction::chartClass()->restore($id)) {
+            if (!transaction()->chartClass()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.chart_class_model'), $id);
             }
@@ -220,7 +219,7 @@ class ChartClassController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartClassPaginate = Transaction::chartClass()->export($inputs);
+            $chartClassPaginate = transaction()->chartClass()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Chart Class']));
 
@@ -244,7 +243,7 @@ class ChartClassController extends Controller
         try {
             $inputs = $request->validated();
 
-            $chartClassPaginate = Transaction::chartClass()->list($inputs);
+            $chartClassPaginate = transaction()->chartClass()->list($inputs);
 
             return new ChartClassCollection($chartClassPaginate);
 

@@ -2,8 +2,6 @@
 
 namespace Fintech\Transaction\Traits;
 
-use Fintech\Transaction\Facades\Transaction;
-
 trait HasCompliance
 {
     /**
@@ -11,7 +9,7 @@ trait HasCompliance
      */
     public function __construct($orderId)
     {
-        $this->order = Transaction::order()->find($orderId);
+        $this->order = transaction()->order()->find($orderId);
         $this->riskProfile = $this->order->risk_profile;
 
         $this->resolvePolicyName();

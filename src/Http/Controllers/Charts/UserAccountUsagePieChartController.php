@@ -3,7 +3,6 @@
 namespace Fintech\Transaction\Http\Controllers\Charts;
 
 use Exception;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\Charts\UserAccountUsageRequest;
 use Fintech\Transaction\Http\Resources\Charts\UserAccountUsageResource;
 use Illuminate\Http\JsonResponse;
@@ -25,7 +24,7 @@ class UserAccountUsagePieChartController extends Controller
                 'dir' => 'asc',
             ];
 
-            $orderSum = Transaction::order()->list($filters);
+            $orderSum = transaction()->order()->list($filters);
 
             return new UserAccountUsageResource($orderSum);
 

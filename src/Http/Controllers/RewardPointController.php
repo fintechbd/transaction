@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportRewardPointRequest;
 use Fintech\Transaction\Http\Requests\IndexRewardPointRequest;
 use Fintech\Transaction\Http\Requests\StoreRewardPointRequest;
@@ -42,7 +41,7 @@ class RewardPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $rewardPointPaginate = Transaction::rewardPoint()->list($inputs);
+            $rewardPointPaginate = transaction()->rewardPoint()->list($inputs);
 
             return new RewardPointCollection($rewardPointPaginate);
 
@@ -65,7 +64,7 @@ class RewardPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $rewardPoint = Transaction::rewardPoint()->create($inputs);
+            $rewardPoint = transaction()->rewardPoint()->create($inputs);
 
             if (! $rewardPoint) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.reward_point_model'));
@@ -94,7 +93,7 @@ class RewardPointController extends Controller
     {
         try {
 
-            $rewardPoint = Transaction::rewardPoint()->find($id);
+            $rewardPoint = transaction()->rewardPoint()->find($id);
 
             if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
@@ -121,7 +120,7 @@ class RewardPointController extends Controller
     {
         try {
 
-            $rewardPoint = Transaction::rewardPoint()->find($id);
+            $rewardPoint = transaction()->rewardPoint()->find($id);
 
             if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
@@ -129,7 +128,7 @@ class RewardPointController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::rewardPoint()->update($id, $inputs)) {
+            if (!transaction()->rewardPoint()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -157,13 +156,13 @@ class RewardPointController extends Controller
     {
         try {
 
-            $rewardPoint = Transaction::rewardPoint()->find($id);
+            $rewardPoint = transaction()->rewardPoint()->find($id);
 
             if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
-            if (! Transaction::rewardPoint()->destroy($id)) {
+            if (!transaction()->rewardPoint()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -189,13 +188,13 @@ class RewardPointController extends Controller
     {
         try {
 
-            $rewardPoint = Transaction::rewardPoint()->find($id, true);
+            $rewardPoint = transaction()->rewardPoint()->find($id, true);
 
             if (! $rewardPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
 
-            if (! Transaction::rewardPoint()->restore($id)) {
+            if (!transaction()->rewardPoint()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.reward_point_model'), $id);
             }
@@ -220,7 +219,7 @@ class RewardPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $rewardPointPaginate = Transaction::rewardPoint()->export($inputs);
+            $rewardPointPaginate = transaction()->rewardPoint()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Reward Point']));
 
@@ -244,7 +243,7 @@ class RewardPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $rewardPointPaginate = Transaction::rewardPoint()->list($inputs);
+            $rewardPointPaginate = transaction()->rewardPoint()->list($inputs);
 
             return new RewardPointCollection($rewardPointPaginate);
 

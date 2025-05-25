@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportRedeemPointRequest;
 use Fintech\Transaction\Http\Requests\IndexRedeemPointRequest;
 use Fintech\Transaction\Http\Requests\StoreRedeemPointRequest;
@@ -42,7 +41,7 @@ class RedeemPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $redeemPointPaginate = Transaction::redeemPoint()->list($inputs);
+            $redeemPointPaginate = transaction()->redeemPoint()->list($inputs);
 
             return new RedeemPointCollection($redeemPointPaginate);
 
@@ -65,7 +64,7 @@ class RedeemPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $redeemPoint = Transaction::redeemPoint()->create($inputs);
+            $redeemPoint = transaction()->redeemPoint()->create($inputs);
 
             if (! $redeemPoint) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.redeem_point_model'));
@@ -94,7 +93,7 @@ class RedeemPointController extends Controller
     {
         try {
 
-            $redeemPoint = Transaction::redeemPoint()->find($id);
+            $redeemPoint = transaction()->redeemPoint()->find($id);
 
             if (! $redeemPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
@@ -121,7 +120,7 @@ class RedeemPointController extends Controller
     {
         try {
 
-            $redeemPoint = Transaction::redeemPoint()->find($id);
+            $redeemPoint = transaction()->redeemPoint()->find($id);
 
             if (! $redeemPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
@@ -129,7 +128,7 @@ class RedeemPointController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::redeemPoint()->update($id, $inputs)) {
+            if (!transaction()->redeemPoint()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
@@ -157,13 +156,13 @@ class RedeemPointController extends Controller
     {
         try {
 
-            $redeemPoint = Transaction::redeemPoint()->find($id);
+            $redeemPoint = transaction()->redeemPoint()->find($id);
 
             if (! $redeemPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
 
-            if (! Transaction::redeemPoint()->destroy($id)) {
+            if (!transaction()->redeemPoint()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
@@ -189,13 +188,13 @@ class RedeemPointController extends Controller
     {
         try {
 
-            $redeemPoint = Transaction::redeemPoint()->find($id, true);
+            $redeemPoint = transaction()->redeemPoint()->find($id, true);
 
             if (! $redeemPoint) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
 
-            if (! Transaction::redeemPoint()->restore($id)) {
+            if (!transaction()->redeemPoint()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.redeem_point_model'), $id);
             }
@@ -220,7 +219,7 @@ class RedeemPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $redeemPointPaginate = Transaction::redeemPoint()->export($inputs);
+            $redeemPointPaginate = transaction()->redeemPoint()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Redeem Point']));
 
@@ -244,7 +243,7 @@ class RedeemPointController extends Controller
         try {
             $inputs = $request->validated();
 
-            $redeemPointPaginate = Transaction::redeemPoint()->list($inputs);
+            $redeemPointPaginate = transaction()->redeemPoint()->list($inputs);
 
             return new RedeemPointCollection($redeemPointPaginate);
 

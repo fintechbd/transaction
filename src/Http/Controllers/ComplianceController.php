@@ -7,7 +7,6 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportComplianceRequest;
 use Fintech\Transaction\Http\Requests\IndexComplianceRequest;
 use Fintech\Transaction\Http\Requests\StoreComplianceRequest;
@@ -42,7 +41,7 @@ class ComplianceController extends Controller
         try {
             $inputs = $request->validated();
 
-            $compliancePaginate = Transaction::compliance()->list($inputs);
+            $compliancePaginate = transaction()->compliance()->list($inputs);
 
             return new ComplianceCollection($compliancePaginate);
 
@@ -65,7 +64,7 @@ class ComplianceController extends Controller
         try {
             $inputs = $request->validated();
 
-            $compliance = Transaction::compliance()->create($inputs);
+            $compliance = transaction()->compliance()->create($inputs);
 
             if (! $compliance) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.compliance_model'));
@@ -94,7 +93,7 @@ class ComplianceController extends Controller
     {
         try {
 
-            $compliance = Transaction::compliance()->find($id);
+            $compliance = transaction()->compliance()->find($id);
 
             if (! $compliance) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.compliance_model'), $id);
@@ -121,7 +120,7 @@ class ComplianceController extends Controller
     {
         try {
 
-            $compliance = Transaction::compliance()->find($id);
+            $compliance = transaction()->compliance()->find($id);
 
             if (! $compliance) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.compliance_model'), $id);
@@ -129,7 +128,7 @@ class ComplianceController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::compliance()->update($id, $inputs)) {
+            if (!transaction()->compliance()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
@@ -157,13 +156,13 @@ class ComplianceController extends Controller
     {
         try {
 
-            $compliance = Transaction::compliance()->find($id);
+            $compliance = transaction()->compliance()->find($id);
 
             if (! $compliance) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            if (! Transaction::compliance()->destroy($id)) {
+            if (!transaction()->compliance()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
@@ -189,13 +188,13 @@ class ComplianceController extends Controller
     {
         try {
 
-            $compliance = Transaction::compliance()->find($id, true);
+            $compliance = transaction()->compliance()->find($id, true);
 
             if (! $compliance) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
 
-            if (! Transaction::compliance()->restore($id)) {
+            if (!transaction()->compliance()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.compliance_model'), $id);
             }
@@ -220,7 +219,7 @@ class ComplianceController extends Controller
         try {
             $inputs = $request->validated();
 
-            $compliancePaginate = Transaction::compliance()->export($inputs);
+            $compliancePaginate = transaction()->compliance()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Compliance']));
 
@@ -244,7 +243,7 @@ class ComplianceController extends Controller
         try {
             $inputs = $request->validated();
 
-            $compliancePaginate = Transaction::compliance()->list($inputs);
+            $compliancePaginate = transaction()->compliance()->list($inputs);
 
             return new ComplianceCollection($compliancePaginate);
 

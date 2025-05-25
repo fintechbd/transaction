@@ -9,7 +9,6 @@ use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Core\Http\Requests\DropDownRequest;
 use Fintech\Core\Http\Resources\DropDownCollection;
-use Fintech\Transaction\Facades\Transaction;
 use Fintech\Transaction\Http\Requests\ImportTransactionFormRequest;
 use Fintech\Transaction\Http\Requests\IndexTransactionFormRequest;
 use Fintech\Transaction\Http\Requests\StoreTransactionFormRequest;
@@ -44,7 +43,7 @@ class TransactionFormController extends Controller
         try {
             $inputs = $request->validated();
 
-            $transactionFormPaginate = Transaction::transactionForm()->list($inputs);
+            $transactionFormPaginate = transaction()->transactionForm()->list($inputs);
 
             return new TransactionFormCollection($transactionFormPaginate);
 
@@ -67,7 +66,7 @@ class TransactionFormController extends Controller
         try {
             $inputs = $request->validated();
 
-            $transactionForm = Transaction::transactionForm()->create($inputs);
+            $transactionForm = transaction()->transactionForm()->create($inputs);
 
             if (! $transactionForm) {
                 throw (new StoreOperationException)->setModel(config('fintech.transaction.transaction_form_model'));
@@ -96,7 +95,7 @@ class TransactionFormController extends Controller
     {
         try {
 
-            $transactionForm = Transaction::transactionForm()->find($id);
+            $transactionForm = transaction()->transactionForm()->find($id);
 
             if (! $transactionForm) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
@@ -123,7 +122,7 @@ class TransactionFormController extends Controller
     {
         try {
 
-            $transactionForm = Transaction::transactionForm()->find($id);
+            $transactionForm = transaction()->transactionForm()->find($id);
 
             if (! $transactionForm) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
@@ -131,7 +130,7 @@ class TransactionFormController extends Controller
 
             $inputs = $request->validated();
 
-            if (! Transaction::transactionForm()->update($id, $inputs)) {
+            if (!transaction()->transactionForm()->update($id, $inputs)) {
 
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
@@ -159,13 +158,13 @@ class TransactionFormController extends Controller
     {
         try {
 
-            $transactionForm = Transaction::transactionForm()->find($id);
+            $transactionForm = transaction()->transactionForm()->find($id);
 
             if (! $transactionForm) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            if (! Transaction::transactionForm()->destroy($id)) {
+            if (!transaction()->transactionForm()->destroy($id)) {
 
                 throw (new DeleteOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
@@ -191,13 +190,13 @@ class TransactionFormController extends Controller
     {
         try {
 
-            $transactionForm = Transaction::transactionForm()->find($id, true);
+            $transactionForm = transaction()->transactionForm()->find($id, true);
 
             if (! $transactionForm) {
                 throw (new ModelNotFoundException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
 
-            if (! Transaction::transactionForm()->restore($id)) {
+            if (!transaction()->transactionForm()->restore($id)) {
 
                 throw (new RestoreOperationException)->setModel(config('fintech.transaction.transaction_form_model'), $id);
             }
@@ -222,7 +221,7 @@ class TransactionFormController extends Controller
         try {
             $inputs = $request->validated();
 
-            $transactionFormPaginate = Transaction::transactionForm()->export($inputs);
+            $transactionFormPaginate = transaction()->transactionForm()->export($inputs);
 
             return response()->exported(__('core::messages.resource.exported', ['model' => 'Transaction Form']));
 
@@ -246,7 +245,7 @@ class TransactionFormController extends Controller
         try {
             $inputs = $request->validated();
 
-            $transactionFormPaginate = Transaction::transactionForm()->list($inputs);
+            $transactionFormPaginate = transaction()->transactionForm()->list($inputs);
 
             return new TransactionFormCollection($transactionFormPaginate);
 
@@ -277,7 +276,7 @@ class TransactionFormController extends Controller
                 unset($filters['attribute']);
             }
 
-            $entries = Transaction::transactionForm()->list($filters)->map(function ($entry) use ($label, $attribute) {
+            $entries = transaction()->transactionForm()->list($filters)->map(function ($entry) use ($label, $attribute) {
                 return [
                     'attribute' => $entry->{$attribute} ?? 'id',
                     'label' => $entry->{$label} ?? 'name',

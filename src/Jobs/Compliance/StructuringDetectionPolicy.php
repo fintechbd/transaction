@@ -41,7 +41,7 @@ class StructuringDetectionPolicy extends Compliance implements ShouldQueue
         $orderCount = floatval(Transaction::order()->findWhere([
             'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
-            'transaction_form_id' => Transaction::transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
+            'transaction_form_id' => transaction()->transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
             'currency' => $currency,
             'count_order' => true,

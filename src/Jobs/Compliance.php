@@ -5,7 +5,6 @@ namespace Fintech\Transaction\Jobs;
 use Fintech\Auth\Facades\Auth;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
-use Fintech\Transaction\Facades\Transaction;
 use Illuminate\Support\Str;
 
 abstract class Compliance
@@ -76,12 +75,12 @@ abstract class Compliance
             'timestamp' => now(),
         ];
 
-        Transaction::order()->update($this->order->getKey(), ['order_data' => $order_data, 'timeline' => $timeline]);
+        transaction()->order()->update($this->order->getKey(), ['order_data' => $order_data, 'timeline' => $timeline]);
 
         $report['order_id'] = $this->order->getKey();
         $report['user_id'] = $this->order->user_id;
 
-        Transaction::compliance()->create($report);
+        transaction()->compliance()->create($report);
     }
 
     private function getScore(): int
@@ -142,7 +141,7 @@ abstract class Compliance
             $orderInfo['risk_profile'] = $this->riskProfile;
         }
 
-        Transaction::order()->update($this->order->getKey(), $orderInfo);
+        transaction()->order()->update($this->order->getKey(), $orderInfo);
     }
 
     public function uniqueId(): string

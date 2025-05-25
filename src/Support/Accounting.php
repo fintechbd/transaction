@@ -105,7 +105,7 @@ class Accounting
 
             $this->logTimeline($message);
 
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (!transaction()->order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -147,7 +147,7 @@ class Accounting
 
             $this->logTimeline("Total {$transactionAmountFormatted} credited for {$this->service->service_name} deposit.");
 
-            if (! Transaction::order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
+            if (!transaction()->order()->update($this->order->getKey(), ['order_data' => $this->orderData, 'timeline' => array_values($this->timeline)])) {
                 throw (new UpdateOperationException)->setModel(config('fintech.transaction.order_model'), $this->order->getKey());
             }
 
@@ -165,12 +165,12 @@ class Accounting
      */
     public function creditBalanceToUserAccount(array $parameters = []): void
     {
-        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->destination_country_id]);
+        $userAccount = transaction()->userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->destination_country_id]);
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['deposit_amount'] += $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
 
-        if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (!transaction()->userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -180,11 +180,11 @@ class Accounting
      */
     public function debitBalanceFromUserAccount(array $parameters = []): void
     {
-        $userAccount = Transaction::userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->source_country_id]);
+        $userAccount = transaction()->userAccount()->findWhere(['user_id' => $this->userId(), 'country_id' => $this->order->source_country_id]);
         $userAccountData = $userAccount->user_account_data ?? [];
         $userAccountData['spent_amount'] -= $this->orderData['transaction_amount'];
         $userAccountData['available_amount'] = $this->orderData['current_amount'];
-        if (! Transaction::userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
+        if (!transaction()->userAccount()->update($userAccount->getKey(), ['user_account_data' => $userAccountData])) {
             throw (new UpdateOperationException)->setModel(config('fintech.transaction.user_account_model'), $userAccount->getKey());
         }
     }
@@ -249,7 +249,7 @@ class Accounting
         $balanceOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
         $balanceOrderDetail->notes = ucfirst("{$this->service->service_name} balance sent to  user: {$userName}");
         $balanceOrderDetail->step = $this->stepIndex++;
-        $balanceOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($balanceOrderDetail));
+        $balanceOrderDetailStore = transaction()->orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($balanceOrderDetail));
         $balanceOrderDetailStore->order_detail_parent_id = $balanceOrderDetail->order_detail_parent_id ?? $balanceOrderDetailStore->getKey();
         $this->orderDetailParentId($balanceOrderDetailStore->order_detail_parent_id);
         $balanceOrderDetailStore->save();
@@ -286,7 +286,7 @@ class Accounting
         $orderEntry->notes = ucfirst("{$this->service->service_name} payment sent to system user: {$this->systemUser->name}");
         $orderEntry->step = $this->stepIndex++;
         $orderEntry->sender_receiver_id = $this->systemUser->getKey();
-        $orderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($orderEntry));
+        $orderDetailStore = transaction()->orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($orderEntry));
         $orderDetailStore->order_detail_parent_id = $orderEntry->order_detail_parent_id ?? $orderDetailStore->getKey();
         $this->orderDetailParentId($orderDetailStore->order_detail_parent_id);
         $orderDetailStore->save();
@@ -330,7 +330,7 @@ class Accounting
                 $chargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
                 $chargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
                 $chargeOrderDetail->step = $this->stepIndex++;
-                $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
+                $chargeOrderDetailStore = transaction()->orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($chargeOrderDetail));
                 $chargeOrderDetailStore->save();
 
                 // Send balance to system
@@ -374,7 +374,7 @@ class Accounting
                 $interacChargeOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
                 $interacChargeOrderDetail->notes = ucfirst("{$this->service->service_name} charge received from user: {$userName}");
                 $interacChargeOrderDetail->step = $this->stepIndex++;
-                $chargeOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($interacChargeOrderDetail));
+                $chargeOrderDetailStore = transaction()->orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($interacChargeOrderDetail));
                 $chargeOrderDetailStore->save();
 
                 // Send balance to system
@@ -417,7 +417,7 @@ class Accounting
                 $discountOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
                 $discountOrderDetail->notes = ucfirst("{$this->service->service_name} discount sent to user: {$userName}");
                 $discountOrderDetail->step = $this->stepIndex++;
-                $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($discountOrderDetail));
+                $discountOrderDetailStore = transaction()->orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($discountOrderDetail));
                 $discountOrderDetailStore->save();
 
                 // Send balance to system
@@ -460,7 +460,7 @@ class Accounting
                 $commissionOrderDetail->order_detail_response_id = $this->orderData['purchase_number'] ?? null;
                 $commissionOrderDetail->notes = ucfirst("{$this->service->service_name} commission sent to  user: {$userName}");
                 $commissionOrderDetail->step = $this->stepIndex++;
-                $discountOrderDetailStore = Transaction::orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($commissionOrderDetail));
+                $discountOrderDetailStore = transaction()->orderDetail()->create(Transaction::orderDetail()->orderDetailsDataArrange($commissionOrderDetail));
                 $discountOrderDetailStore->save();
 
                 // Send balance to system
@@ -496,7 +496,7 @@ class Accounting
 
     private function previousBalance(): float
     {
-        return (float) Transaction::orderDetail([
+        return (float)transaction()->orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -505,7 +505,7 @@ class Accounting
 
     private function currentBalance(): float
     {
-        return (float) Transaction::orderDetail([
+        return (float)transaction()->orderDetail([
             'get_order_detail_amount_sum' => true,
             'user_id' => $this->userId(),
             'order_detail_currency' => $this->order->currency,
@@ -527,7 +527,7 @@ class Accounting
             $parameters['converted_currency'] = $this->order->converted_currency;
         }
 
-        return (float) Transaction::orderDetail($parameters);
+        return (float)transaction()->orderDetail($parameters);
     }
 
     private function orderDetailParentId($orderDetailParentId = null): ?int
