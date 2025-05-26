@@ -22,7 +22,6 @@ use Illuminate\Database\Eloquent\Collection;
 class Transaction
 {
     /**
-     * @param $filters
      * @return TransactionFormService|Collection|BaseModel
      */
     public function transactionForm($filters = null)
@@ -31,7 +30,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return OrderService|Collection|BaseModel
      */
     public function order($filters = null)
@@ -40,7 +38,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return OrderDetailService|Collection|BaseModel
      */
     public function orderDetail($filters = null)
@@ -49,7 +46,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return ChartClassService|Collection|BaseModel
      */
     public function chartClass($filters = null)
@@ -58,7 +54,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return ChartTypeService|Collection|BaseModel
      */
     public function chartType($filters = null)
@@ -67,7 +62,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return ChartEntryService|Collection|BaseModel
      */
     public function chartEntry($filters = null)
@@ -76,7 +70,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return UserAccountService|Collection|BaseModel
      */
     public function userAccount($filters = null)
@@ -85,7 +78,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return OrderQueueService|Collection|BaseModel
      */
     public function orderQueue($filters = null)
@@ -94,7 +86,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return ManualRefundService|Collection|BaseModel
      */
     public function manualRefund($filters = null)
@@ -103,7 +94,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return RewardPointService|Collection|BaseModel
      */
     public function rewardPoint($filters = null)
@@ -112,7 +102,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return RedeemPointService|Collection|BaseModel
      */
     public function redeemPoint($filters = null)
@@ -121,7 +110,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return ComplianceService|Collection|BaseModel
      */
     public function compliance($filters = null)
@@ -130,7 +118,6 @@ class Transaction
     }
 
     /**
-     * @param $filters
      * @return PolicyService|Collection|BaseModel
      */
     public function policy($filters = null)
@@ -139,8 +126,6 @@ class Transaction
     }
 
     /**
-     * @param BaseModel $order
-     * @param string|int|null $user_id
      * @return Accounting
      */
     public function accounting(\Fintech\Core\Abstracts\BaseModel $order, string|int|null $user_id = null)
