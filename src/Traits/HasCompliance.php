@@ -26,7 +26,6 @@ trait HasCompliance
         }
     }
 
-
     /**
      * Execute the job.
      */

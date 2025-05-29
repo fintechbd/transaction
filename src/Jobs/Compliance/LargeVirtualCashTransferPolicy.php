@@ -24,7 +24,8 @@ class LargeVirtualCashTransferPolicy extends Compliance implements ShouldQueue
     private $highThreshold = 10_000;
 
     private $moderateThreshold = 5_000;
-    private $interval = 24; //hours
+
+    private $interval = 24; // hours
 
     protected $code = 'CP002';
 

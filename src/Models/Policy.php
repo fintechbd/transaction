@@ -27,7 +27,7 @@ class Policy extends BaseModel implements Auditable
         'restored_at' => 'datetime',
         'enabled' => 'bool',
         'risk' => RiskProfile::class,
-        'priority' => RiskProfile::class
+        'priority' => RiskProfile::class,
     ];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];

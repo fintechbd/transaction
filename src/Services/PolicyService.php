@@ -11,6 +11,7 @@ use Fintech\Transaction\Interfaces\PolicyRepository;
 class PolicyService
 {
     use HasFindWhereSearch;
+
     /**
      * PolicyService constructor.
      */
