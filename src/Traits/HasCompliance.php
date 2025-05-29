@@ -2,8 +2,6 @@
 
 namespace Fintech\Transaction\Traits;
 
-use Fintech\Core\Enums\Auth\RiskProfile;
-
 trait HasCompliance
 {
     /**

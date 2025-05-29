@@ -24,6 +24,7 @@ class LargeVirtualCashTransferPolicy extends Compliance implements ShouldQueue
     private $highThreshold = 10_000;
 
     private $moderateThreshold = 5_000;
+    private $interval = 24; //hours
 
     protected $code = 'CP002';
 
@@ -35,7 +36,7 @@ class LargeVirtualCashTransferPolicy extends Compliance implements ShouldQueue
         $currency = $this->order->currency;
 
         $orderSumAmount = floatval(Transaction::order()->findWhere([
-            'created_at_start_date' => now()->subHours(24)->format('Y-m-d'),
+            'created_at_start_date' => now()->subHours($this->interval)->format('Y-m-d'),
             'created_at_end_date' => now()->format('Y-m-d'),
             'transaction_form_id' => transaction()->transactionForm()->findWhere(['code' => 'money_transfer'])->getKey(),
             'user_id' => $this->order->user_id,
