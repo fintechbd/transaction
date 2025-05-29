@@ -38,6 +38,8 @@ abstract class Compliance
 
     protected $code;
 
+    protected ?BaseModel $policyModel;
+
     /**
      * @var bool
      */
@@ -49,6 +51,9 @@ abstract class Compliance
 
         $this->title = trim(preg_replace('/(.+)\sPolicy$/', '$1', $this->title));
 
+        if ($this->policyModel) {
+            $this->title = $this->policyModel->name;
+        }
     }
 
     protected function updateComplianceReport(): void

@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\Transaction\Interfaces\PolicyRepository;
 
 /**
@@ -9,6 +10,7 @@ use Fintech\Transaction\Interfaces\PolicyRepository;
  */
 class PolicyService
 {
+    use HasFindWhereSearch;
     /**
      * PolicyService constructor.
      */

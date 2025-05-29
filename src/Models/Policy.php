@@ -22,7 +22,13 @@ class Policy extends BaseModel implements Auditable
 
     protected $guarded = ['id'];
 
-    protected $casts = ['policy_data' => 'array', 'restored_at' => 'datetime', 'enabled' => 'bool', 'risk' => RiskProfile::class, 'priority' => RiskProfile::class];
+    protected $casts = [
+        'policy_data' => 'array',
+        'restored_at' => 'datetime',
+        'enabled' => 'bool',
+        'risk' => RiskProfile::class,
+        'priority' => RiskProfile::class
+    ];
 
     protected $hidden = ['creator_id', 'editor_id', 'destroyer_id', 'restorer_id'];
 
