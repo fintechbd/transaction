@@ -56,7 +56,7 @@ class UserOrderSummaryController extends Controller
 
                     $serviceTypeCacheData = Cache::remember('serviceTypeCacheData', DAY, function () {
                         $serviceTypes = [];
-                        foreach (\Fintech\Business\Facades\business()->serviceType(['paginate' => false]) as $serviceType) {
+                        foreach (\Fintech\Business\Facades\Business::serviceType(['paginate' => false]) as $serviceType) {
                             $serviceTypes[$serviceType->getKey()] = $serviceType->service_type_parent_id;
                         }
 
@@ -71,7 +71,7 @@ class UserOrderSummaryController extends Controller
                         return $order;
                     });
 
-                    $serviceTypes = \Fintech\Business\Facades\business()->serviceType()
+                    $serviceTypes = \Fintech\Business\Facades\Business::serviceType()
                         ->available($input)
                         ->each(function ($item) use ($orders) {
                             $groupedOrders = [];
