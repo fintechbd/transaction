@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\MetaData\Facades\MetaData;
 use Fintech\MetaData\Models\Country;
 use Fintech\Transaction\Interfaces\UserAccountRepository;
@@ -13,7 +14,7 @@ use Illuminate\Support\Str;
  */
 class UserAccountService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * UserAccountService constructor.

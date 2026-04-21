@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\Transaction\Interfaces\TransactionFormRepository;
 
 /**
@@ -9,7 +10,7 @@ use Fintech\Transaction\Interfaces\TransactionFormRepository;
  */
 class TransactionFormService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * TransactionFormService constructor.

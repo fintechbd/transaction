@@ -1,13 +1,26 @@
 <?php
 
 // config for Fintech/Transaction
+use Fintech\Transaction\Interfaces\ChartClassRepository;
+use Fintech\Transaction\Interfaces\ChartEntryRepository;
+use Fintech\Transaction\Interfaces\ChartTypeRepository;
+use Fintech\Transaction\Interfaces\ComplianceRepository;
+use Fintech\Transaction\Interfaces\ManualRefundRepository;
+use Fintech\Transaction\Interfaces\OrderDetailRepository;
+use Fintech\Transaction\Interfaces\OrderQueueRepository;
+use Fintech\Transaction\Interfaces\PolicyRepository;
+use Fintech\Transaction\Interfaces\RedeemPointRepository;
+use Fintech\Transaction\Interfaces\RewardPointRepository;
+use Fintech\Transaction\Interfaces\UserAccountRepository;
 use Fintech\Transaction\Models\ChartClass;
 use Fintech\Transaction\Models\ChartEntry;
 use Fintech\Transaction\Models\ChartType;
+use Fintech\Transaction\Models\Compliance;
 use Fintech\Transaction\Models\ManualRefund;
 use Fintech\Transaction\Models\Order;
 use Fintech\Transaction\Models\OrderDetail;
 use Fintech\Transaction\Models\OrderQueue;
+use Fintech\Transaction\Models\Policy;
 use Fintech\Transaction\Models\RedeemPoint;
 use Fintech\Transaction\Models\RewardPoint;
 use Fintech\Transaction\Models\TransactionForm;
@@ -153,7 +166,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'compliance_model' => \Fintech\Transaction\Models\Compliance::class,
+    'compliance_model' => Compliance::class,
 
     /*
     |--------------------------------------------------------------------------
@@ -162,7 +175,7 @@ return [
     |
     | This value will be used to across system where model is needed
     */
-    'policy_model' => \Fintech\Transaction\Models\Policy::class,
+    'policy_model' => Policy::class,
 
     // ** Model Config Point Do not Remove **//
 
@@ -175,31 +188,31 @@ return [
     */
 
     'repositories' => [
-        \Fintech\Transaction\Interfaces\TransactionFormRepository::class => TransactionFormRepository::class,
+        Fintech\Transaction\Interfaces\TransactionFormRepository::class => TransactionFormRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderRepository::class => OrderRepository::class,
+        Fintech\Transaction\Interfaces\OrderRepository::class => OrderRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderDetailRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository::class,
+        OrderDetailRepository::class => Fintech\Transaction\Repositories\Eloquent\OrderDetailRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartClassRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartClassRepository::class,
+        ChartClassRepository::class => Fintech\Transaction\Repositories\Eloquent\ChartClassRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartTypeRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
+        ChartTypeRepository::class => Fintech\Transaction\Repositories\Eloquent\ChartTypeRepository::class,
 
-        \Fintech\Transaction\Interfaces\ChartEntryRepository::class => \Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
+        ChartEntryRepository::class => Fintech\Transaction\Repositories\Eloquent\ChartEntryRepository::class,
 
-        \Fintech\Transaction\Interfaces\UserAccountRepository::class => \Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
+        UserAccountRepository::class => Fintech\Transaction\Repositories\Eloquent\UserAccountRepository::class,
 
-        \Fintech\Transaction\Interfaces\OrderQueueRepository::class => \Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
+        OrderQueueRepository::class => Fintech\Transaction\Repositories\Eloquent\OrderQueueRepository::class,
 
-        \Fintech\Transaction\Interfaces\ManualRefundRepository::class => \Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository::class,
+        ManualRefundRepository::class => Fintech\Transaction\Repositories\Eloquent\ManualRefundRepository::class,
 
-        \Fintech\Transaction\Interfaces\RewardPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RewardPointRepository::class,
+        RewardPointRepository::class => Fintech\Transaction\Repositories\Eloquent\RewardPointRepository::class,
 
-        \Fintech\Transaction\Interfaces\RedeemPointRepository::class => \Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository::class,
+        RedeemPointRepository::class => Fintech\Transaction\Repositories\Eloquent\RedeemPointRepository::class,
 
-        \Fintech\Transaction\Interfaces\ComplianceRepository::class => \Fintech\Transaction\Repositories\Eloquent\ComplianceRepository::class,
+        ComplianceRepository::class => Fintech\Transaction\Repositories\Eloquent\ComplianceRepository::class,
 
-        \Fintech\Transaction\Interfaces\PolicyRepository::class => \Fintech\Transaction\Repositories\Eloquent\PolicyRepository::class,
+        PolicyRepository::class => Fintech\Transaction\Repositories\Eloquent\PolicyRepository::class,
 
         // ** Repository Binding Config Point Do not Remove **//
     ],

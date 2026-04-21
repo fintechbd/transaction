@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Services;
 
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\Transaction\Interfaces\OrderDetailRepository;
 
 /**
@@ -10,7 +11,7 @@ use Fintech\Transaction\Interfaces\OrderDetailRepository;
  */
 class OrderDetailService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * OrderDetailService constructor.

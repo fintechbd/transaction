@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Jobs;
 
+use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
 use Fintech\Core\Enums\Transaction\OrderStatus;
 use Illuminate\Bus\Queueable;
@@ -15,7 +16,7 @@ class OrderRiskProfileUpdateJob implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
-     * @var \Fintech\Core\Abstracts\BaseModel
+     * @var BaseModel
      */
     public $transaction;
 

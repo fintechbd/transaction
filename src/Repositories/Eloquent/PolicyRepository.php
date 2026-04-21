@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\PolicyRepository as InterfacesPolicyRepository;
+use Fintech\Transaction\Models\Policy;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,7 +15,7 @@ class PolicyRepository extends EloquentRepository implements InterfacesPolicyRep
 {
     public function __construct()
     {
-        parent::__construct(config('fintech.transaction.policy_model', \Fintech\Transaction\Models\Policy::class));
+        parent::__construct(config('fintech.transaction.policy_model', Policy::class));
     }
 
     /**

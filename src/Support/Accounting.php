@@ -13,11 +13,12 @@ use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Exceptions\Transaction\MasterCurrencyUnavailableException;
 use Fintech\Core\Exceptions\UpdateOperationException;
 use Fintech\Transaction\Facades\Transaction;
+use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class ChartClassService
  *
- * @property BaseModel|\Illuminate\Database\Eloquent\Model $order
+ * @property BaseModel|Model $order
  * @property string|int|null $userId
  */
 class Accounting

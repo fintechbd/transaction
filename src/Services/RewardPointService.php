@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\Transaction\Interfaces\RewardPointRepository;
 
 /**
@@ -9,7 +10,7 @@ use Fintech\Transaction\Interfaces\RewardPointRepository;
  */
 class RewardPointService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * RewardPointService constructor.

@@ -4,6 +4,7 @@ namespace Fintech\Transaction\Repositories\Eloquent;
 
 use Fintech\Core\Repositories\EloquentRepository;
 use Fintech\Transaction\Interfaces\ComplianceRepository as InterfacesComplianceRepository;
+use Fintech\Transaction\Models\Compliance;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -14,7 +15,7 @@ class ComplianceRepository extends EloquentRepository implements InterfacesCompl
 {
     public function __construct()
     {
-        parent::__construct(config('fintech.transaction.compliance_model', \Fintech\Transaction\Models\Compliance::class));
+        parent::__construct(config('fintech.transaction.compliance_model', Compliance::class));
     }
 
     /**

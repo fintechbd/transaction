@@ -2,6 +2,7 @@
 
 namespace Fintech\Transaction\Services;
 
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\Transaction\Interfaces\ChartClassRepository;
 
 /**
@@ -9,7 +10,7 @@ use Fintech\Transaction\Interfaces\ChartClassRepository;
  */
 class ChartClassService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * ChartClassService constructor.

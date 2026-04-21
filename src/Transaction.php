@@ -128,7 +128,7 @@ class Transaction
     /**
      * @return Accounting
      */
-    public function accounting(\Fintech\Core\Abstracts\BaseModel $order, string|int|null $user_id = null)
+    public function accounting(BaseModel $order, string|int|null $user_id = null)
     {
         return new Accounting($order, $user_id);
     }

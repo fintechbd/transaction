@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Services;
 
 use Carbon\Carbon;
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\MetaData\Facades\MetaData;
 use Fintech\Transaction\Interfaces\OrderRepository;
 
@@ -11,7 +12,7 @@ use Fintech\Transaction\Interfaces\OrderRepository;
  */
 class OrderService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * OrderService constructor.

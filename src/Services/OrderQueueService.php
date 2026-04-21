@@ -3,6 +3,7 @@
 namespace Fintech\Transaction\Services;
 
 use Fintech\Core\Abstracts\BaseModel;
+use Fintech\Core\Traits\HasFindWhereSearch;
 use Fintech\Transaction\Interfaces\OrderQueueRepository;
 use Illuminate\Contracts\Pagination\Paginator;
 use Illuminate\Support\Collection;
@@ -12,7 +13,7 @@ use Illuminate\Support\Collection;
  */
 class OrderQueueService
 {
-    use \Fintech\Core\Traits\HasFindWhereSearch;
+    use HasFindWhereSearch;
 
     /**
      * OrderQueueService constructor.

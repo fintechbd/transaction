@@ -7,6 +7,7 @@ use Fintech\Business\Models\Service;
 use Fintech\Business\Models\ServiceVendor;
 use Fintech\Core\Abstracts\BaseModel;
 use Fintech\Core\Enums\Auth\RiskProfile;
+use Fintech\Core\Enums\Reload\DepositStatus;
 use Fintech\Core\Enums\Transaction\OrderStatus;
 use Fintech\Core\Enums\Transaction\OrderType;
 use Fintech\Core\Traits\Audits\BlameableTrait;
@@ -19,7 +20,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
- * @property \Fintech\Core\Enums\Reload\DepositStatus $status
+ * @property DepositStatus $status
  * @property float $transaction_amount
  */
 class Order extends BaseModel

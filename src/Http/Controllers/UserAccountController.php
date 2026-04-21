@@ -7,6 +7,7 @@ use Fintech\Core\Exceptions\DeleteOperationException;
 use Fintech\Core\Exceptions\RestoreOperationException;
 use Fintech\Core\Exceptions\StoreOperationException;
 use Fintech\Core\Exceptions\UpdateOperationException;
+use Fintech\MetaData\Observers\CountryObserver;
 use Fintech\Transaction\Http\Requests\ImportUserAccountRequest;
 use Fintech\Transaction\Http\Requests\IndexUserAccountRequest;
 use Fintech\Transaction\Http\Requests\StoreUserAccountRequest;
@@ -227,7 +228,7 @@ class UserAccountController extends Controller
      *
      * @throws ModelNotFoundException
      *
-     * @see \Fintech\MetaData\Observers\CountryObserver
+     * @see CountryObserver
      */
     public function toggle(string|int $id): JsonResponse
     {
